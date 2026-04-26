@@ -1,0 +1,2 @@
+export { FeaturesCard } from "./FeaturesCard";
+
