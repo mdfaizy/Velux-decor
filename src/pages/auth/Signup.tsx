@@ -4,6 +4,7 @@ import { signupApi } from "../../services/authService";
 import { useAppDispatch, useAppSelector } from "../../redux/slice/reduxHooks";
 import { setLoading, setError } from "../../redux/slice/authSlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const dispatch = useAppDispatch();
@@ -31,13 +32,15 @@ const Signup = () => {
 
     // ✅ Validation
     if (!form.name || !form.email || !form.password || !form.confirmPassword) {
-      dispatch(setError("All fields are required"));
-      return;
+      return toast.error("All fields are required");
+    }
+
+    if (form.password.length < 6) {
+      return toast.error("Password must be at least 6 characters");
     }
 
     if (form.password !== form.confirmPassword) {
-      dispatch(setError("Passwords do not match ❌"));
-      return;
+      return toast.error("Passwords do not match ❌");
     }
 
     try {
@@ -54,13 +57,17 @@ const Signup = () => {
       console.log("Signup Success:", res);
 
       // ✅ success redirect
-      alert("Signup Successful ✅");
+     // ✅ SUCCESS TOAST
+      toast.success("Account created successfully 🎉");
       navigate("/login");
 
     } catch (err: any) {
-      dispatch(
-        setError(err.response?.data?.message || "Signup failed")
-      );
+       const message =
+        err.response?.data?.message || "Signup failed";
+
+        
+      toast.error(message); // 🔥 ERROR TOAST
+      dispatch(setError(message));
     } finally {
       dispatch(setLoading(false));
     }

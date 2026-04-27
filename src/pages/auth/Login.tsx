@@ -154,6 +154,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/slice/reduxHooks";
 import { setUser, setToken, setLoading, setError } from "../../redux/slice/authSlice";
 import { loginApi } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -189,10 +190,17 @@ const Login = () => {
 
       dispatch(setUser(res.data.user));
       dispatch(setToken(res.token));
-
-      navigate(`/${res.data.user.role}`);
+toast.success("Login successful ✅");
+      // navigate(`/${res.data.user.role}`);
+      setTimeout(() => {
+        navigate(`/${res.data.user.role}`);
+      }, 1000);
     } catch (err: any) {
-      dispatch(setError(err.response?.data?.message || "Login failed"));
+      const message =
+        err.response?.data?.message || "Login failed";
+
+      toast.error(message); // 🔥 toast error
+      dispatch(setError(message));
     } finally {
       dispatch(setLoading(false));
     }
