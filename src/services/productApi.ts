@@ -9,7 +9,10 @@ export const createProductApi = async (data: FormData) => {
   });
 };
 
-
+export const getProductByIdApi = async (id: any) => {
+  const res = await apiConnector.get(`/products/${id}`);
+  return res.data;
+};
 // 🔥 GET ALL PRODUCTS
 export const getProductsApi = async () => {
   const res = await apiConnector.get("/products");

@@ -386,6 +386,7 @@ interface Product {
   reviews: number;
 }
 
+import { useNavigate } from "react-router-dom";
 
 interface FeaturedProductsProps {
   productsRef: (node?: Element | null | undefined) => void;
@@ -394,6 +395,7 @@ interface FeaturedProductsProps {
   
   products?: any[];
 }
+
 
 const StarRating = ({ rating }: { rating: number }) => (
   <div className="flex gap-0.5">
@@ -413,7 +415,7 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({
    productsInView = true,
   // FEATURED_PRODUCTS,
 }) => {
-
+const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
   const fetchProducts = async () => {
   try {
@@ -517,6 +519,7 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({
           {products.map((p, i) => (
             <div
               key={p.id}
+              onClick={() => navigate(`/product/${p.id}`)}
               style={{
                 background: "#fff",
                 borderRadius: 16,

@@ -169,12 +169,15 @@ import {
 
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import UserProfile from "../../../pages/auth/UserProfile";
+import { useAppSelector } from "../../../redux/slice/reduxHooks";
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [openMenu, setOpenMenu] = useState<number | null>(null);
 
+
+ const { user } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -300,7 +303,7 @@ const Dashboard = () => {
             if (isParent) {
               setOpenMenu(isOpen ? null : index);
             } else {
-              navigate(`/dashboard/${item.path}`);
+              navigate(`/${user?.role}/${item.path}`);
               setSidebarOpen(false);
             }
           }}
@@ -350,14 +353,16 @@ const Dashboard = () => {
           <div className="ml-10 mt-1 space-y-1 border-l pl-3">
 
             {item.children.map((child, i) => {
-              const isActive =
-                location.pathname === `/dashboard/${child.path}`;
+            const isActive =
+  user &&
+  location.pathname === `/${user.role}/${child.path}`;
 
               return (
                 <button
                   key={i}
                   onClick={() => {
-                    navigate(`/dashboard/${child.path}`);
+                    // navigate(`/dashboard/${child.path}`);
+                    navigate(`/${user.role}/${child.path}`);
                     setSidebarOpen(false);
                   }}
                   className={`

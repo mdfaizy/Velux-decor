@@ -105,6 +105,10 @@ import PrivateRoute from "./pages/auth/PrivateRoute";
 import OpenRoute from "./pages/auth/OpenRoute"
 import { Showroom } from "./screens/AiAgentMobile/Showroom";
 import { ShowroomForm } from "./screens/AiAgentMobile/ShowroomForm";
+import Overview from "./components/screens/dashboard/Overview ";
+import ProductDetails from "./screens/ProductDetails";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import ResetPassword from "./pages/auth/ResetPassword";
 function App() {
   return (
     <Router>
@@ -120,7 +124,10 @@ function App() {
 
     <Route path="/" element={<AiAgentMobile />} />
     <Route path="/featured-products" element={<FeaturedProducts />} />
+    <Route path="/product/:id" element={<ProductDetails />} />
     <Route path='/services-s' element={<Services/>}/>
+    <Route path="/forgot-password" element={<ForgotPassword />} />
+<Route path="/reset-password/:token" element={<ResetPassword />} />
     <Route
       path="/login"
       element={
@@ -134,13 +141,13 @@ function App() {
   </Route>
 
         {/* Dashboard */}
-        <Route path="/dashboard" element={<PrivateRoute>
+        <Route path="/:role" element={<PrivateRoute>
       <Dashboard />
     </PrivateRoute>}>
 
           {/* DEFAULT */}
-          <Route index element={<Navigate to="products" />} />
-
+          <Route index element={<Navigate to="overview" />} />
+           <Route path="overview" element={<Overview />} />
           {/* USERS */}
           <Route path="signup" element={<Signup />} />
           <Route path="users" element={<UserListPage />} />

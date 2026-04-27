@@ -145,7 +145,7 @@ const Signup = () => {
 </div>
 
         {/* Password */}
-        <div className="relative">
+        {/* <div className="relative">
           <Lock className="absolute left-3 top-3 text-gray-400" size={18} />
           <input
             type={showPassword ? "text" : "password"}
@@ -157,7 +157,7 @@ const Signup = () => {
           />
         </div>
 
-        {/* Confirm Password */}
+     
         <div className="relative">
           <Lock className="absolute left-3 top-3 text-gray-400" size={18} />
           <input
@@ -168,7 +168,54 @@ const Signup = () => {
             placeholder="Confirm Password"
             className="w-full pl-10 pr-10 py-3 rounded-xl border focus:ring-2 focus:ring-blue-500"
           />
-        </div>
+        </div> */}
+
+
+        {/* PASSWORD */}
+<div className="relative">
+  <Lock className="absolute left-3 top-3 text-gray-400" size={18} />
+
+  <input
+    type={showPassword ? "text" : "password"}
+    name="password"
+    value={form.password}
+    onChange={handleChange}
+    placeholder="Password"
+    className="w-full pl-10 pr-10 py-3 rounded-xl border focus:ring-2 focus:ring-blue-500"
+  />
+
+  {/* 👁 Eye Icon */}
+  <button
+    type="button"
+    onClick={() => setShowPassword(!showPassword)}
+    className="absolute right-3 top-3 text-gray-400"
+  >
+    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+  </button>
+</div>
+
+{/* CONFIRM PASSWORD */}
+<div className="relative">
+  <Lock className="absolute left-3 top-3 text-gray-400" size={18} />
+
+  <input
+    type={showConfirm ? "text" : "password"}
+    name="confirmPassword"
+    value={form.confirmPassword}
+    onChange={handleChange}
+    placeholder="Confirm Password"
+    className="w-full pl-10 pr-10 py-3 rounded-xl border focus:ring-2 focus:ring-blue-500"
+  />
+
+  {/* 👁 Eye Icon */}
+  <button
+    type="button"
+    onClick={() => setShowConfirm(!showConfirm)}
+    className="absolute right-3 top-3 text-gray-400"
+  >
+    {showConfirm ? <EyeOff size={18} /> : <Eye size={18} />}
+  </button>
+</div>
 
         {/* Button */}
         <button

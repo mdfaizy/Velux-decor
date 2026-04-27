@@ -16,7 +16,7 @@ import { FAQ } from "./FAQ";
 import { Showroom } from "./Showroom";
 import { CTABanner } from "./CTABanner";
 import { Contact } from "./Contact";
-import { Footer } from "./Footer";
+// import { Footer } from "./Footer";
 import { BookingModal } from "./BookingModal";
 import { FloatingWhatsApp } from "./FloatingWhatsApp";
 // import ReviewCard from "../../pages/review/ReviewCard";
@@ -210,7 +210,7 @@ export const AiAgentMobile = (): JSX.Element => {
       <Contact setBookingOpen={setBookingOpen} />
 
       {/* Footer */}
-      <Footer />
+      {/* <Footer /> */}
 
       {/* Booking Modal */}
       <BookingModal

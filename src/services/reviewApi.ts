@@ -2,7 +2,11 @@ import apiConnector from "./apiConnector";
 
 // CREATE
 export const createReviewApi = async (data: any) => {
-  const res = await apiConnector.post("/reviews", data);
+  const res = await apiConnector.post("/reviews", data, {
+    headers: {
+      "Content-Type": "multipart/form-data", // ✅ FIX
+    },
+  });
   return res.data;
 };
 
