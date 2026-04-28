@@ -172,7 +172,7 @@ function App() {
           {/* USERS */}
           <Route path="signup" element={<Signup />} />
           <Route path="users" element={<UserListPage />} />
-<Route path="/enquiry" element={<EnquiryTable />} />
+<Route path="enquiry" element={<EnquiryTable />} />
           {/* CATEGORY */}
           <Route path="categories" element={<CategoryList />} />
           <Route path="category" element={<CreateCategory />} />
