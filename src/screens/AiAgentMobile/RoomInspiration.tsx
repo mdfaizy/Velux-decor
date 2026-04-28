@@ -1,5 +1,6 @@
 import React from "react";
-
+import { ROOM_SCENES } from "./data";
+import { useState } from "react";
 interface RoomScene {
   id: string;
   label: string;
@@ -8,11 +9,16 @@ interface RoomScene {
 }
 
 interface RoomInspirationProps {
-  roomRef: (node?: Element | null | undefined) => void;
+  // roomRef: (node?: Element | null | undefined) => void;
+  // roomInView: boolean;
+  // ROOM_SCENES: RoomScene[];
+  // activeRoom: string;
+  // setActiveRoom: (id: string) => void;
+  // scrollTo: (id: string) => void;
+  // setBookingOpen: (open: boolean) => void;
+
+  roomRef: (node?: Element | null) => void;
   roomInView: boolean;
-  ROOM_SCENES: RoomScene[];
-  activeRoom: string;
-  setActiveRoom: (id: string) => void;
   scrollTo: (id: string) => void;
   setBookingOpen: (open: boolean) => void;
 }
@@ -20,15 +26,16 @@ interface RoomInspirationProps {
 export const RoomInspiration: React.FC<RoomInspirationProps> = ({
   roomRef,
   roomInView,
-  ROOM_SCENES,
-  activeRoom,
-  setActiveRoom,
+  // ROOM_SCENES,
+  // activeRoom,
+  // setActiveRoom,
   scrollTo,
   setBookingOpen,
 }) => {
+  const [activeRoom, setActiveRoom] = useState(ROOM_SCENES[0].id);
+  console.log("ROOM_SCENES:", ROOM_SCENES);
   const activeRoomScene =
-    ROOM_SCENES.find((r) => r.id === activeRoom) || ROOM_SCENES[0];
-
+  ROOM_SCENES?.find((r) => r.id === activeRoom) || ROOM_SCENES?.[0];
   return (
     <section
       id="rooms"

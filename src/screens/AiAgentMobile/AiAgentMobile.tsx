@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
 // Import all the refactored components
-import Navbar  from "./Navbar";
+// import {Navbar}  from "./Navbar";
 import Hero from "./Hero";
 import Brand from "./Brand";
 import Stats from "./Stats";
-import { RoomInspiration } from "./RoomInspiration";
-import { Categories } from "./Categories";
+// import { RoomInspiration } from "./RoomInspiration";
+// import { Categories } from "./Categories";
 import  {FeaturedProducts} from "./FeaturedProducts";
 import Services  from "./Services";
 import { ProcessSteps } from "./ProcessSteps";
@@ -19,8 +19,6 @@ import { Contact } from "./Contact";
 // import { Footer } from "./Footer";
 import { BookingModal } from "./BookingModal";
 import { FloatingWhatsApp } from "./FloatingWhatsApp";
-// import ReviewCard from "../../pages/review/ReviewCard";
-// import { getReviewsApi } from "../services/reviewApi"; 
 // Import data
 import {
   CATEGORIES,
@@ -112,12 +110,12 @@ export const AiAgentMobile = (): JSX.Element => {
       }}
     >
       {/* Navbar */}
-      <Navbar
+      {/* <Navbar
         menuOpen={menuOpen}
         setMenuOpen={setMenuOpen}
         scrollTo={scrollTo}
         setBookingOpen={setBookingOpen}
-      />
+      /> */}
 
       {/* Hero Section */}
       <Hero
@@ -142,7 +140,7 @@ export const AiAgentMobile = (): JSX.Element => {
       />
 
       {/* Room Inspiration */}
-      <RoomInspiration
+      {/* <RoomInspiration
         roomRef={roomRef}
         roomInView={roomInView}
         ROOM_SCENES={ROOM_SCENES}
@@ -150,14 +148,14 @@ export const AiAgentMobile = (): JSX.Element => {
         setActiveRoom={setActiveRoom}
         scrollTo={scrollTo}
         setBookingOpen={setBookingOpen}
-      />
+      /> */}
 
       {/* Categories */}
-      <Categories
+      {/* <Categories
         CATEGORIES={CATEGORIES}
         activeCategory={activeCategory}
         setActiveCategory={setActiveCategory}
-      />
+      /> */}
 
       {/* Featured Products */}
       <FeaturedProducts

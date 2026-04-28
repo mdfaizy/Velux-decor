@@ -1,5 +1,6 @@
 import React from "react";
-
+import { CATEGORIES } from "./data";
+import { useState } from "react";
 interface Category {
   id: string;
   name: string;
@@ -9,17 +10,19 @@ interface Category {
   tag: string;
 }
 
-interface CategoriesProps {
-  CATEGORIES: Category[];
-  activeCategory: string;
-  setActiveCategory: (id: string) => void;
-}
+// interface CategoriesProps {
+//   CATEGORIES: Category[];
+//   activeCategory: string;
+//   setActiveCategory: (id: string) => void;
+// }
 
-export const Categories: React.FC<CategoriesProps> = ({
-  CATEGORIES,
-  activeCategory,
-  setActiveCategory,
+export const Categories: React.FC = ({
+  // CATEGORIES,
+  // activeCategory,
+  // setActiveCategory,
 }) => {
+
+  const [activeCategory, setActiveCategory] = useState(CATEGORIES[0].id);
   return (
     <section
       id="categories"

@@ -387,6 +387,7 @@ interface Product {
 }
 
 import { useNavigate } from "react-router-dom";
+import EnquiryModal from "./EnquiryModal";
 
 interface FeaturedProductsProps {
   productsRef: (node?: Element | null | undefined) => void;
@@ -417,6 +418,8 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({
 }) => {
 const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+const [enquiryOpen, setEnquiryOpen] = useState(false);
   const fetchProducts = async () => {
   try {
     const res = await getProductsApi();
@@ -685,7 +688,7 @@ const navigate = useNavigate();
                       </span>
                     )}
                   </div>
-                  <button
+                  {/* <button
                     style={{
                       background: "linear-gradient(135deg,#C9A84C,#8B6914)",
                       border: "none",
@@ -706,7 +709,35 @@ const navigate = useNavigate();
                     }
                   >
                     Enquire
-                  </button>
+                  </button> */}
+
+                  <button
+  style={{
+    background: "linear-gradient(135deg,#C9A84C,#8B6914)",
+    border: "none",
+    borderRadius: 8,
+    padding: "9px 16px",
+    fontSize: 12,
+    fontWeight: 600,
+    color: "#fff",
+    cursor: "pointer",
+    letterSpacing: "0.03em",
+    transition: "all 0.2s",
+  }}
+  onClick={(e) => {
+    e.stopPropagation();
+    setSelectedProduct(p);   // ✅ product pass
+    setEnquiryOpen(true);          // ✅ modal open
+  }}
+  onMouseEnter={(e) =>
+    (e.currentTarget.style.transform = "translateY(-1px)")
+  }
+  onMouseLeave={(e) =>
+    (e.currentTarget.style.transform = "none")
+  }
+>
+  Enquire
+</button>
                 </div>
               </div>
             </div>
@@ -741,6 +772,12 @@ const navigate = useNavigate();
           </button>
         </div>
       </div>
+
+      <EnquiryModal
+  open={enquiryOpen}
+  setOpen={setEnquiryOpen}
+  product={selectedProduct}
+/>
     </section>
   );
 };

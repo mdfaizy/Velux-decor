@@ -279,15 +279,15 @@
       }
     },
     {
-      "id": "src\\pages\\auth\\Signup.tsx:58:6-to-src\\pages\\auth\\OpenRoute.tsx",
+      "id": "src\\pages\\auth\\Signup.tsx:62:6-to-src\\pages\\auth\\OpenRoute.tsx",
       "source": "src\\pages\\auth\\Signup.tsx",
       "target": "src\\pages\\auth\\OpenRoute.tsx",
       "data": {
         "viaRoute": "/login",
         "trigger": {
           "element": "navigate(\"/login\")",
-          "line": 58,
-          "endLine": 58,
+          "line": 62,
+          "endLine": 62,
           "column": 6,
           "endColumn": 24,
           "sourceFile": "src\\pages\\auth\\Signup.tsx"

@@ -274,9 +274,21 @@ export const Testimonials = () => {
     fetchReviews();
   }, []);
 
-  // 🔥 Safety
-  if (TESTIMONIALS.length === 0) return null;
+ 
+useEffect(() => {
+  if (TESTIMONIALS.length === 0) return;
 
+  const interval = setInterval(() => {
+    setActiveTestimonial((prev) =>
+      prev === TESTIMONIALS.length - 1 ? 0 : prev + 1
+    );
+  }, 3000); // 3 sec
+
+  return () => clearInterval(interval);
+}, [TESTIMONIALS]);
+
+ // 🔥 Safety
+  if (TESTIMONIALS.length === 0) return null;
   return (
     <section
       style={{

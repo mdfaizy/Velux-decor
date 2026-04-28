@@ -109,6 +109,8 @@ import Overview from "./components/screens/dashboard/Overview ";
 import ProductDetails from "./screens/ProductDetails";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
+import { RoomInspiration } from "./screens/AiAgentMobile/RoomInspiration";
+import { Categories } from "./screens/AiAgentMobile/Categories";
 function App() {
   return (
     <Router>
@@ -123,6 +125,12 @@ function App() {
 <Route element={<PublicLayout />}>
 
     <Route path="/" element={<AiAgentMobile />} />
+    <Route
+  path="/categories"
+  element={
+    <Categories/>
+  }
+/>
     <Route path="/featured-products" element={<FeaturedProducts />} />
     <Route path="/product/:id" element={<ProductDetails />} />
     <Route path='/services-s' element={<Services/>}/>
@@ -137,7 +145,19 @@ function App() {
       }
     />
     <Route path='/contact' element={<Contact/>}/>
-<Route path="showroom-video" element={<Showroom />} />
+<Route path="/showroom-video" element={<Showroom />} />
+{/* <Route path="/room-inspiration" element={<RoomInspiration/>}/> */}
+<Route
+  path="/room-inspiration"
+  element={
+    <RoomInspiration
+      roomRef={() => {}}
+      roomInView={true}
+      scrollTo={() => {}}
+      setBookingOpen={() => {}}
+    />
+  }
+/>
   </Route>
 
         {/* Dashboard */}

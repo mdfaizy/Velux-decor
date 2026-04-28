@@ -1,36 +1,6 @@
-// import { Outlet } from "react-router-dom";
-// import Navbar from "../AiAgentMobile/Navbar";
-// import { Footer } from "../AiAgentMobile/Footer";
-
-// const PublicLayout = () => {
-  
-//   return (
-//     <div className="bg-[#FAF7F2] min-h-screen">
-
-//       {/* Navbar (sab public pages me common) */}
-//       <Navbar
-//         menuOpen={false}
-//         setMenuOpen={() => {}}
-//         scrollTo={() => {}}
-//         setBookingOpen={() => {}}
-//       />
-
-//       {/* Page content */}
-//       <Outlet />
-
-
-//       <Footer/>
-
-//     </div>
-//   );
-// };
-
-// export default PublicLayout;
-
-
 import { Outlet } from "react-router-dom";
 import { useState } from "react"; // ✅ ADD
-import Navbar from "../AiAgentMobile/Navbar";
+import {Navbar} from "../AiAgentMobile/Navbar";
 import { Footer } from "../AiAgentMobile/Footer";
 import { BookingModal } from "../AiAgentMobile/BookingModal"; // ✅ ADD
 
