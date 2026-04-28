@@ -111,6 +111,7 @@ import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import { RoomInspiration } from "./screens/AiAgentMobile/RoomInspiration";
 import { Categories } from "./screens/AiAgentMobile/Categories";
+import EnquiryTable from "./screens/AiAgentMobile/EnquiryTable";
 function App() {
   return (
     <Router>
@@ -171,7 +172,7 @@ function App() {
           {/* USERS */}
           <Route path="signup" element={<Signup />} />
           <Route path="users" element={<UserListPage />} />
-
+<Route path="/enquiry" element={<EnquiryTable />} />
           {/* CATEGORY */}
           <Route path="categories" element={<CategoryList />} />
           <Route path="category" element={<CreateCategory />} />

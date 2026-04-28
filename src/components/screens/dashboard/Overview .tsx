@@ -107,6 +107,7 @@
 
 import React from "react";
 import { Users, ShoppingCart, DollarSign, TrendingUp, Activity, Package, CreditCard, Star, ArrowUpRight, ArrowDownRight, MoreVertical } from "lucide-react";
+import EnquiryTable from "../../../screens/AiAgentMobile/EnquiryTable";
 
 const Overview = () => {
   const stats = [
@@ -337,6 +338,8 @@ const Overview = () => {
           </div>
         </div>
       </div>
+
+      <EnquiryTable/>
     </div>
   );
 };
