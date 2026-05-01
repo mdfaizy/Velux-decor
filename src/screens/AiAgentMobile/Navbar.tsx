@@ -106,8 +106,9 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         <div className="hidden md:flex items-center gap-3">
-          <button
-            onClick={() => scrollTo("contact")}
+          <Link
+            // onClick={() => scrollTo("contact")}
+            to='/contact'
             style={{
               background: "none",
               border: "1px solid rgba(201,168,76,0.7)",
@@ -134,7 +135,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             }}
           >
             Get a Quote
-          </button>
+          </Link>
           <button
             onClick={() => setBookingOpen(true)}
             style={{
