@@ -139,9 +139,22 @@ function App() {
     {/* <Route path="/:categorySlug/:subCategorySlug" element={<FeaturedProducts />} />
     <Route path="/product/:id" element={<ProductDetails />} />
      */}
-     <Route path="/products/category/:categorySlug" element={<FeaturedProducts />} />
-<Route path="/products/:categorySlug/:subCategorySlug" element={<FeaturedProducts />} />
+
+     // ✅ 3 param (subcategory + product)
 <Route path="/products/:categorySlug/:subCategorySlug/:productSlug" element={<ProductDetails />} />
+
+// ✅ 2 param (category + product)  ⭐ IMPORTANT
+<Route path="/products/:categorySlug/:productSlug" element={<ProductDetails />} />
+
+// ✅ subcategory listing
+<Route path="/products/:categorySlug/:subCategorySlug" element={<FeaturedProducts />} />
+
+// ✅ category listing
+<Route path="/products/:categorySlug" element={<FeaturedProducts />} />
+     {/* <Route path="/products/category/:categorySlug" element={<FeaturedProducts />} />
+<Route path="/products/:categorySlug/:subCategorySlug" element={<FeaturedProducts />} />
+<Route path="/products/:categorySlug/:productSlug" element={<ProductDetails />} />
+<Route path="/products/:categorySlug/:subCategorySlug/:productSlug" element={<ProductDetails />} /> */}
     <Route path='/services-s' element={<Services/>}/>
     <Route path="/forgot-password" element={<ForgotPassword />} />
 <Route path="/reset-password/:token" element={<ResetPassword />} />

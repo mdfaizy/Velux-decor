@@ -356,6 +356,22 @@
       }
     },
     {
+      "id": "src\\pages\\products\\EditProductForm.tsx:317:6-to-src\\pages\\category\\CreateCategory.tsx",
+      "source": "src\\pages\\products\\ProductList.tsx",
+      "target": "src\\pages\\category\\CreateCategory.tsx",
+      "data": {
+        "viaRoute": "category",
+        "trigger": {
+          "element": "<select\r\n        name=\"category\"\r\n        value={form.category}\r\n        onChange={handleChange}\r\n        className=\"w-full border px-3 py-2 rounded\"\r\n      >\r\n        <option value=\"\">Select Category</option>\r\n        {categories.map((c: any) => (\r\n          <option key={c._id} value={c._id}>\r\n            {c.name}\r\n          </option>\r\n        ))}\r\n      </select>",
+          "line": 317,
+          "endLine": 329,
+          "column": 6,
+          "endColumn": 15,
+          "sourceFile": "src\\pages\\products\\EditProductForm.tsx"
+        }
+      }
+    },
+    {
       "id": "src\\pages\\products\\CreateProduct.tsx:411:8-to-src\\pages\\category\\CreateCategory.tsx",
       "source": "src\\pages\\products\\CreateProduct.tsx",
       "target": "src\\pages\\category\\CreateCategory.tsx",
@@ -372,17 +388,17 @@
       }
     },
     {
-      "id": "src\\pages\\subcategory\\CreateSubCategory.tsx:97:8-to-src\\pages\\category\\CreateCategory.tsx",
+      "id": "src\\pages\\subcategory\\CreateSubCategory.tsx:244:14-to-src\\pages\\category\\CreateCategory.tsx",
       "source": "src\\pages\\subcategory\\CreateSubCategory.tsx",
       "target": "src\\pages\\category\\CreateCategory.tsx",
       "data": {
         "viaRoute": "category",
         "trigger": {
-          "element": "<Select\r\n          label=\"Category\"\r\n          name=\"category\"\r\n          value={form.category}\r\n          onChange={handleChange}\r\n          options={categories.map((c: any) => ({\r\n            label: c.name,\r\n            value: c._id, // 🔥 IMPORTANT\r\n          }))}\r\n        />",
-          "line": 97,
-          "endLine": 106,
-          "column": 8,
-          "endColumn": 10,
+          "element": "<select\r\n                name=\"category\"\r\n                value={form.category}\r\n                onChange={handleChange}\r\n                className=\"w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none\"\r\n              >\r\n                <option value=\"\">Select Category</option>\r\n                {categories.map((c: any) => (\r\n                  <option key={c._id} value={c._id}>\r\n                    {c.name}\r\n                  </option>\r\n                ))}\r\n              </select>",
+          "line": 244,
+          "endLine": 256,
+          "column": 14,
+          "endColumn": 23,
           "sourceFile": "src\\pages\\subcategory\\CreateSubCategory.tsx"
         }
       }

@@ -147,38 +147,168 @@
 // export default ProductDetails;
 
 
+// import { Link, useParams } from "react-router-dom";
+// import React, { useEffect, useState } from "react";
+// import apiConnector from "../services/apiConnector";
+
+// const ProductDetails = () => {
+//   // ✅ SLUG PARAMS
+//   const { categorySlug, subCategorySlug, productSlug } = useParams();
+
+//   const [product, setProduct] = useState<any>(null);
+//   const [activeImage, setActiveImage] = useState<string>("");
+
+//   // 🔥 FETCH BY SLUG
+//   const fetchProduct = async () => {
+//     try {
+//       if (!categorySlug || !productSlug) return;
+
+//       let url = "";
+
+//       if (subCategorySlug) {
+//         url = `/products/${categorySlug}/${subCategorySlug}/${productSlug}`;
+//       } else {
+//         url = `/products/${categorySlug}/${productSlug}`;
+//       }
+
+//       const res = await apiConnector.get(url);
+
+//       if (res.data.success) {
+//         setProduct(res.data.data);
+
+//         if (res.data.data.images?.length) {
+//           setActiveImage(res.data.data.images[0]);
+//         }
+//       }
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchProduct();
+//   }, [categorySlug, subCategorySlug, productSlug]);
+
+//   if (!product) return <div className="p-10 text-center">Loading...</div>;
+
+//   return (
+//     <div className="max-w-6xl mx-auto p-6 mt-10">
+
+//       {/* 🔥 BREADCRUMB */}
+//       <div className="text-sm text-gray-500 mb-4 flex flex-wrap gap-1">
+//         <Link to="/" className="hover:text-black">Home</Link>
+//         <span>›</span>
+
+//         <Link to="/featured-products" className="hover:text-black">Products</Link>
+//         <span>›</span>
+
+//         <span className="text-black font-medium">
+//           {product.category?.name}
+//         </span>
+
+//         {product.subCategory && (
+//           <>
+//             <span>›</span>
+//             <span>{product.subCategory?.name}</span>
+//           </>
+//         )}
+
+//         <span>›</span>
+//         <span className="text-black font-semibold">
+//           {product.name}
+//         </span>
+//       </div>
+
+//       {/* 🔥 MAIN */}
+//       <div className="grid md:grid-cols-2 gap-8">
+
+//         {/* IMAGE */}
+//         <div>
+//           <img
+//             src={activeImage}
+//             alt={product.name}
+//             className="w-full h-[400px] object-cover rounded-xl border"
+//           />
+
+//           <div className="flex gap-3 mt-4 flex-wrap">
+//             {product.images?.map((img: string, i: number) => (
+//               <img
+//                 key={i}
+//                 src={img}
+//                 onClick={() => setActiveImage(img)}
+//                 className={`
+//                   w-20 h-20 object-cover rounded cursor-pointer border
+//                   ${activeImage === img
+//                     ? "border-black scale-105"
+//                     : "border-gray-200 hover:scale-105"}
+//                 `}
+//               />
+//             ))}
+//           </div>
+//         </div>
+
+//         {/* DETAILS */}
+//         <div>
+//           <h1 className="text-3xl font-bold">{product.name}</h1>
+
+//           <p className="text-gray-500 mt-2">
+//             Category: {product.category?.name}
+//           </p>
+
+//           <h2 className="text-2xl text-green-600 mt-4 font-semibold">
+//             ₹{product.price}
+//           </h2>
+
+//           <p className="mt-4 text-gray-700 leading-relaxed">
+//             {product.description}
+//           </p>
+
+//           {/* FEATURES */}
+//           <div className="mt-5">
+//             <h3 className="font-semibold mb-2">Features:</h3>
+//             <ul className="space-y-2 text-gray-700">
+//               {product.features?.map((f: any, i: number) => (
+//                 <li key={i}>✔ {f}</li>
+//               ))}
+//             </ul>
+//           </div>
+
+//           <button className="mt-6 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition">
+//             Enquire Now
+//           </button>
+//         </div>
+
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ProductDetails;
+
+
 import { Link, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import apiConnector from "../services/apiConnector";
 
 const ProductDetails = () => {
-  // ✅ SLUG PARAMS
   const { categorySlug, subCategorySlug, productSlug } = useParams();
 
   const [product, setProduct] = useState<any>(null);
   const [activeImage, setActiveImage] = useState<string>("");
 
-  // 🔥 FETCH BY SLUG
   const fetchProduct = async () => {
     try {
       if (!categorySlug || !productSlug) return;
 
-      let url = "";
-
-      if (subCategorySlug) {
-        url = `/products/${categorySlug}/${subCategorySlug}/${productSlug}`;
-      } else {
-        url = `/products/${categorySlug}/${productSlug}`;
-      }
+      let url = subCategorySlug
+        ? `/products/${categorySlug}/${subCategorySlug}/${productSlug}`
+        : `/products/${categorySlug}/${productSlug}`;
 
       const res = await apiConnector.get(url);
 
       if (res.data.success) {
         setProduct(res.data.data);
-
-        if (res.data.data.images?.length) {
-          setActiveImage(res.data.data.images[0]);
-        }
+        setActiveImage(res.data.data.images?.[0]);
       }
     } catch (err) {
       console.log(err);
@@ -192,44 +322,43 @@ const ProductDetails = () => {
   if (!product) return <div className="p-10 text-center">Loading...</div>;
 
   return (
-    <div className="max-w-6xl mx-auto p-6 mt-5">
+    <div className="max-w-7xl mx-auto px-6 py-10 mt-16">
 
-      {/* 🔥 BREADCRUMB */}
-      <div className="text-sm text-gray-500 mb-4 flex flex-wrap gap-1">
+      {/* 🔥 Breadcrumb */}
+      <div className="text-sm text-gray-500 mb-6 flex flex-wrap gap-2">
         <Link to="/" className="hover:text-black">Home</Link>
         <span>›</span>
 
-        <Link to="/featured-products" className="hover:text-black">Products</Link>
+        <Link to="/products" className="hover:text-black">Products</Link>
         <span>›</span>
 
-        <span className="text-black font-medium">
-          {product.category?.name}
-        </span>
+        <span className="text-gray-700">{product.category?.name}</span>
 
         {product.subCategory && (
           <>
             <span>›</span>
-            <span>{product.subCategory?.name}</span>
+            <span className="text-gray-700">{product.subCategory?.name}</span>
           </>
         )}
 
         <span>›</span>
-        <span className="text-black font-semibold">
-          {product.name}
-        </span>
+        <span className="text-black font-semibold">{product.name}</span>
       </div>
 
-      {/* 🔥 MAIN */}
-      <div className="grid md:grid-cols-2 gap-8">
+      {/* 🔥 MAIN GRID */}
+      <div className="grid lg:grid-cols-2 gap-10">
 
-        {/* IMAGE */}
+        {/* LEFT - IMAGES */}
         <div>
-          <img
-            src={activeImage}
-            alt={product.name}
-            className="w-full h-[400px] object-cover rounded-xl border"
-          />
+          <div className="border rounded-xl overflow-hidden shadow-sm">
+            <img
+              src={activeImage}
+              alt={product.name}
+              className="w-full h-[420px] object-cover"
+            />
+          </div>
 
+          {/* THUMBNAILS */}
           <div className="flex gap-3 mt-4 flex-wrap">
             {product.images?.map((img: string, i: number) => (
               <img
@@ -237,7 +366,7 @@ const ProductDetails = () => {
                 src={img}
                 onClick={() => setActiveImage(img)}
                 className={`
-                  w-20 h-20 object-cover rounded cursor-pointer border
+                  w-20 h-20 object-cover rounded-lg cursor-pointer border transition
                   ${activeImage === img
                     ? "border-black scale-105"
                     : "border-gray-200 hover:scale-105"}
@@ -247,37 +376,57 @@ const ProductDetails = () => {
           </div>
         </div>
 
-        {/* DETAILS */}
-        <div>
-          <h1 className="text-3xl font-bold">{product.name}</h1>
+        {/* RIGHT - DETAILS */}
+        <div className="flex flex-col justify-between">
 
-          <p className="text-gray-500 mt-2">
-            Category: {product.category?.name}
-          </p>
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">
+              {product.name}
+            </h1>
 
-          <h2 className="text-2xl text-green-600 mt-4 font-semibold">
-            ₹{product.price}
-          </h2>
+            <p className="text-gray-500 mt-2">
+              Category:{" "}
+              <span className="text-gray-700 font-medium">
+                {product.category?.name}
+              </span>
+            </p>
 
-          <p className="mt-4 text-gray-700 leading-relaxed">
-            {product.description}
-          </p>
+            {/* PRICE */}
+            <div className="mt-4">
+              <span className="text-3xl font-bold text-green-600">
+                ₹{product.price}
+              </span>
+            </div>
 
-          {/* FEATURES */}
-          <div className="mt-5">
-            <h3 className="font-semibold mb-2">Features:</h3>
-            <ul className="space-y-2 text-gray-700">
-              {product.features?.map((f: any, i: number) => (
-                <li key={i}>✔ {f}</li>
-              ))}
-            </ul>
+            {/* DESCRIPTION */}
+            <p className="mt-5 text-gray-600 leading-relaxed">
+              {product.description}
+            </p>
+
+            {/* FEATURES */}
+            <div className="mt-6">
+              <h3 className="font-semibold text-lg mb-3">Features</h3>
+              <ul className="space-y-2">
+                {product.features?.map((f: any, i: number) => (
+                  <li
+                    key={i}
+                    className="flex items-center gap-2 text-gray-700"
+                  >
+                    <span className="text-green-600">✔</span> {f}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
-          <button className="mt-6 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition">
-            Enquire Now
-          </button>
-        </div>
+          {/* CTA */}
+          <div className="mt-8">
+            <button className="w-full bg-black text-white py-3 rounded-lg text-lg font-medium hover:bg-gray-800 transition">
+              Enquire Now
+            </button>
+          </div>
 
+        </div>
       </div>
     </div>
   );
