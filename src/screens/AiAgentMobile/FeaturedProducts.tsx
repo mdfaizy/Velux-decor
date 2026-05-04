@@ -373,11 +373,34 @@
 
 
 import React, { useEffect, useState } from "react";
-import { getProductsApi } from "../../services/productApi";
+// import { getProductsApi } from "../../services/productApi";
+import {
+  getProductsApi,
+  getProductsByCategoryApi,
+  getProductsBySubCategoryApi,
+} from "../../services/productApi";
+// interface Product {
+//   id: number;
+//   name: string;
+//   category: string;
+//   price: number;
+//   originalPrice?: number;
+//   image: string;
+//   badge?: string;
+//   rating: number;
+//   reviews: number;
+// }
 interface Product {
-  id: number;
+  id: string; // 🔥 Mongo _id is string
   name: string;
+
+  // 🔥 ADD THESE
+  slug: string;
+  categorySlug: string;
+  subCategorySlug?: string;
+
   category: string;
+
   price: number;
   originalPrice?: number;
   image: string;
@@ -385,9 +408,10 @@ interface Product {
   rating: number;
   reviews: number;
 }
-
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import EnquiryModal from "./EnquiryModal";
+import apiConnector from "../../services/apiConnector";
 
 interface FeaturedProductsProps {
   productsRef: (node?: Element | null | undefined) => void;
@@ -417,45 +441,151 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({
   // FEATURED_PRODUCTS,
 }) => {
 const navigate = useNavigate();
+const { categorySlug, subCategorySlug } = useParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
 const [enquiryOpen, setEnquiryOpen] = useState(false);
-  const fetchProducts = async () => {
+//   const fetchProducts = async () => {
+//   try {
+//     const res = await getProductsApi();
+
+//     if (res.success) {
+//       // const formatted = res.data.map((item: any) => ({
+//       //   id: item._id,
+//       //   name: item.name,
+
+//       //   category:
+//       //     typeof item.category === "object"
+//       //       ? item.category?.name || "General"
+//       //       : item.category || "General",
+
+//       //   price: item.price,
+
+//       //   // 🔥 FIX HERE (VERY IMPORTANT)
+//       //   image:
+//       //     item.images && item.images.length > 0
+//       //       ? item.images[0]
+//       //       : "https://via.placeholder.com/300",
+
+//       //   rating: item.rating || 5,
+//       //   reviews: item.reviews || 0,
+//       // }));
+
+
+//       const formatted = res.data.map((item: any) => ({
+//   id: item._id,
+//   name: item.name,
+
+//   // 🔥 ADD SLUGS
+//   slug: item.slug,
+
+//   categorySlug:
+//     typeof item.category === "object"
+//       ? item.category?.slug
+//       : "",
+
+//   subCategorySlug:
+//     typeof item.subCategory === "object"
+//       ? item.subCategory?.slug
+//       : "",
+
+//   category:
+//     typeof item.category === "object"
+//       ? item.category?.name || "General"
+//       : item.category || "General",
+
+//   price: item.price,
+
+//   image:
+//     item.images && item.images.length > 0
+//       ? item.images[0]
+//       : "https://via.placeholder.com/300",
+
+//   rating: item.rating || 5,
+//   reviews: item.reviews || 0,
+// }));
+//       setProducts(formatted);
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
+
+const fetchProducts = async () => {
   try {
-    const res = await getProductsApi();
+    let res;
 
-    if (res.success) {
-      const formatted = res.data.map((item: any) => ({
-        id: item._id,
-        name: item.name,
-
-        category:
-          typeof item.category === "object"
-            ? item.category?.name || "General"
-            : item.category || "General",
-
-        price: item.price,
-
-        // 🔥 FIX HERE (VERY IMPORTANT)
-        image:
-          item.images && item.images.length > 0
-            ? item.images[0]
-            : "https://via.placeholder.com/300",
-
-        rating: item.rating || 5,
-        reviews: item.reviews || 0,
-      }));
-
-      setProducts(formatted);
+    if (categorySlug && subCategorySlug) {
+      res = await getProductsBySubCategoryApi(
+        categorySlug,
+        subCategorySlug
+      );
+    } else if (categorySlug) {
+      res = await getProductsByCategoryApi(categorySlug);
+    } else {
+      res = await getProductsApi();
     }
+
+    // if (res.success) {
+    //   const formatted = res.data.map((item: any) => ({
+    //     id: item._id,
+    //     name: item.name,
+    //     slug: item.slug,
+
+    //     categorySlug: item.category?.slug || "",
+    //     subCategorySlug: item.subCategory?.slug || "",
+
+    //     category: item.category?.name || "General",
+
+    //     price: item.price,
+
+    //     image:
+    //       item.images && item.images.length > 0
+    //         ? item.images[0]
+    //         : "https://via.placeholder.com/300",
+
+    //     rating: item.rating || 5,
+    //     reviews: item.reviews || 0,
+    //   }));
+
+    //   setProducts(formatted);
+    // }
+    if (res.success) {
+  const rawData = Array.isArray(res.data)
+    ? res.data
+    : [res.data]; // 🔥 SINGLE → ARRAY
+
+  const formatted = rawData.map((item: any) => ({
+    id: item._id,
+    name: item.name,
+    slug: item.slug,
+
+    categorySlug: item.category?.slug || "",
+    subCategorySlug: item.subCategory?.slug || "",
+
+    category: item.category?.name || "General",
+
+    price: item.price,
+
+    image:
+      item.images && item.images.length > 0
+        ? item.images[0]
+        : "https://via.placeholder.com/300",
+
+    rating: item.rating || 5,
+    reviews: item.reviews || 0,
+  }));
+
+  setProducts(formatted);
+}
   } catch (err) {
     console.log(err);
   }
 };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+ useEffect(() => {
+  fetchProducts();
+}, [categorySlug, subCategorySlug]);
   return (
     <section
       id="products"
@@ -512,17 +642,25 @@ const [enquiryOpen, setEnquiryOpen] = useState(false);
           </p>
         </div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
-            gap: 24,
-          }}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+          // style={{
+          //   display: "grid",
+          //   gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
+          //   gap: 24,
+          // }}
         >
           {products.map((p, i) => (
             <div
               key={p.id}
-              onClick={() => navigate(`/product/${p.id}`)}
+              // onClick={() => navigate(`/product/${p.id}`)}
+           onClick={() => {
+  if (p.subCategorySlug) {
+    navigate(`/products/${p.categorySlug}/${p.subCategorySlug}/${p.slug}`);
+    // navigate(`/products/${p.categorySlug}/${p.subCategorySlug}`);
+  } else {
+    navigate(`/products/${p.categorySlug}/${p.slug}`);
+  }
+}}
               style={{
                 background: "#fff",
                 borderRadius: 16,

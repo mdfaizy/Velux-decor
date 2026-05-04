@@ -8,7 +8,24 @@ export const createProductApi = async (data: FormData) => {
     },
   });
 };
+// 🔥 GET BY CATEGORY
+export const getProductsByCategoryApi = async (categorySlug: string) => {
+  const res = await apiConnector.get(
+    `/products/category/${categorySlug}`
+  );
+  return res.data;
+};
 
+// 🔥 GET BY CATEGORY + SUBCATEGORY
+export const getProductsBySubCategoryApi = async (
+  categorySlug: string,
+  subCategorySlug: string
+) => {
+  const res = await apiConnector.get(
+    `/products/${categorySlug}/${subCategorySlug}`
+  );
+  return res.data;
+};
 export const getProductByIdApi = async (id: any) => {
   const res = await apiConnector.get(`/products/${id}`);
   return res.data;

@@ -36,6 +36,7 @@ const ProductList = () => {
     try {
       setLoading(true);
       const res = await getProductsApi();
+      console.log(res);
       const data = res.data || [];
       setProducts(data);
       setFiltered(data);
@@ -205,6 +206,7 @@ const ProductList = () => {
                   <TableCell isHeader>Image</TableCell>
                   <TableCell isHeader>Name</TableCell>
                   <TableCell isHeader className="hidden sm:table-cell">Category</TableCell>
+                  <TableCell isHeader className="hidden sm:table-cell">Sub Category</TableCell>
                   <TableCell isHeader>Price</TableCell>
                   <TableCell isHeader className="hidden lg:table-cell">Stock</TableCell>
                   <TableCell isHeader>Status</TableCell>
@@ -233,6 +235,9 @@ const ProductList = () => {
 
                     <TableCell className="hidden sm:table-cell">
                       {product.category?.name || "N/A"}
+                    </TableCell>
+                     <TableCell className="hidden sm:table-cell">
+                      {product.subCategory?.name || "N/A"}
                     </TableCell>
 
                     <TableCell>₹{product.price}</TableCell>

@@ -1,10 +1,16 @@
 import apiConnector from "./apiConnector";
 
 // 🔥 CREATE CATEGORY
-export const createCategoryApi = async (data: { name: string }) => {
+// export const createCategoryApi = async (data: { name: string }) => {
+//   const res = await apiConnector.post("/category", data);
+//   return res.data;
+// };
+
+export const createCategoryApi = async (data: FormData) => {
   const res = await apiConnector.post("/category", data);
   return res.data;
 };
+
 
 // 🔥 GET ALL CATEGORIES
 export const getCategoriesApi = async () => {

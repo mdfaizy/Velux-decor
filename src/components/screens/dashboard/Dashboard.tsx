@@ -203,6 +203,14 @@ const Dashboard = () => {
     { label: "Create Category", path: "category" },
   ],
 },
+{
+  label: "Sub Category",
+  icon: ShoppingCart, // ya Folder bhi use kar sakte ho
+  children: [
+    { label: "All SubCategories", path: "subcategories" },
+    { label: "Create SubCategory", path: "subcategory" },
+  ],
+},
 
 // ✅ PRODUCT (SEPARATE)
 {
@@ -257,7 +265,7 @@ const Dashboard = () => {
       )}
 
       {/* ===== SIDEBAR ===== */}
-      <aside
+      {/* <aside
         className={`
         fixed z-50 top-0 left-0 h-full bg-white shadow-lg transition-all duration-300
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} 
@@ -265,7 +273,17 @@ const Dashboard = () => {
         ${collapsed ? "lg:w-20" : "lg:w-64"}
         w-64
         `}
-      >
+      > */}
+      <aside
+  className={`
+    fixed z-50 top-0 left-0 h-full bg-white shadow-lg transition-all duration-300
+    overflow-y-auto   // 🔥 ADD THIS LINE
+    ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} 
+    lg:translate-x-0
+    ${collapsed ? "lg:w-20" : "lg:w-64"}
+    w-64
+  `}
+>
         {/* Header */}
         <div className="p-4 flex items-center justify-between border-b">
           {!collapsed && <h2 className="font-bold text-lg">Dashboard</h2>}
@@ -288,8 +306,14 @@ const Dashboard = () => {
         </div>
 
         {/* ===== MENU ===== */}
-      <nav className="mt-4 px-2 space-y-1">
+      {/* <nav className="mt-4 px-2 space-y-1"> */}
 
+{/* <nav className="mt-4 px-2 space-y-1 flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300">   */}
+<nav className="mt-4 px-2 space-y-1 flex-1 overflow-y-auto 
+  scrollbar-thin 
+  scrollbar-thumb-gray-400 
+  scrollbar-track-gray-100
+">
   {menuItems.map((item, index) => {
     const isParent = item.children;
     const isOpen = openMenu === index;

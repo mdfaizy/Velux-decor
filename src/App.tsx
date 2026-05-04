@@ -112,6 +112,9 @@ import ResetPassword from "./pages/auth/ResetPassword";
 import { RoomInspiration } from "./screens/AiAgentMobile/RoomInspiration";
 import { Categories } from "./screens/AiAgentMobile/Categories";
 import EnquiryTable from "./screens/AiAgentMobile/EnquiryTable";
+import SubCategoryList from "./pages/subcategory/SubCategoryList";
+import CreateSubCategory from "./pages/subcategory/CreateSubCategory";
+import SubCategoryListPage from "./pages/subcategory/SubCategoryListPage";
 function App() {
   return (
     <Router>
@@ -133,7 +136,12 @@ function App() {
   }
 />
     <Route path="/featured-products" element={<FeaturedProducts />} />
+    {/* <Route path="/:categorySlug/:subCategorySlug" element={<FeaturedProducts />} />
     <Route path="/product/:id" element={<ProductDetails />} />
+     */}
+     <Route path="/products/category/:categorySlug" element={<FeaturedProducts />} />
+<Route path="/products/:categorySlug/:subCategorySlug" element={<FeaturedProducts />} />
+<Route path="/products/:categorySlug/:subCategorySlug/:productSlug" element={<ProductDetails />} />
     <Route path='/services-s' element={<Services/>}/>
     <Route path="/forgot-password" element={<ForgotPassword />} />
 <Route path="/reset-password/:token" element={<ResetPassword />} />
@@ -145,6 +153,9 @@ function App() {
         </OpenRoute>
       }
     />
+
+    {/* <Route path="/subcategory/:categoryId" element={<SubCategoryListPage />} /> */}
+  <Route path="/subcategory/:categorySlug" element={<SubCategoryListPage />} />
     <Route path='/contact' element={<Contact/>}/>
 <Route path="/showroom-video" element={<Showroom />} />
 {/* <Route path="/room-inspiration" element={<RoomInspiration/>}/> */}
@@ -183,6 +194,11 @@ function App() {
           
           {/* CONSULTATION */}
           <Route path="consultations" element={<ConsultationList />} />
+
+
+          {/* SUBCATEGORY */}
+<Route path="subcategories" element={<SubCategoryList />} />
+<Route path="subcategory" element={<CreateSubCategory />} />
 
           {/* 🔥 REVIEW */}
           <Route path="reviews" element={<ReviewList />} />

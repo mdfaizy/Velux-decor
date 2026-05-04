@@ -1,13 +1,25 @@
 import React from "react";
 import { CATEGORIES } from "./data";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { getCategoriesApi } from "../../services/categoryApi";
+import { useState,useEffect } from "react";
+// interface Category {
+//   id: string;
+//   name: string;
+//   icon: string;
+//   description: string;
+//   image: string;
+//   tag: string;
+// }
 interface Category {
-  id: string;
+  _id: string;          // 🔥 Mongo ID
   name: string;
-  icon: string;
   description: string;
   image: string;
-  tag: string;
+  icon: string;
+  badge?: string;
+  slug: string;         // 🔥 IMPORTANT
+  isActive: boolean;
 }
 
 // interface CategoriesProps {
@@ -21,8 +33,32 @@ export const Categories: React.FC = ({
   // activeCategory,
   // setActiveCategory,
 }) => {
+  const navigate = useNavigate();
+// const [categories, setCategories] = useState<any[]>([]);
+const [categories, setCategories] = useState<Category[]>([]);
+const [activeCategory, setActiveCategory] = useState("");
+//   const [activeCategory, setActiveCategory] = useState(CATEGORIES[0].id);
+// 
 
-  const [activeCategory, setActiveCategory] = useState(CATEGORIES[0].id);
+useEffect(() => {
+  const fetchCategories = async () => {
+    try {
+      const res = await getCategoriesApi();
+      const data = res.data || [];
+
+      setCategories(data);
+
+      // default active
+      if (data.length > 0) {
+        setActiveCategory(data[0]._id);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  fetchCategories();
+}, []);
   return (
     <section
       id="categories"
@@ -91,13 +127,26 @@ export const Categories: React.FC = ({
 
         {/* 6-category masonry-style grid */}
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {CATEGORIES.map((cat, i) => {
+          {categories.map((cat, i) => {
             // Make first and last tile double-wide on large screens only
             const isWide = i === 0 || i === 5;
             return (
               <div
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
+                // key={cat.id}
+                // onClick={() => setActiveCategory(cat.id)}
+                key={cat._id}
+// onClick={() => setActiveCategory(cat._id)}
+onClick={() => {
+  setActiveCategory(cat._id);
+
+  // 🔥 SLUG BASE NAVIGATION
+  if (!cat.slug) {
+    console.error("Slug missing:", cat);
+    return;
+  }
+
+  navigate(`/subcategory/${cat.slug}`);
+}}
                 className={`overflow-hidden rounded-[16px] cursor-pointer transition-all duration-300 ${
                   isWide ? "lg:col-span-2" : ""
                 }`}
@@ -106,12 +155,12 @@ export const Categories: React.FC = ({
                   overflow: "hidden",
                   cursor: "pointer",
                   boxShadow:
-                    activeCategory === cat.id
+                    activeCategory === cat._id
                       ? "0 20px 50px rgba(201,168,76,0.22)"
                       : "0 4px 20px rgba(61,43,31,0.07)",
-                  border: `2px solid ${activeCategory === cat.id ? "#C9A84C" : "transparent"}`,
+                  border: `2px solid ${activeCategory === cat._id ? "#C9A84C" : "transparent"}`,
                   transform:
-                    activeCategory === cat.id ? "translateY(-4px)" : "none",
+                    activeCategory === cat._id ? "translateY(-4px)" : "none",
                   position: "relative",
                 }}
               >
@@ -130,7 +179,7 @@ export const Categories: React.FC = ({
                       height: "100%",
                       objectFit: "cover",
                       transform:
-                        activeCategory === cat.id
+                        activeCategory === cat._id
                           ? "scale(1.06)"
                           : "scale(1)",
                       transition: "transform 0.6s",
@@ -160,7 +209,8 @@ export const Categories: React.FC = ({
                       textTransform: "uppercase",
                     }}
                   >
-                    {cat.tag}
+                    {/* {cat.tag} */}
+                    {cat.badge}
                   </div>
                   {/* Name at bottom */}
                   <div
@@ -181,7 +231,11 @@ export const Categories: React.FC = ({
                         marginBottom: 6,
                       }}
                     >
-                      <span style={{ fontSize: 22 }}>{cat.icon}</span>
+                      <span style={{ fontSize: 22 }}>
+                        {/* {cat.icon} */}
+                        <img src={cat.icon} className="w-6 h-6" />
+
+                      </span>
                       <span
                         style={{
                           fontFamily: "'Playfair Display',serif",

@@ -243,18 +243,21 @@ import Form from "../../components/ui/Form";
 import Input from "../../components/ui/Input";
 import Select from "../../components/ui/Select";
 import Button from "../../components/ui/Button";
+import apiConnector from "../../services/apiConnector";
 
 const CreateProduct = () => {
   const [form, setForm] = useState({
     name: "",
     price: "",
     category: "",
+    subCategory: "",
     description: "",
     stock: "",
      features: "",
   });
 
   const [categories, setCategories] = useState<any[]>([]);
+  const [subCategories, setSubCategories] = useState<any[]>([]);
   const [images, setImages] = useState<File[]>([]);
   const [preview, setPreview] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
@@ -268,6 +271,23 @@ const CreateProduct = () => {
     fetch();
   }, []);
 
+  useEffect(() => {
+  const fetchSub = async () => {
+    if (!form.category) return;
+
+    try {
+      const res = await apiConnector.get(
+        `/subcategory/category/${form.category}`
+      );
+
+      setSubCategories(res.data.data || []);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  fetchSub();
+}, [form.category]);
   // 🔥 Cleanup
   useEffect(() => {
     return () => {
@@ -327,6 +347,7 @@ formData.append(
         name: "",
         price: "",
         category: "",
+        subCategory:"",
         description: "",
         stock: "",
          features: "",
@@ -397,6 +418,20 @@ formData.append(
             value: c._id,
           }))}
         />
+
+        <Select
+  label="SubCategory (Optional)"
+  name="subCategory"
+  value={form.subCategory}
+  onChange={handleChange}
+  options={[
+    { label: "No SubCategory", value: "" }, // 🔥 optional
+    ...subCategories.map((s: any) => ({
+      label: s.name,
+      value: s._id,
+    })),
+  ]}
+/>
 <Input
   label="Features (comma separated)"
   name="features"
