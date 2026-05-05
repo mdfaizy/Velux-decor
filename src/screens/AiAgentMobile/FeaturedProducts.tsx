@@ -17,7 +17,7 @@
 //   productsRef: (node?: Element | null | undefined) => void;
 //   productsInView: boolean;
 //   // FEATURED_PRODUCTS: Product[];
-  
+
 //   products?: any[];
 // }
 
@@ -373,34 +373,14 @@
 
 
 import React, { useEffect, useState } from "react";
-// import { getProductsApi } from "../../services/productApi";
-import {
-  getProductsApi,
-  getProductsByCategoryApi,
-  getProductsBySubCategoryApi,
-} from "../../services/productApi";
-// interface Product {
-//   id: number;
-//   name: string;
-//   category: string;
-//   price: number;
-//   originalPrice?: number;
-//   image: string;
-//   badge?: string;
-//   rating: number;
-//   reviews: number;
-// }
+import { getProductsApi, getProductsByCategoryApi, getProductsBySubCategoryApi } from "../../services/productApi";
 interface Product {
-  id: string; // 🔥 Mongo _id is string
+  id: string;
   name: string;
-
-  // 🔥 ADD THESE
   slug: string;
   categorySlug: string;
   subCategorySlug?: string;
-
   category: string;
-
   price: number;
   originalPrice?: number;
   image: string;
@@ -411,17 +391,12 @@ interface Product {
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import EnquiryModal from "./EnquiryModal";
-import apiConnector from "../../services/apiConnector";
-
 interface FeaturedProductsProps {
   productsRef: (node?: Element | null | undefined) => void;
   productsInView: boolean;
   // FEATURED_PRODUCTS: Product[];
-  
   products?: any[];
 }
-
-
 const StarRating = ({ rating }: { rating: number }) => (
   <div className="flex gap-0.5">
     {[1, 2, 3, 4, 5].map((s) => (
@@ -434,158 +409,58 @@ const StarRating = ({ rating }: { rating: number }) => (
     ))}
   </div>
 );
-
 export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({
   productsRef,
-   productsInView = true,
+  productsInView = true,
   // FEATURED_PRODUCTS,
 }) => {
-const navigate = useNavigate();
-const { categorySlug, subCategorySlug } = useParams();
+  const navigate = useNavigate();
+  const { categorySlug, subCategorySlug } = useParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
-const [enquiryOpen, setEnquiryOpen] = useState(false);
-//   const fetchProducts = async () => {
-//   try {
-//     const res = await getProductsApi();
-
-//     if (res.success) {
-//       // const formatted = res.data.map((item: any) => ({
-//       //   id: item._id,
-//       //   name: item.name,
-
-//       //   category:
-//       //     typeof item.category === "object"
-//       //       ? item.category?.name || "General"
-//       //       : item.category || "General",
-
-//       //   price: item.price,
-
-//       //   // 🔥 FIX HERE (VERY IMPORTANT)
-//       //   image:
-//       //     item.images && item.images.length > 0
-//       //       ? item.images[0]
-//       //       : "https://via.placeholder.com/300",
-
-//       //   rating: item.rating || 5,
-//       //   reviews: item.reviews || 0,
-//       // }));
-
-
-//       const formatted = res.data.map((item: any) => ({
-//   id: item._id,
-//   name: item.name,
-
-//   // 🔥 ADD SLUGS
-//   slug: item.slug,
-
-//   categorySlug:
-//     typeof item.category === "object"
-//       ? item.category?.slug
-//       : "",
-
-//   subCategorySlug:
-//     typeof item.subCategory === "object"
-//       ? item.subCategory?.slug
-//       : "",
-
-//   category:
-//     typeof item.category === "object"
-//       ? item.category?.name || "General"
-//       : item.category || "General",
-
-//   price: item.price,
-
-//   image:
-//     item.images && item.images.length > 0
-//       ? item.images[0]
-//       : "https://via.placeholder.com/300",
-
-//   rating: item.rating || 5,
-//   reviews: item.reviews || 0,
-// }));
-//       setProducts(formatted);
-//     }
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-
-
-const fetchProducts = async () => {
-  try {
-    let res;
-
-    if (categorySlug && subCategorySlug) {
-      res = await getProductsBySubCategoryApi(
-        categorySlug,
-        subCategorySlug
-      );
-    } else if (categorySlug) {
-      res = await getProductsByCategoryApi(categorySlug);
-    } else {
-      res = await getProductsApi();
+  const [enquiryOpen, setEnquiryOpen] = useState(false);
+  const fetchProducts = async () => {
+    try {
+      let res;
+      if (categorySlug && subCategorySlug) {
+        res = await getProductsBySubCategoryApi(
+          categorySlug,
+          subCategorySlug
+        );
+      } else if (categorySlug) {
+        res = await getProductsByCategoryApi(categorySlug);
+      } else {
+        res = await getProductsApi();
+      }
+      if (res.success) {
+        const rawData = Array.isArray(res.data)
+          ? res.data
+          : [res.data]; // 🔥 SINGLE → ARRAY
+          const formatted = rawData.map((item: any) => ({
+            _id: item._id,
+          id: item._id,
+          name: item.name,
+          slug: item.slug,
+          categorySlug: item.category?.slug || "",
+          subCategorySlug: item.subCategory?.slug || "",
+          category: item.category?.name || "General",
+          price: item.price,
+          image:
+            item.images && item.images.length > 0
+              ? item.images[0]
+              : "https://via.placeholder.com/300",
+          rating: item.rating || 5,
+          reviews: item.reviews || 0,
+        }));
+        setProducts(formatted);
+      }
+    } catch (err) {
+      console.log(err);
     }
-
-    // if (res.success) {
-    //   const formatted = res.data.map((item: any) => ({
-    //     id: item._id,
-    //     name: item.name,
-    //     slug: item.slug,
-
-    //     categorySlug: item.category?.slug || "",
-    //     subCategorySlug: item.subCategory?.slug || "",
-
-    //     category: item.category?.name || "General",
-
-    //     price: item.price,
-
-    //     image:
-    //       item.images && item.images.length > 0
-    //         ? item.images[0]
-    //         : "https://via.placeholder.com/300",
-
-    //     rating: item.rating || 5,
-    //     reviews: item.reviews || 0,
-    //   }));
-
-    //   setProducts(formatted);
-    // }
-    if (res.success) {
-  const rawData = Array.isArray(res.data)
-    ? res.data
-    : [res.data]; // 🔥 SINGLE → ARRAY
-
-  const formatted = rawData.map((item: any) => ({
-    id: item._id,
-    name: item.name,
-    slug: item.slug,
-
-    categorySlug: item.category?.slug || "",
-    subCategorySlug: item.subCategory?.slug || "",
-
-    category: item.category?.name || "General",
-
-    price: item.price,
-
-    image:
-      item.images && item.images.length > 0
-        ? item.images[0]
-        : "https://via.placeholder.com/300",
-
-    rating: item.rating || 5,
-    reviews: item.reviews || 0,
-  }));
-
-  setProducts(formatted);
-}
-  } catch (err) {
-    console.log(err);
-  }
-};
- useEffect(() => {
-  fetchProducts();
-}, [categorySlug, subCategorySlug]);
+  };
+  useEffect(() => {
+    fetchProducts();
+  }, [categorySlug, subCategorySlug]);
   return (
     <section
       id="products"
@@ -641,26 +516,23 @@ const fetchProducts = async () => {
             homeowners across India.
           </p>
         </div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-          // style={{
-          //   display: "grid",
-          //   gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
-          //   gap: 24,
-          // }}
+        // style={{
+        //   display: "grid",
+        //   gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
+        //   gap: 24,
+        // }}
         >
           {products.map((p, i) => (
             <div
               key={p.id}
-              // onClick={() => navigate(`/product/${p.id}`)}
-           onClick={() => {
-  if (p.subCategorySlug) {
-    navigate(`/products/${p.categorySlug}/${p.subCategorySlug}/${p.slug}`);
-    // navigate(`/products/${p.categorySlug}/${p.subCategorySlug}`);
-  } else {
-    navigate(`/products/${p.categorySlug}/${p.slug}`);
-  }
-}}
+              onClick={() => {
+                if (p.subCategorySlug && p.subCategorySlug !== "") {
+                  navigate(`/products/${p.categorySlug}/${p.subCategorySlug}/${p.slug}`);
+                } else {
+                  navigate(`/product/${p.categorySlug}/${p.slug}`);
+                }
+              }}
               style={{
                 background: "#fff",
                 borderRadius: 16,
@@ -674,12 +546,12 @@ const fetchProducts = async () => {
                 transition: `all 0.6s ease ${i * 0.1}s`,
               }}
               onMouseEnter={(e) =>
-                (e.currentTarget.style.boxShadow =
-                  "0 16px 48px rgba(61,43,31,0.14)")
+              (e.currentTarget.style.boxShadow =
+                "0 16px 48px rgba(61,43,31,0.14)")
               }
               onMouseLeave={(e) =>
-                (e.currentTarget.style.boxShadow =
-                  "0 4px 20px rgba(61,43,31,0.06)")
+              (e.currentTarget.style.boxShadow =
+                "0 4px 20px rgba(61,43,31,0.06)")
               }
             >
               <div
@@ -746,8 +618,8 @@ const fetchProducts = async () => {
                     (e.currentTarget.style.background = "#C9A84C")
                   }
                   onMouseLeave={(e) =>
-                    (e.currentTarget.style.background =
-                      "rgba(255,255,255,0.92)")
+                  (e.currentTarget.style.background =
+                    "rgba(255,255,255,0.92)")
                   }
                 >
                   ♡
@@ -850,32 +722,32 @@ const fetchProducts = async () => {
                   </button> */}
 
                   <button
-  style={{
-    background: "linear-gradient(135deg,#C9A84C,#8B6914)",
-    border: "none",
-    borderRadius: 8,
-    padding: "9px 16px",
-    fontSize: 12,
-    fontWeight: 600,
-    color: "#fff",
-    cursor: "pointer",
-    letterSpacing: "0.03em",
-    transition: "all 0.2s",
-  }}
-  onClick={(e) => {
-    e.stopPropagation();
-    setSelectedProduct(p);   // ✅ product pass
-    setEnquiryOpen(true);          // ✅ modal open
-  }}
-  onMouseEnter={(e) =>
-    (e.currentTarget.style.transform = "translateY(-1px)")
-  }
-  onMouseLeave={(e) =>
-    (e.currentTarget.style.transform = "none")
-  }
->
-  Enquire
-</button>
+                    style={{
+                      background: "linear-gradient(135deg,#C9A84C,#8B6914)",
+                      border: "none",
+                      borderRadius: 8,
+                      padding: "9px 16px",
+                      fontSize: 12,
+                      fontWeight: 600,
+                      color: "#fff",
+                      cursor: "pointer",
+                      letterSpacing: "0.03em",
+                      transition: "all 0.2s",
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedProduct(p);   // ✅ product pass
+                      setEnquiryOpen(true);          // ✅ modal open
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.transform = "translateY(-1px)")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.transform = "none")
+                    }
+                  >
+                    Enquire
+                  </button>
                 </div>
               </div>
             </div>
@@ -912,10 +784,10 @@ const fetchProducts = async () => {
       </div>
 
       <EnquiryModal
-  open={enquiryOpen}
-  setOpen={setEnquiryOpen}
-  product={selectedProduct}
-/>
+        open={enquiryOpen}
+        setOpen={setEnquiryOpen}
+        product={selectedProduct}
+      />
     </section>
   );
 };

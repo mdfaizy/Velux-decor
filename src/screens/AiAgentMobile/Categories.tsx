@@ -1,5 +1,5 @@
 import React from "react";
-import { CATEGORIES } from "./data";
+// import { CATEGORIES } from "./data";
 import { useNavigate } from "react-router-dom";
 import { getCategoriesApi } from "../../services/categoryApi";
 import { useState,useEffect } from "react";

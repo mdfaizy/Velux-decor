@@ -9,13 +9,20 @@ export const createProductApi = async (data: FormData) => {
   });
 };
 // 🔥 GET BY CATEGORY
+// export const getProductsByCategoryApi = async (categorySlug: string) => {
+//   const res = await apiConnector.get(
+//     `/products/category/${categorySlug}`
+//   );
+//   return res.data;
+// };
+
+
 export const getProductsByCategoryApi = async (categorySlug: string) => {
   const res = await apiConnector.get(
-    `/products/category/${categorySlug}`
+    `/products/${categorySlug}` 
   );
   return res.data;
 };
-
 // 🔥 GET BY CATEGORY + SUBCATEGORY
 export const getProductsBySubCategoryApi = async (
   categorySlug: string,
@@ -38,7 +45,8 @@ export const getProductsApi = async () => {
 
 // 🔥 DELETE PRODUCT
 export const deleteProductApi = async (id: string) => {
-  const res = await apiConnector.delete(`/product/${id}`);
+  const res = await apiConnector.delete(`/products/${id}`);
+  // apiConnector.delete(`/product/${id}`);
   return res.data;
 };
 

@@ -24,10 +24,13 @@ const EnquiryModal = ({ open, setOpen, product }: any) => {
       setLoading(true);
 
       await createEnquiryApi({
-        productId: product.id,
+        // productId: product.id,
+          productId: product?._id || product?.id,
+
         ...form,
       });
 
+      console.log("PRODUCT:", product);
       toast.success("Enquiry Sent ✅");
       setOpen(false);
 

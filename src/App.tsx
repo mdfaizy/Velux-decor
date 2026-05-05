@@ -140,17 +140,24 @@ function App() {
     <Route path="/product/:id" element={<ProductDetails />} />
      */}
 
-     // ✅ 3 param (subcategory + product)
+
+{/* <Route path="/products/:categorySlug" element={<FeaturedProducts />} />
+<Route path="/products/:categorySlug/:productSlug" element={<ProductDetails />} />
+<Route path="/products/:categorySlug/:subCategorySlug" element={<FeaturedProducts />} />
+<Route path="/products/:categorySlug/:subCategorySlug/:productSlug" element={<ProductDetails />} /> */}
+// 🔥 1. PRODUCT DETAIL (3 param)
 <Route path="/products/:categorySlug/:subCategorySlug/:productSlug" element={<ProductDetails />} />
 
-// ✅ 2 param (category + product)  ⭐ IMPORTANT
-<Route path="/products/:categorySlug/:productSlug" element={<ProductDetails />} />
-
-// ✅ subcategory listing
+// 🔥 2. SUBCATEGORY LIST (VERY IMPORTANT ABOVE)
 <Route path="/products/:categorySlug/:subCategorySlug" element={<FeaturedProducts />} />
 
-// ✅ category listing
+// 🔥 3. PRODUCT DETAIL (NO SUBCATEGORY)
+// ✔ direct product (no subcategory)
+<Route path="/product/:categorySlug/:productSlug" element={<ProductDetails />} />
+
+// 🔥 4. CATEGORY LIST
 <Route path="/products/:categorySlug" element={<FeaturedProducts />} />
+
      {/* <Route path="/products/category/:categorySlug" element={<FeaturedProducts />} />
 <Route path="/products/:categorySlug/:subCategorySlug" element={<FeaturedProducts />} />
 <Route path="/products/:categorySlug/:productSlug" element={<ProductDetails />} />

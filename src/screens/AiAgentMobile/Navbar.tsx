@@ -49,9 +49,11 @@ export const Navbar: React.FC<NavbarProps> = ({
         boxShadow: isScrolled ? "0 2px 24px rgba(61,43,31,0.08)" : "none",
         transition: "all 0.4s ease",
         borderBottom: isScrolled ? "1px solid rgba(201,168,76,0.15)" : "none",
+        borderRadius: isScrolled ? "0 0 12px 12px" : "0",
       }}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      
         <Link to='/'
           className="flex items-center gap-3 cursor-pointer"
         // onClick={() => scrollTo("/")}
