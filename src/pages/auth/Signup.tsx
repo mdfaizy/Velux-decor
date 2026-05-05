@@ -11,7 +11,9 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const { loading, error } = useAppSelector((state) => state.auth);
+const { user } = useAppSelector((state) => state.auth);
 
+const isAdmin = user?.role === "admin";
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -27,51 +29,106 @@ const Signup = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
+  // const handleSubmit = async (e: any) => {
+  //   e.preventDefault();
 
-    // ✅ Validation
-    if (!form.name || !form.email || !form.password || !form.confirmPassword) {
-      return toast.error("All fields are required");
-    }
+  //   // ✅ Validation
+  //   if (!form.name || !form.email || !form.password || !form.confirmPassword) {
+  //     return toast.error("All fields are required");
+  //   }
 
-    if (form.password.length < 6) {
-      return toast.error("Password must be at least 6 characters");
-    }
+  //   if (form.password.length < 6) {
+  //     return toast.error("Password must be at least 6 characters");
+  //   }
 
-    if (form.password !== form.confirmPassword) {
-      return toast.error("Passwords do not match ❌");
-    }
+  //   if (form.password !== form.confirmPassword) {
+  //     return toast.error("Passwords do not match ❌");
+  //   }
 
-    try {
-      dispatch(setLoading(true));
-      dispatch(setError(null));
+  //   try {
+  //     dispatch(setLoading(true));
+  //     dispatch(setError(null));
 
-      const res = await signupApi({
-        name: form.name,
-        email: form.email,
-        password: form.password,
-        role: form.role,    
-      });
+  //     const res = await signupApi({
+  //       name: form.name,
+  //       email: form.email,
+  //       password: form.password,
+  //       role: form.role,    
+  //     });
 
-      console.log("Signup Success:", res);
+  //     console.log("Signup Success:", res);
 
-      // ✅ success redirect
-     // ✅ SUCCESS TOAST
-      toast.success("Account created successfully 🎉");
-      navigate("/login");
+  //     // ✅ success redirect
+  //    // ✅ SUCCESS TOAST
+  //     toast.success("Account created successfully 🎉");
+  //     navigate("/login");
 
-    } catch (err: any) {
-       const message =
-        err.response?.data?.message || "Signup failed";
+  //   } catch (err: any) {
+  //      const message =
+  //       err.response?.data?.message || "Signup failed";
 
         
-      toast.error(message); // 🔥 ERROR TOAST
-      dispatch(setError(message));
-    } finally {
-      dispatch(setLoading(false));
+  //     toast.error(message); // 🔥 ERROR TOAST
+  //     dispatch(setError(message));
+  //   } finally {
+  //     dispatch(setLoading(false));
+  //   }
+  // };
+
+  const handleSubmit = async (e: any) => {
+  e.preventDefault();
+
+  if (!form.name || !form.email || !form.password || !form.confirmPassword) {
+    return toast.error("All fields are required");
+  }
+
+  if (form.password.length < 6) {
+    return toast.error("Password must be at least 6 characters");
+  }
+
+  if (form.password !== form.confirmPassword) {
+    return toast.error("Passwords do not match ❌");
+  }
+
+  try {
+    dispatch(setLoading(true));
+    dispatch(setError(null));
+
+    // 🔥 IMPORTANT CHANGE
+    const payload = isAdmin
+      ? {
+          name: form.name,
+          email: form.email,
+          password: form.password,
+          role: form.role, // ✅ only admin can send role
+        }
+      : {
+          name: form.name,
+          email: form.email,
+          password: form.password,
+        };
+
+    const res = await signupApi(payload);
+
+    toast.success("Account created successfully 🎉");
+
+    // 🔥 redirect logic
+    if (isAdmin) {
+      // admin same page par rahe ya user list pe jaye
+      navigate("/dashboard/users");
+    } else {
+      navigate("/login");
     }
-  };
+
+  } catch (err: any) {
+    const message = err.response?.data?.message || "Signup failed";
+
+    toast.error(message);
+    dispatch(setError(message));
+  } finally {
+    dispatch(setLoading(false));
+  }
+};
 
   return (
    <div className="min-h-screen flex bg-gray-100">
@@ -139,7 +196,7 @@ const Signup = () => {
 
         {/* Role Select */}
 <div className="relative">
-  <select
+  {/* <select
     name="role"
     value={form.role}
     onChange={handleChange}
@@ -148,7 +205,26 @@ const Signup = () => {
     <option value="user">User</option>
     <option value="admin">Admin</option>
     <option value="designer">Designer</option>
+  </select> */}
+  {isAdmin ? (
+  <select
+    name="role"
+    value={form.role}
+    onChange={handleChange}
+    className="w-full px-4 py-3 rounded-xl border"
+  >
+    <option value="user">User</option>
+    <option value="designer">Designer</option>
+    <option value="admin">Admin</option>
   </select>
+) : (
+  <input
+    type="text"
+    value="User"
+    disabled
+    className="w-full px-4 py-3 rounded-xl border bg-gray-100"
+  />
+)}
 </div>
 
         {/* Password */}

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useLocation, Link } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from "../../redux/slice/reduxHooks";
+import { useNavigate } from "react-router-dom";
+import { setUser, setToken } from "../../redux/slice/authSlice";
 interface NavbarProps {
   setBookingOpen: (open: boolean) => void;
   scrollTo: (id: string) => void;
@@ -14,6 +17,16 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [isScrolled, setIsScrolled] = useState(false);
   const [isRoutePage, setIsRoutePage] = useState(false);
   const location = useLocation();
+
+  const { user } = useAppSelector((state) => state.auth);
+const dispatch = useAppDispatch();
+const navigate = useNavigate();
+
+const handleLogout = () => {
+  dispatch(setUser(null));
+  dispatch(setToken(null));
+  navigate("/login");
+};
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll);
@@ -161,7 +174,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             Book Consultation
           </button>
 
-          <Link to='/login'
+          {/* <Link to='/login'
             onClick={() => setMenuOpen(false)}
             style={{
               background: "linear-gradient(135deg,#C9A84C,#8B6914)",
@@ -179,6 +192,149 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             Login
           </Link>
+           <Link to='/signup'
+            onClick={() => setMenuOpen(false)}
+            style={{
+              background: "linear-gradient(135deg,#C9A84C,#8B6914)",
+              border: "none",
+              borderRadius: 6,
+              padding: "9px 20px",
+              fontSize: 13,
+              fontWeight: 600,
+              color: "#fff",
+              cursor: "pointer",
+              letterSpacing: "0.05em",
+              boxShadow: "0 4px 15px rgba(201,168,76,0.35)",
+              transition: "all 0.2s",
+            }}
+          >
+            Signup
+          </Link> */}
+
+          {!user ? (
+  <>
+    <Link to='/login'
+            onClick={() => setMenuOpen(false)}
+            style={{
+              background: "linear-gradient(135deg,#C9A84C,#8B6914)",
+              border: "none",
+              borderRadius: 6,
+              padding: "9px 20px",
+              fontSize: 13,
+              fontWeight: 600,
+              color: "#fff",
+              cursor: "pointer",
+              letterSpacing: "0.05em",
+              boxShadow: "0 4px 15px rgba(201,168,76,0.35)",
+              transition: "all 0.2s",
+            }}
+          >
+            Login
+          </Link>
+           <Link to='/signup'
+            onClick={() => setMenuOpen(false)}
+            style={{
+              background: "linear-gradient(135deg,#C9A84C,#8B6914)",
+              border: "none",
+              borderRadius: 6,
+              padding: "9px 20px",
+              fontSize: 13,
+              fontWeight: 600,
+              color: "#fff",
+              cursor: "pointer",
+              letterSpacing: "0.05em",
+              boxShadow: "0 4px 15px rgba(201,168,76,0.35)",
+              transition: "all 0.2s",
+            }}
+          >
+            Signup
+          </Link>
+  </>
+) : (
+  // <div className="flex items-center gap-3">
+
+  //   <img
+  //     src={
+  //       user.avatar ||
+  //       `https://ui-avatars.com/api/?name=${user.name}`
+  //     }
+  //     className="w-9 h-9 rounded-full cursor-pointer"
+  //     onClick={() => navigate("/profile")}
+  //   />
+
+  //   {/* <span
+  //     className="text-sm font-semibold cursor-pointer"
+  //     onClick={() => navigate("/profile")}
+  //   >
+  //     {user.name}
+  //   </span>
+
+  //   <button
+  //     onClick={handleLogout}
+  //     className="text-red-500 text-sm"
+  //   >
+  //     Logout
+  //   </button> */}
+  //   <div className="absolute hidden group-hover:block bg-white shadow rounded p-2 right-0">
+  //   <p onClick={() => navigate("/profile")}>Profile</p>
+  //   <p onClick={handleLogout}>Logout</p>
+  // </div>
+
+  // </div>
+ <div className="relative group flex items-center gap-3">
+
+  {/* 🔥 AVATAR */}
+  <div className="relative">
+    <img
+      src={user.avatar || `https://ui-avatars.com/api/?name=${user.name}`}
+      className="w-10 h-10 rounded-full cursor-pointer border-2 border-[#C9A84C] shadow-md hover:scale-105 transition"
+    />
+
+    {/* ONLINE DOT */}
+    <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
+  </div>
+
+  {/* 🔥 DROPDOWN */}
+  <div className="
+    absolute top-14 right-0
+    w-56
+    bg-white/90 backdrop-blur-lg
+    shadow-2xl rounded-xl
+    border border-gray-200
+    opacity-0 invisible
+    group-hover:opacity-100 group-hover:visible
+    transform translate-y-2 group-hover:translate-y-0
+    transition-all duration-300 z-50
+  ">
+
+    {/* 🔥 USER INFO */}
+    <div className="px-4 py-3 border-b">
+      <p className="font-semibold text-gray-800">{user.name}</p>
+      <p className="text-xs text-gray-500 truncate">{user.email}</p>
+    </div>
+
+    {/* 🔥 MENU ITEMS */}
+    <div className="py-2">
+
+      <button
+        onClick={() => navigate("/profile")}
+        className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2 transition"
+      >
+        👤 Profile
+      </button>
+      <button
+        onClick={handleLogout}
+        className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50 flex items-center gap-2 transition"
+      >
+        🚪 Logout
+      </button>
+
+    </div>
+
+  </div>
+</div>
+)}
+          
         </div>
         <button
           className="flex flex-col gap-[5px] md:hidden"
@@ -210,7 +366,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         </button>
       </div>
 
-      {menuOpen && (
+      {/* {menuOpen && (
         <div
           style={{
             background: "rgba(250,247,242,0.98)",
@@ -284,7 +440,97 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </div>
         </div>
-      )}
+      )} */}
+
+      {menuOpen && (
+  <div
+    className="bg-[#FAF7F2]/95 backdrop-blur-md border-t border-[#C9A84C]/20 px-6 py-6 space-y-4"
+  >
+
+    {/* 🔥 NAV LINKS */}
+    {navLinks.map((l) => (
+      <NavLink
+        key={l.path}
+        to={l.path}
+        onClick={() => setMenuOpen(false)}
+        className="block text-[#3D2B1F] font-medium py-2 border-b border-[#C9A84C]/10"
+      >
+        {l.label}
+      </NavLink>
+    ))}
+
+    {/* 🔥 AUTH SECTION */}
+    {!user ? (
+      <div className="flex gap-2 mt-4">
+
+        <Link
+          to="/login"
+          onClick={() => setMenuOpen(false)}
+          className="w-full text-center bg-gradient-to-r from-[#C9A84C] to-[#8B6914] text-white py-3 rounded-lg font-semibold"
+        >
+          Login
+        </Link>
+
+        <Link
+          to="/signup"
+          onClick={() => setMenuOpen(false)}
+          className="w-full text-center bg-gradient-to-r from-[#C9A84C] to-[#8B6914] text-white py-3 rounded-lg font-semibold"
+        >
+          Signup
+        </Link>
+
+      </div>
+    ) : (
+      <div className="mt-4 bg-white rounded-xl shadow p-4">
+
+        {/* 🔥 USER INFO */}
+        <div className="flex items-center gap-3 mb-4">
+          <img
+            src={user.avatar || `https://ui-avatars.com/api/?name=${user.name}`}
+            className="w-10 h-10 rounded-full"
+          />
+          <div>
+            <p className="font-semibold text-sm">{user.name}</p>
+            <p className="text-xs text-gray-500 truncate">{user.email}</p>
+          </div>
+        </div>
+
+        {/* 🔥 ACTIONS */}
+        <button
+          onClick={() => {
+            navigate("/profile");
+            setMenuOpen(false);
+          }}
+          className="w-full text-left py-2 text-sm hover:text-[#C9A84C]"
+        >
+          👤 Profile
+        </button>
+        <button
+          onClick={() => {
+            handleLogout();
+            setMenuOpen(false);
+          }}
+          className="w-full text-left py-2 text-sm text-red-500 hover:text-red-600"
+        >
+          🚪 Logout
+        </button>
+
+      </div>
+    )}
+
+    {/* 🔥 CONSULT BUTTON */}
+    <button
+      onClick={() => {
+        setBookingOpen(true);
+        setMenuOpen(false);
+      }}
+      className="w-full mt-4 bg-gradient-to-r from-[#C9A84C] to-[#8B6914] text-white py-3 rounded-lg font-semibold"
+    >
+      Book Free Consultation
+    </button>
+
+  </div>
+)}
     </nav>
   );
 };

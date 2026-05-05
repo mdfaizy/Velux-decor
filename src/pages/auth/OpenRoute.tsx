@@ -41,11 +41,25 @@ import { useAppSelector } from "../../redux/slice/reduxHooks";
 //   return children;
 // };
 
+// const OpenRoute = ({ children }: any) => {
+//   const { token, user } = useAppSelector((state) => state.auth);
+
+//   if (token && user?.role) {
+//     return <Navigate to={`/${user.role}`} replace />;
+//   }
+
+//   return children;
+// };
+
 const OpenRoute = ({ children }: any) => {
   const { token, user } = useAppSelector((state) => state.auth);
 
   if (token && user?.role) {
-    return <Navigate to={`/${user.role}`} replace />;
+    if (user.role === "user") {
+      return <Navigate to="/profile" replace />;
+    } else {
+      return <Navigate to="/dashboard" replace />;
+    }
   }
 
   return children;

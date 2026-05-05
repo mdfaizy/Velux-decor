@@ -18,11 +18,11 @@ const Login = () => {
     password: "",
   });
 
-  useEffect(() => {
-    if (token && user?.role) {
-      navigate(`/${user.role}`);
-    }
-  }, [token, user]);
+  // useEffect(() => {
+  //   if (token && user?.role) {
+  //     navigate(`/${user.role}`);
+  //   }
+  // }, [token, user]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -42,9 +42,16 @@ const Login = () => {
       dispatch(setToken(res.token));
 toast.success("Login successful ✅");
       // navigate(`/${res.data.user.role}`);
-      setTimeout(() => {
-        navigate(`/${res.data.user.role}`);
-      }, 1000);
+      // setTimeout(() => {
+      //   navigate(`/${res.data.user.role}`);
+      // }, 1000);
+      const role = res.data.user.role;
+
+if (role === "user") {
+  navigate("/profile");        // 👤 user profile page
+} else {
+  navigate("/dashboard");      // 🛠 admin/designer dashboard
+}
     } catch (err: any) {
       const message =
         err.response?.data?.message || "Login failed";
