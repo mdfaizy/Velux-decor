@@ -168,7 +168,7 @@ import {
 } from "lucide-react";
 
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import UserProfile from "../../../pages/auth/UserProfile";
+// import UserProfile from "../../../pages/auth/UserProfile";
 import { useAppSelector } from "../../../redux/slice/reduxHooks";
 
 const Dashboard = () => {
@@ -449,15 +449,20 @@ const Dashboard = () => {
 
           {/* Right */}
           <div className="flex items-center gap-4">
-            {/* <span className="hidden md:block text-gray-600">
-              Welcome Admin 👋
-            </span>
+            <div className="flex items-center gap-3">
 
-            <div className="w-9 h-9 bg-blue-500 text-white rounded-full flex items-center justify-center">
-              A
-            </div> */}
+  <span className="hidden md:block text-gray-600">
+    Welcome {user?.name} 👋
+  </span>
 
-            <UserProfile />
+  <div
+    onClick={() => navigate("/profile")}
+    className="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center font-semibold cursor-pointer"
+  >
+    {user?.name?.charAt(0).toUpperCase()}
+  </div>
+
+</div>
           </div>
         </header>
 

@@ -50,7 +50,7 @@ toast.success("Login successful ✅");
 if (role === "user") {
   navigate("/profile");        // 👤 user profile page
 } else {
-  navigate("/dashboard");      // 🛠 admin/designer dashboard
+   navigate("/dashboard/overview");    // 🛠 admin/designer dashboard
 }
     } catch (err: any) {
       const message =
