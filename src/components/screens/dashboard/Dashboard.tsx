@@ -327,7 +327,8 @@ const Dashboard = () => {
             if (isParent) {
               setOpenMenu(isOpen ? null : index);
             } else {
-              navigate(`/${user?.role}/${item.path}`);
+              // navigate(`/${user?.role}/${item.path}`);
+              navigate(`/dashboard/${item.path}`);
               setSidebarOpen(false);
             }
           }}
@@ -379,14 +380,16 @@ const Dashboard = () => {
             {item.children.map((child, i) => {
             const isActive =
   user &&
-  location.pathname === `/${user.role}/${child.path}`;
+  // location.pathname === `/${user.role}/${child.path}`;
+  location.pathname === `/dashboard/${child.path}`;
 
               return (
                 <button
                   key={i}
                   onClick={() => {
                     // navigate(`/dashboard/${child.path}`);
-                    navigate(`/${user.role}/${child.path}`);
+                    // navigate(`/${user.role}/${child.path}`);
+                    navigate(`/dashboard/${child.path}`);
                     setSidebarOpen(false);
                   }}
                   className={`
