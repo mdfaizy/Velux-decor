@@ -6,21 +6,48 @@ const UserListPage = () => {
   const [loading, setLoading] = useState(false);
 
   const fetchUsers = async () => {
-    try {
-      setLoading(true);
+  try {
+    setLoading(true);
 
-      const res = await getUsersApi();
-      console.log(res);
+    const res = await getUsersApi();
 
-      // 🔥 important (tumhara response structure)
-      setUsers(res.data);
+    console.log("USERS API:", res);
 
-    } catch (error) {
-      console.error("Error fetching users", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    setUsers(res?.data?.data || []);
+
+  } catch (error: any) {
+    console.log("ERROR:", error?.response?.data);
+  } finally {
+    setLoading(false);
+  }
+};
+  // const fetchUsers = async () => {
+
+  //   try {
+  //     setLoading(true);
+
+  //     const res = await getUsersApi();
+  //     console.log(res);
+
+  //     // 🔥 important (tumhara response structure)
+  //     // setUsers(res.data.data);
+  //     console.log("API RESPONSE:", res);
+
+  //   setUsers(
+  //     Array.isArray(res.data)
+  //       ? res.data
+  //       : res.data?.users || []
+  //   );
+
+  //   } catch (error) {
+  //     // console.error("Error fetching users", error);
+  //   console.log("FULL ERROR:", error);
+  // console.log("STATUS:", error?.response?.status);
+  // console.log("DATA:", error?.response?.data);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   useEffect(() => {
     fetchUsers();
@@ -51,7 +78,10 @@ const UserListPage = () => {
             </thead>
 
             <tbody>
-              {users?.map((user: any, index: number) => (
+              {/* {users?.map((user: any, index: number) => (
+               */}
+               {Array.isArray(users) &&
+  users.map((user: any, index: number) => (
                 <tr
                   key={user._id}
                   className="border-t hover:bg-gray-50"

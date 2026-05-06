@@ -67,14 +67,14 @@ const UserProfile = () => {
           </div>
 
           <button
-            onClick={() => navigate("/dashboard/profile")}
+            // onClick={() => navigate("/dashboard/profile")}
             className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm"
           >
             Profile
           </button>
 
           <button
-            onClick={() => navigate("/dashboard/settings")}
+            // onClick={() => navigate("/dashboard/settings")}
             className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm"
           >
             Settings

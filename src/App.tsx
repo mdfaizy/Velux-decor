@@ -297,7 +297,7 @@ import SubCategoryListPage from "./pages/subcategory/SubCategoryListPage";
 
 // Dashboard
 import Dashboard from "./components/screens/dashboard/Dashboard";
-import Overview from "./components/screens/dashboard/Overview ";
+import Overview from "./components/screens/dashboard/Overview";
 import UserListPage from "./pages/auth/UserListPage";
 import CategoryList from "./pages/category/CategoryList";
 import CreateCategory from "./pages/category/CreateCategory";

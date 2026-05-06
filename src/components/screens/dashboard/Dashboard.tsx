@@ -168,7 +168,7 @@ import {
 } from "lucide-react";
 
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-// import UserProfile from "../../../pages/auth/UserProfile";
+import UserProfile from "../../../pages/auth/UserProfile";
 import { useAppSelector } from "../../../redux/slice/reduxHooks";
 
 const Dashboard = () => {
@@ -246,7 +246,7 @@ const Dashboard = () => {
   icon: Star, // lucide-react
   children: [
     { label: "Rooms Design", path: "showroom-video" },
-    { label: "Create Rooms Design", path: "showroom-from" },
+    { label: "Create Rooms Design", path: "showroom-form" },
   ],
   
 },
@@ -433,37 +433,12 @@ const Dashboard = () => {
             ${collapsed ? "h-14" : "h-20"}
           `}
         >
-          {/* Left */}
-          <div className="flex items-center gap-3">
-            <button
-              className="lg:hidden"
-              onClick={() => setSidebarOpen(true)}
-            >
-              <Menu />
-            </button>
+         <div className="flex">
 
-            <h1 className="text-lg md:text-xl font-bold">
-              Admin Panel
-            </h1>
-          </div>
+          
 
-          {/* Right */}
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-3">
-
-  <span className="hidden md:block text-gray-600">
-    Welcome {user?.name} 👋
-  </span>
-
-  <div
-    onClick={() => navigate("/profile")}
-    className="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center font-semibold cursor-pointer"
-  >
-    {user?.name?.charAt(0).toUpperCase()}
-  </div>
-
-</div>
-          </div>
+         </div>
+<UserProfile/>
         </header>
 
         {/* ===== CONTENT ===== */}

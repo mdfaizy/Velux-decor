@@ -15,9 +15,13 @@ export const signupApi = async (data: any) => {
   return res.data;
 };
 
+// export const getUsersApi = async () => {
+//   const res = await apiConnector.get("/auth/users");
+//   return res.data;
+// };
+
 export const getUsersApi = async () => {
-  const res = await apiConnector.get("/auth/users");
-  return res.data;
+  return await apiConnector.get("/auth/users");
 };
 
 // ✅ FORGOT PASSWORD

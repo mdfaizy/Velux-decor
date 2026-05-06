@@ -33,38 +33,17 @@
       ]
     },
     {
-      "id": "src/screens/AiAgentMobile/Services.tsx",
-      "label": "Services",
-      "routes": [
-        "/services-s"
-      ]
-    },
-    {
-      "id": "src/pages/auth/ForgotPassword.tsx",
-      "label": "ForgotPassword",
-      "routes": [
-        "/forgot-password"
-      ]
-    },
-    {
-      "id": "src/pages/auth/ResetPassword.tsx",
-      "label": "ResetPassword",
-      "routes": [
-        "/reset-password/:token"
-      ]
-    },
-    {
-      "id": "src/pages/auth/OpenRoute.tsx",
-      "label": "OpenRoute",
-      "routes": [
-        "/login"
-      ]
-    },
-    {
       "id": "src/pages/subcategory/SubCategoryListPage.tsx",
       "label": "SubCategoryListPage",
       "routes": [
         "/subcategory/:categorySlug"
+      ]
+    },
+    {
+      "id": "src/screens/AiAgentMobile/Services.tsx",
+      "label": "Services",
+      "routes": [
+        "/services-s"
       ]
     },
     {
@@ -90,15 +69,38 @@
       ]
     },
     {
-      "id": "src/pages/auth/PrivateRoute.tsx",
-      "label": "PrivateRoute",
+      "id": "src/pages/auth/OpenRoute.tsx",
+      "label": "OpenRoute",
       "routes": [
-        "/:role"
+        "/login",
+        "/signup"
       ]
     },
     {
-      "id": "src/components/screens/dashboard/Overview .tsx",
-      "label": "Overview ",
+      "id": "src/pages/auth/ForgotPassword.tsx",
+      "label": "ForgotPassword",
+      "routes": [
+        "/forgot-password"
+      ]
+    },
+    {
+      "id": "src/pages/auth/ResetPassword.tsx",
+      "label": "ResetPassword",
+      "routes": [
+        "/reset-password/:token"
+      ]
+    },
+    {
+      "id": "src/pages/auth/PrivateRoute.tsx",
+      "label": "PrivateRoute",
+      "routes": [
+        "/profile",
+        "/dashboard"
+      ]
+    },
+    {
+      "id": "src/components/screens/dashboard/Overview.tsx",
+      "label": "Overview",
       "routes": [
         "overview"
       ]
@@ -191,7 +193,7 @@
       "id": "src/screens/AiAgentMobile/ShowroomForm.tsx",
       "label": "ShowroomForm",
       "routes": [
-        "showroom-from"
+        "showroom-form"
       ]
     }
   ],
@@ -293,38 +295,6 @@
       }
     },
     {
-      "id": "src\\pages\\auth\\ResetPassword.tsx:48:8-to-src\\pages\\auth\\OpenRoute.tsx",
-      "source": "src\\pages\\auth\\ResetPassword.tsx",
-      "target": "src\\pages\\auth\\OpenRoute.tsx",
-      "data": {
-        "viaRoute": "/login",
-        "trigger": {
-          "element": "navigate(\"/login\")",
-          "line": 48,
-          "endLine": 48,
-          "column": 8,
-          "endColumn": 26,
-          "sourceFile": "src\\pages\\auth\\ResetPassword.tsx"
-        }
-      }
-    },
-    {
-      "id": "src\\pages\\auth\\ResetPassword.tsx:137:27-to-src\\pages\\auth\\OpenRoute.tsx",
-      "source": "src\\pages\\auth\\ResetPassword.tsx",
-      "target": "src\\pages\\auth\\OpenRoute.tsx",
-      "data": {
-        "viaRoute": "/login",
-        "trigger": {
-          "element": "navigate(\"/login\")",
-          "line": 137,
-          "endLine": 137,
-          "column": 27,
-          "endColumn": 45,
-          "sourceFile": "src\\pages\\auth\\ResetPassword.tsx"
-        }
-      }
-    },
-    {
       "id": "src\\pages\\subcategory\\SubCategoryListPage.tsx:83:19-to-src\\components\\screens\\AiAgentMobile\\AiAgentMobile.tsx",
       "source": "src\\pages\\subcategory\\SubCategoryListPage.tsx",
       "target": "src\\components\\screens\\AiAgentMobile\\AiAgentMobile.tsx",
@@ -357,15 +327,63 @@
       }
     },
     {
-      "id": "src\\pages\\auth\\PrivateRoute.tsx:22:11-to-src\\pages\\auth\\OpenRoute.tsx",
+      "id": "src\\pages\\auth\\OpenRoute.tsx:81:13-to-src\\pages\\auth\\PrivateRoute.tsx",
+      "source": "src\\pages\\auth\\OpenRoute.tsx",
+      "target": "src\\pages\\auth\\PrivateRoute.tsx",
+      "data": {
+        "viaRoute": "/profile",
+        "trigger": {
+          "element": "<Navigate to=\"/profile\" replace />",
+          "line": 81,
+          "endLine": 81,
+          "column": 13,
+          "endColumn": 47,
+          "sourceFile": "src\\pages\\auth\\OpenRoute.tsx"
+        }
+      }
+    },
+    {
+      "id": "src\\pages\\auth\\ResetPassword.tsx:48:8-to-src\\pages\\auth\\OpenRoute.tsx",
+      "source": "src\\pages\\auth\\ResetPassword.tsx",
+      "target": "src\\pages\\auth\\OpenRoute.tsx",
+      "data": {
+        "viaRoute": "/login",
+        "trigger": {
+          "element": "navigate(\"/login\")",
+          "line": 48,
+          "endLine": 48,
+          "column": 8,
+          "endColumn": 26,
+          "sourceFile": "src\\pages\\auth\\ResetPassword.tsx"
+        }
+      }
+    },
+    {
+      "id": "src\\pages\\auth\\ResetPassword.tsx:137:27-to-src\\pages\\auth\\OpenRoute.tsx",
+      "source": "src\\pages\\auth\\ResetPassword.tsx",
+      "target": "src\\pages\\auth\\OpenRoute.tsx",
+      "data": {
+        "viaRoute": "/login",
+        "trigger": {
+          "element": "navigate(\"/login\")",
+          "line": 137,
+          "endLine": 137,
+          "column": 27,
+          "endColumn": 45,
+          "sourceFile": "src\\pages\\auth\\ResetPassword.tsx"
+        }
+      }
+    },
+    {
+      "id": "src\\pages\\auth\\PrivateRoute.tsx:40:11-to-src\\pages\\auth\\OpenRoute.tsx",
       "source": "src\\pages\\auth\\PrivateRoute.tsx",
       "target": "src\\pages\\auth\\OpenRoute.tsx",
       "data": {
         "viaRoute": "/login",
         "trigger": {
           "element": "<Navigate to=\"/login\" replace />",
-          "line": 22,
-          "endLine": 22,
+          "line": 40,
+          "endLine": 40,
           "column": 11,
           "endColumn": 43,
           "sourceFile": "src\\pages\\auth\\PrivateRoute.tsx"
@@ -373,15 +391,15 @@
       }
     },
     {
-      "id": "src\\pages\\auth\\Signup.tsx:62:6-to-src\\pages\\auth\\OpenRoute.tsx",
+      "id": "src\\pages\\auth\\Signup.tsx:120:6-to-src\\pages\\auth\\OpenRoute.tsx",
       "source": "src\\pages\\auth\\Signup.tsx",
       "target": "src\\pages\\auth\\OpenRoute.tsx",
       "data": {
         "viaRoute": "/login",
         "trigger": {
           "element": "navigate(\"/login\")",
-          "line": 62,
-          "endLine": 62,
+          "line": 120,
+          "endLine": 120,
           "column": 6,
           "endColumn": 24,
           "sourceFile": "src\\pages\\auth\\Signup.tsx"

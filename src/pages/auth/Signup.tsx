@@ -131,10 +131,10 @@ const isAdmin = user?.role === "admin";
 };
 
   return (
-   <div className="min-h-screen flex bg-gray-100">
+   <div className="min-h-screen flex bg-gray-100 mt-4">
 
   {/* 🔥 LEFT SIDE (DESIGN / BANNER) */}
-  <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-blue-600 to-purple-600 text-white items-center justify-center p-10">
+  <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-blue-600 to-purple-600 text-white items-center justify-center p-10 mt-16 rounded-r-lg">
 
     <div className="max-w-md text-center space-y-4">
       <h1 className="text-4xl text-gray-500 font-bold">

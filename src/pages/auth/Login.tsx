@@ -24,44 +24,92 @@ const Login = () => {
   //   }
   // }, [token, user]);
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
+//   const handleSubmit = async (e: any) => {
+//     e.preventDefault();
 
-    if (!form.email || !form.password) {
-      dispatch(setError("All fields are required"));
-      return;
+//     if (!form.email || !form.password) {
+//       dispatch(setError("All fields are required"));
+//       return;
+//     }
+
+//     try {
+//       dispatch(setLoading(true));
+//       dispatch(setError(null));
+
+//       const res = await loginApi(form);
+
+//       dispatch(setUser(res.data.user));
+//       dispatch(setToken(res.token));
+// toast.success("Login successful ✅");
+//       // navigate(`/${res.data.user.role}`);
+//       // setTimeout(() => {
+//       //   navigate(`/${res.data.user.role}`);
+//       // }, 1000);
+//       const role = res.data.user.role;
+
+// if (role === "user") {
+//   navigate("/profile");        // 👤 user profile page
+// } else {
+//    navigate("/dashboard/overview");    // 🛠 admin/designer dashboard
+// }
+//     } catch (err: any) {
+//       const message =
+//         err.response?.data?.message || "Login failed";
+
+//       toast.error(message); // 🔥 toast error
+//       dispatch(setError(message));
+//     } finally {
+//       dispatch(setLoading(false));
+//     }
+//   };
+
+const handleSubmit = async (e: any) => {
+  e.preventDefault();
+
+  if (!form.email || !form.password) {
+    dispatch(setError("All fields are required"));
+    return;
+  }
+
+  try {
+    dispatch(setLoading(true));
+    dispatch(setError(null));
+
+    const res = await loginApi(form);
+console.log("ROLE:", res);
+    // ✅ SAVE USER + TOKEN
+    dispatch(setUser(res.data.user));
+    dispatch(setToken(res.token));
+
+    // ✅ LOCAL STORAGE
+    localStorage.setItem("token", res.token);
+    localStorage.setItem("user", JSON.stringify(res.data.user));
+
+    toast.success("Login successful ✅");
+
+    const role = res.data.user.role;
+
+    // ✅ USER → PROFILE
+    if (role === "user") {
+      navigate("/profile");
     }
 
-    try {
-      dispatch(setLoading(true));
-      dispatch(setError(null));
-
-      const res = await loginApi(form);
-
-      dispatch(setUser(res.data.user));
-      dispatch(setToken(res.token));
-toast.success("Login successful ✅");
-      // navigate(`/${res.data.user.role}`);
-      // setTimeout(() => {
-      //   navigate(`/${res.data.user.role}`);
-      // }, 1000);
-      const role = res.data.user.role;
-
-if (role === "user") {
-  navigate("/profile");        // 👤 user profile page
-} else {
-   navigate("/dashboard/overview");    // 🛠 admin/designer dashboard
-}
-    } catch (err: any) {
-      const message =
-        err.response?.data?.message || "Login failed";
-
-      toast.error(message); // 🔥 toast error
-      dispatch(setError(message));
-    } finally {
-      dispatch(setLoading(false));
+    // ✅ ADMIN + DESIGNER → DASHBOARD
+    if (role === "admin" || role === "designer") {
+      navigate("/dashboard/overview");
     }
-  };
+
+  } catch (err: any) {
+    const message =
+      err.response?.data?.message || "Login failed";
+
+    toast.error(message);
+
+    dispatch(setError(message));
+  } finally {
+    dispatch(setLoading(false));
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-50 pt-24 md:pt-28">
