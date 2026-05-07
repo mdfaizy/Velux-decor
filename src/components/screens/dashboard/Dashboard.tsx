@@ -254,7 +254,8 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="flex h-screen bg-gray-100 overflow-hidden">
+    // <div className="flex h-screen bg-gray-100 overflow-hidden">
+    <div className="flex h-screen bg-gray-100">
       
       {/* ===== MOBILE OVERLAY ===== */}
       {sidebarOpen && (
@@ -274,7 +275,7 @@ const Dashboard = () => {
         w-64
         `}
       > */}
-      <aside
+      {/* <aside
   className={`
     fixed z-50 top-0 left-0 h-full bg-white shadow-lg transition-all duration-300
     overflow-y-auto   // 🔥 ADD THIS LINE
@@ -282,6 +283,20 @@ const Dashboard = () => {
     lg:translate-x-0
     ${collapsed ? "lg:w-20" : "lg:w-64"}
     w-64
+  `}
+> */}
+<aside
+  className={`
+    fixed top-0 left-0 z-50 h-full bg-white shadow-lg
+    transition-all duration-300 ease-in-out
+    overflow-y-auto
+
+    ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+
+    lg:translate-x-0
+    ${collapsed ? "lg:w-20" : "lg:w-72"}
+
+    w-[260px]
   `}
 >
         {/* Header */}
@@ -361,7 +376,8 @@ const Dashboard = () => {
 
             {/* LABEL */}
             {!collapsed && (
-              <span className="font-medium">
+              // <span className="font-medium">
+              <span className="font-medium truncate">
                 {item.label}
               </span>
             )}
@@ -375,8 +391,8 @@ const Dashboard = () => {
 
         {/* 🔥 CHILD MENU */}
         {isParent && isOpen && !collapsed && (
-          <div className="ml-10 mt-1 space-y-1 border-l pl-3">
-
+          // <div className="ml-10 mt-1 space-y-1 border-l pl-3">
+<div className="ml-6 mt-1 space-y-1 border-l pl-3">
             {item.children.map((child, i) => {
             const isActive =
   user &&
@@ -420,20 +436,52 @@ const Dashboard = () => {
       </aside>
 
       {/* ===== MAIN CONTENT ===== */}
-      <div
+      {/* <div
         className={`flex-1 flex flex-col transition-all duration-300
         ${collapsed ? "lg:ml-20" : "lg:ml-64"}
       `}
-      >
+      > */}
+      <div
+  className={`
+    flex flex-col flex-1 min-w-0
+    transition-all duration-300
+
+    ${collapsed ? "lg:ml-20" : "lg:ml-72"}
+  `}
+>
         {/* ===== HEADER ===== */}
-        <header
+        {/* <header
           className={`
             bg-white shadow flex items-center justify-between
             px-4 md:px-6 transition-all duration-300
             ${collapsed ? "h-14" : "h-20"}
           `}
-        >
-         <div className="flex">
+        > */}
+        <header
+  className={`
+    sticky top-0 z-30
+    bg-white border-b
+    flex items-center justify-between
+    px-4 md:px-6
+    transition-all duration-300
+
+    ${collapsed ? "h-14" : "h-16"}
+  `}
+>
+         {/* <div className="flex"> */}
+         <div className="flex items-center gap-3">
+
+  {/* MOBILE MENU BUTTON */}
+  <button
+    className="lg:hidden"
+    onClick={() => setSidebarOpen(true)}
+  >
+    <Menu size={24} />
+  </button>
+
+  <h1 className="text-lg md:text-xl font-semibold">
+    Admin Panel
+  </h1>
 
           
 
@@ -442,7 +490,8 @@ const Dashboard = () => {
         </header>
 
         {/* ===== CONTENT ===== */}
-        <main className="flex-1 p-4 md:p-6 overflow-y-auto">
+        {/* <main className="flex-1 p-4 md:p-6 overflow-y-auto"> */}
+        <main className="flex-1 overflow-x-hidden overflow-y-auto p-3 md:p-5">
           <Outlet />
         </main>
       </div>
