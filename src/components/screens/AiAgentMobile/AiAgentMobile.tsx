@@ -1236,7 +1236,7 @@ export const AiAgentMobile = (): JSX.Element => {
       {/* ══════════════════════════════════════════════════════════
           ── ROOM INSPIRATION — VJ Furnishings &#39;shop by room&#39; concept
          ══════════════════════════════════════════════════════════ */}
-      <section
+      {/* <section
         id="rooms"
         ref={roomRef}
         style={{ padding: "110px 0", background: "#FAF7F2" }}
@@ -1250,7 +1250,7 @@ export const AiAgentMobile = (): JSX.Element => {
               alignItems: "start",
             }}
           >
-            {/* Left: text + tabs */}
+         
             <div
               style={{
                 opacity: roomInView ? 1 : 0,
@@ -1309,7 +1309,7 @@ export const AiAgentMobile = (): JSX.Element => {
                 flooring — organised by the room you&#39;re styling, not just by
                 product type.
               </p>
-              {/* Room tabs */}
+              
               <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                 {ROOM_SCENES.map((room) => (
                   <button
@@ -1393,7 +1393,7 @@ export const AiAgentMobile = (): JSX.Element => {
               </button>
             </div>
 
-            {/* Right: big room scene image */}
+            
             <div
               style={{
                 opacity: roomInView ? 1 : 0,
@@ -1423,7 +1423,7 @@ export const AiAgentMobile = (): JSX.Element => {
                   }}
                 />
               </div>
-              {/* Room label overlay */}
+             
               <div
                 style={{
                   position: "absolute",
@@ -1485,7 +1485,7 @@ export const AiAgentMobile = (): JSX.Element => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* ══════════════════════════════════════════════════════════
           ── CATEGORIES — Darpan-inspired horizontal tile grid

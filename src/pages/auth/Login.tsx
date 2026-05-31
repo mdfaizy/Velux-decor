@@ -77,6 +77,9 @@ const handleSubmit = async (e: any) => {
 
     const res = await loginApi(form);
 console.log("ROLE:", res);
+console.log("FULL LOGIN RESPONSE:", res);
+console.log("TOKEN:", res.token);
+console.log("USER:", res.data.user);
     // ✅ SAVE USER + TOKEN
     dispatch(setUser(res.data.user));
     dispatch(setToken(res.token));

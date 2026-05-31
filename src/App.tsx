@@ -316,7 +316,27 @@ import UserProfile from "./pages/UserProfile";
 // Guards
 import PrivateRoute from "./pages/auth/PrivateRoute";
 import OpenRoute from "./pages/auth/OpenRoute";
+  
 
+// const HomeRedirect = () => {
+//   const token = localStorage.getItem("token");
+//   const user = localStorage.getItem("user");
+
+//   if (token && user) {
+//     const userData = JSON.parse(user);
+
+//     if (
+//       userData.role === "admin" ||
+//       userData.role === "designer"
+//     ) {
+//       return <Navigate to="/dashboard/overview" replace />;
+//     }
+
+//     return <Navigate to="/profile" replace />;
+//   }
+
+//   return <AiAgentMobile />;
+// };
 function App() {
   return (
     <Router>
@@ -326,6 +346,7 @@ function App() {
         <Route element={<PublicLayout />}>
 
           <Route path="/" element={<AiAgentMobile />} />
+          {/* <Route path="/" element={<HomeRedirect />} />  */}
 
           <Route path="/categories" element={<Categories />} />
           <Route path="/featured-products" element={<FeaturedProducts />} />
@@ -387,7 +408,7 @@ function App() {
 
           {/* USERS */}
           <Route path="signup" element={<Signup />} />
-          <Route path="users" element={<UserListPage />} />
+          <Route path="users" element={<PrivateRoute><UserListPage /> </PrivateRoute>} />
           <Route path="enquiry" element={<EnquiryTable />} />
 
           {/* CATEGORY */}

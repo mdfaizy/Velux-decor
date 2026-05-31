@@ -7,16 +7,18 @@ const UserListPage = () => {
 
   const fetchUsers = async () => {
   try {
+    console.log("🚀 Fetch Users Called");
     setLoading(true);
 
     const res = await getUsersApi();
 
-    console.log("USERS API:", res);
+console.log("USERS API:", res);
 
     setUsers(res?.data?.data || []);
 
   } catch (error: any) {
     console.log("ERROR:", error?.response?.data);
+     console.log("DATA:", error?.response?.data);
   } finally {
     setLoading(false);
   }

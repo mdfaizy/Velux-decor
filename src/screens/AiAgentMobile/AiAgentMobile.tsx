@@ -19,6 +19,7 @@ import { Contact } from "./Contact";
 // import { Footer } from "./Footer";
 import { BookingModal } from "./BookingModal";
 import { FloatingWhatsApp } from "./FloatingWhatsApp";
+import {RoomInspiration} from "./RoomInspiration";
 // Import data
 import {
   CATEGORIES,
@@ -140,7 +141,7 @@ export const AiAgentMobile = (): JSX.Element => {
       />
 
       {/* Room Inspiration */}
-      {/* <RoomInspiration
+      <RoomInspiration
         roomRef={roomRef}
         roomInView={roomInView}
         ROOM_SCENES={ROOM_SCENES}
@@ -148,7 +149,7 @@ export const AiAgentMobile = (): JSX.Element => {
         setActiveRoom={setActiveRoom}
         scrollTo={scrollTo}
         setBookingOpen={setBookingOpen}
-      /> */}
+      />
 
       {/* Categories */}
       {/* <Categories

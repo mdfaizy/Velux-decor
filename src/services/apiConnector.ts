@@ -1,8 +1,8 @@
 import axios from "axios";
 
 // ✅ Base URL
-// const BASE_URL = "http://localhost:8080/api";
-const BASE_URL='https://velux-decor-server.onrender.com/api'
+const BASE_URL = "http://localhost:8080/api";
+// const BASE_URL='https://velux-decor-server.onrender.com/api'
 
 // ✅ Axios instance
 const apiConnector = axios.create({
@@ -42,5 +42,22 @@ apiConnector.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+
+// apiConnector.interceptors.response.use(
+//   (response) => response,
+//   (error) => {
+//     console.log("API ERROR STATUS:", error?.response?.status);
+//     console.log("API ERROR DATA:", error?.response?.data);
+
+//     // TEMPORARY COMMENT
+//     // if (error.response?.status === 401) {
+//     //   localStorage.removeItem("token");
+//     //   window.location.href = "/login";
+//     // }
+
+//     return Promise.reject(error);
+//   }
+// );
 
 export default apiConnector;

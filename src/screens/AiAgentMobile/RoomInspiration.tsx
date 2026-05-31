@@ -2,35 +2,50 @@ import React from "react";
 import { ROOM_SCENES } from "./data";
 import { useState } from "react";
 interface RoomScene {
+  
   id: string;
   label: string;
   image: string;
   tag: string;
 }
+ console.log("ROOM PAGE LOADED");
+  console.log(ROOM_SCENES);
+// interface RoomInspirationProps {
+//   // roomRef: (node?: Element | null | undefined) => void;
+//   // roomInView: boolean;
+//   // ROOM_SCENES: RoomScene[];
+//   // activeRoom: string;
+//   // setActiveRoom: (id: string) => void;
+//   // scrollTo: (id: string) => void;
+//   // setBookingOpen: (open: boolean) => void;
+
+//   roomRef: (node?: Element | null) => void;
+//   roomInView: boolean;
+//   scrollTo: (id: string) => void;
+//   setBookingOpen: (open: boolean) => void;
+// }
 
 interface RoomInspirationProps {
-  // roomRef: (node?: Element | null | undefined) => void;
-  // roomInView: boolean;
-  // ROOM_SCENES: RoomScene[];
-  // activeRoom: string;
-  // setActiveRoom: (id: string) => void;
-  // scrollTo: (id: string) => void;
-  // setBookingOpen: (open: boolean) => void;
-
-  roomRef: (node?: Element | null) => void;
-  roomInView: boolean;
-  scrollTo: (id: string) => void;
-  setBookingOpen: (open: boolean) => void;
+  roomRef?: (node?: Element | null) => void;
+  roomInView?: boolean;
+  scrollTo?: (id: string) => void;
+  setBookingOpen?: (open: boolean) => void;
 }
 
+// export const RoomInspiration: React.FC<RoomInspirationProps> = ({
+//   roomRef,
+//   roomInView,
+//   // ROOM_SCENES,
+//   // activeRoom,
+//   // setActiveRoom,
+//   scrollTo,
+//   setBookingOpen,
+// }) => {
 export const RoomInspiration: React.FC<RoomInspirationProps> = ({
   roomRef,
-  roomInView,
-  // ROOM_SCENES,
-  // activeRoom,
-  // setActiveRoom,
-  scrollTo,
-  setBookingOpen,
+  roomInView = true,
+  scrollTo = () => {},
+  setBookingOpen = () => {},
 }) => {
   const [activeRoom, setActiveRoom] = useState(ROOM_SCENES[0].id);
   console.log("ROOM_SCENES:", ROOM_SCENES);
