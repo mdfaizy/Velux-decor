@@ -1,6 +1,7 @@
 import React from "react";
 import { ROOM_SCENES } from "./data";
 import { useState } from "react";
+import { Categories } from "./Categories";
 interface RoomScene {
   
   id: string;
@@ -201,6 +202,9 @@ export const RoomInspiration: React.FC<RoomInspirationProps> = ({
               View All Collections <span style={{ fontSize: 20 }}>→</span>
             </button>
           </div>
+
+        
+
 
           {/* Right: big room scene image */}
           <div

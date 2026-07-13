@@ -6,8 +6,6 @@ import { useInView } from "react-intersection-observer";
 import Hero from "./Hero";
 import Brand from "./Brand";
 import Stats from "./Stats";
-// import { RoomInspiration } from "./RoomInspiration";
-// import { Categories } from "./Categories";
 import  {FeaturedProducts} from "./FeaturedProducts";
 import Services  from "./Services";
 import { ProcessSteps } from "./ProcessSteps";
@@ -22,8 +20,6 @@ import { FloatingWhatsApp } from "./FloatingWhatsApp";
 import {RoomInspiration} from "./RoomInspiration";
 // Import data
 import {
-  CATEGORIES,
-  FEATURED_PRODUCTS,
   TESTIMONIALS,
   STATS,
   SERVICES,
@@ -32,8 +28,9 @@ import {
   ROOM_SCENES,
   BRANDS,
   HERO_SLIDES,
-  SHOWROOM_VIDEOS,
+ 
 } from "./data";
+import { Categories } from "./Categories";
 // import ReviewSection from "../../pages/review/ReviewSection";
 
 export const AiAgentMobile = (): JSX.Element => {
@@ -151,7 +148,7 @@ export const AiAgentMobile = (): JSX.Element => {
         setBookingOpen={setBookingOpen}
       />
 
-      {/* Categories */}
+      <Categories/>
       {/* <Categories
         CATEGORIES={CATEGORIES}
         activeCategory={activeCategory}
@@ -162,7 +159,7 @@ export const AiAgentMobile = (): JSX.Element => {
       <FeaturedProducts
         productsRef={productsRef}
         productsInView={productsInView}
-        FEATURED_PRODUCTS={FEATURED_PRODUCTS}
+        // FEATURED_PRODUCTS={FEATURED_PRODUCTS}
       />
 
       {/* Services */}
@@ -181,13 +178,10 @@ export const AiAgentMobile = (): JSX.Element => {
 
       {/* Testimonials */}
       <Testimonials
-        TESTIMONIALS={TESTIMONIALS}
+        // TESTIMONIALS={TESTIMONIALS}
         activeTestimonial={activeTestimonial}
         setActiveTestimonial={setActiveTestimonial}
       />
-{/* <ReviewSection/> */}
-      {/* Showroom Videos */}
-      {/* <Showroom SHOWROOM_VIDEOS={SHOWROOM_VIDEOS} /> */}
       <Showroom/>
 
       {/* FAQ */}
@@ -207,9 +201,6 @@ export const AiAgentMobile = (): JSX.Element => {
 
       {/* Contact */}
       <Contact setBookingOpen={setBookingOpen} />
-
-      {/* Footer */}
-      {/* <Footer /> */}
 
       {/* Booking Modal */}
       <BookingModal

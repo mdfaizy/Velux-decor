@@ -1,164 +1,25 @@
-// import { Link, useParams } from "react-router-dom";
-// import React, { useEffect, useState } from "react";
-// import apiConnector from "../services/apiConnector";
-
-// const ProductDetails = () => {
-//   const { categorySlug, subCategorySlug, productSlug } = useParams();
-
-//   const [product, setProduct] = useState<any>(null);
-//   const [activeImage, setActiveImage] = useState<string>("");
-
-//   const fetchProduct = async () => {
-//     try {
-//       if (!categorySlug || !productSlug) return;
-
-//       let url = subCategorySlug
-//         ? `/products/${categorySlug}/${subCategorySlug}/${productSlug}`
-//         : `/products/detail/${categorySlug}/${productSlug}`;
-
-//       const res = await apiConnector.get(url);
-
-//       if (res.data.success) {
-//         setProduct(res.data.data);
-//         setActiveImage(res.data.data.images?.[0]);
-//       }
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchProduct();
-//   }, [categorySlug, subCategorySlug, productSlug]);
-
-//   if (!product) return <div className="p-10 text-center">Loading...</div>;
-
-//   return (
-//     <div className="max-w-7xl mx-auto px-6 py-10 mt-16">
-
-//       {/* 🔥 Breadcrumb */}
-//       <div className="text-sm text-gray-500 mb-6 flex flex-wrap gap-2">
-//         <Link to="/" className="hover:text-black">Home</Link>
-//         <span>›</span>
-
-//         <Link to="/featured-products" className="hover:text-black">Products</Link>
-//         <span>›</span>
-// <Link to="/categories" className="hover:text-black"><span className="text-gray-700">{product.category?.name}</span></Link>
-        
-
-//         {product.subCategory && (
-//           <>
-//           <Link to="/featured-products" className="hover:text-black">Products</Link>
-//             <span>›</span>
-//             <span className="text-gray-700">{product.subCategory?.name}</span>
-//           </>
-//         )}
-
-//         <span>›</span>
-//         <span className="text-black font-semibold">{product.name}</span>
-//       </div>
-
-//       {/* 🔥 MAIN GRID */}
-//       <div className="grid lg:grid-cols-2 gap-10">
-
-//         {/* LEFT - IMAGES */}
-//         <div>
-//           <div className="border rounded-xl overflow-hidden shadow-sm">
-//             <img
-//               src={activeImage}
-//               alt={product.name}
-//               className="w-full h-[420px] object-cover"
-//             />
-//           </div>
-
-//           {/* THUMBNAILS */}
-//           <div className="flex gap-3 mt-4 flex-wrap">
-//             {product.images?.map((img: string, i: number) => (
-//               <img
-//                 key={i}
-//                 src={img}
-//                 onClick={() => setActiveImage(img)}
-//                 className={`
-//                   w-20 h-20 object-cover rounded-lg cursor-pointer border transition
-//                   ${activeImage === img
-//                     ? "border-black scale-105"
-//                     : "border-gray-200 hover:scale-105"}
-//                 `}
-//               />
-//             ))}
-//           </div>
-//         </div>
-
-//         {/* RIGHT - DETAILS */}
-//         <div className="flex flex-col justify-between">
-
-//           <div>
-//             <h1 className="text-3xl font-bold text-gray-900">
-//               {product.name}
-//             </h1>
-
-//             <p className="text-gray-500 mt-2">
-//               Category:{" "}
-//               <span className="text-gray-700 font-medium">
-//                 {product.category?.name}
-//               </span>
-//             </p>
-
-//             {/* PRICE */}
-//             <div className="mt-4">
-//               <span className="text-3xl font-bold text-green-600">
-//                 ₹{product.price}
-//               </span>
-//             </div>
-
-//             {/* DESCRIPTION */}
-//             <p className="mt-5 text-gray-600 leading-relaxed">
-//               {product.description}
-//             </p>
-
-//             {/* FEATURES */}
-//             <div className="mt-6">
-//               <h3 className="font-semibold text-lg mb-3">Features</h3>
-//               <ul className="space-y-2">
-//                 {product.features?.map((f: any, i: number) => (
-//                   <li
-//                     key={i}
-//                     className="flex items-center gap-2 text-gray-700"
-//                   >
-//                     <span className="text-green-600">✔</span> {f}
-//                   </li>
-//                 ))}
-//               </ul>
-//             </div>
-//           </div>
-
-//           {/* CTA */}
-//           <div className="mt-8">
-//             <button className="w-full bg-black text-white py-3 rounded-lg text-lg font-medium hover:bg-gray-800 transition">
-//               Enquire Now
-//             </button>
-//           </div>
-
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ProductDetails;
-
-
 import { Link, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import apiConnector from "../services/apiConnector";
 import EnquiryModal from "./AiAgentMobile/EnquiryModal";
+import { 
+  ShoppingCart, 
+  Heart, 
+  Share2, 
+  ChevronRight, 
+  Star, 
+  Eye,
+  CheckCircle
+} from "lucide-react";
 
 const ProductDetails = () => {
   const { categorySlug, subCategorySlug, productSlug } = useParams();
- const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [enquiryOpen, setEnquiryOpen] = useState(false);
   const [product, setProduct] = useState<any>(null);
   const [activeImage, setActiveImage] = useState<string>("");
+  const [quantity, setQuantity] = useState(1);
+  const [isWishlist, setIsWishlist] = useState(false);
 
   const fetchProduct = async () => {
     try {
@@ -183,151 +44,226 @@ const ProductDetails = () => {
     fetchProduct();
   }, [categorySlug, subCategorySlug, productSlug]);
 
-  if (!product) return <div className="p-10 text-center">Loading...</div>;
+  if (!product) return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-amber-600 mx-auto"></div>
+        <p className="mt-4 text-gray-600 font-medium">Loading product details...</p>
+      </div>
+    </div>
+  );
 
   return (
-    <div className="bg-gray-50 min-h-screen py-10 px-4 mt-14">
-      <div className="max-w-7xl mx-auto bg-white rounded-2xl shadow-lg p-6 lg:p-10">
-
-        {/* 🔥 Breadcrumb */}
-        <div className="text-sm text-gray-500 mb-6 flex flex-wrap gap-2">
-          <Link to="/" className="hover:text-black">Home</Link>
-          <span>›</span>
-
-          <Link to="/categories" className="hover:text-black">
+    <div className="bg-gray-50 min-h-screen py-6 px-4 mt-14">
+      {/* Enhanced Breadcrumb */}
+      <div className="max-w-7xl mx-auto mb-6">
+        <nav className="flex items-center gap-2 text-sm text-gray-500 bg-white px-4 py-3 rounded-lg shadow-sm">
+          <Link to="/" className="hover:text-amber-600 transition">Home</Link>
+          <ChevronRight className="w-4 h-4" />
+          <Link to="/categories" className="hover:text-amber-600 transition">
             {product.category?.name}
           </Link>
-
           {product.subCategory && (
             <>
-              <span>›</span>
+              <ChevronRight className="w-4 h-4" />
               <span className="text-gray-700">{product.subCategory?.name}</span>
             </>
           )}
+          <ChevronRight className="w-4 h-4" />
+          <span className="text-amber-700 font-semibold">{product.name}</span>
+        </nav>
+      </div>
 
-          <span>›</span>
-          <span className="text-black font-semibold">{product.name}</span>
-        </div>
-
-        {/* 🔥 MAIN GRID */}
-        <div className="grid lg:grid-cols-2 gap-10">
-
-          {/* LEFT IMAGE SECTION */}
-          <div>
-            <div className="border rounded-xl overflow-hidden shadow-md">
-              <img
-                src={activeImage}
-                alt={product.name}
-                className="w-full h-[420px] object-cover hover:scale-105 transition duration-300"
-              />
-            </div>
-
-            {/* THUMBNAILS */}
-            <div className="flex gap-3 mt-4 flex-wrap">
-              {product.images?.map((img: string, i: number) => (
-                <img
-                  key={i}
-                  src={img}
-                  onClick={() => setActiveImage(img)}
-                  className={`
-                    w-20 h-20 object-cover rounded-lg cursor-pointer border
-                    transition duration-200
-                    ${activeImage === img
-                      ? "border-black scale-105 shadow"
-                      : "border-gray-200 hover:scale-105"}
-                  `}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* RIGHT DETAILS SECTION */}
-          <div className="flex flex-col justify-between">
-
+      <div className="max-w-7xl mx-auto">
+        {/* Main Product Card */}
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <div className="grid lg:grid-cols-2 gap-8 p-6 lg:p-10">
+            
+            {/* LEFT - Image Gallery */}
             <div>
-              {/* TITLE */}
-              <h1 className="text-3xl font-bold text-gray-900">
+              <div className="relative bg-gray-100 rounded-xl overflow-hidden">
+                <img
+                  src={activeImage}
+                  alt={product.name}
+                  className="w-full h-[500px] object-cover transition duration-500 hover:scale-105"
+                />
+                {product.isNew && (
+                  <span className="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                    New
+                  </span>
+                )}
+                {product.discount && (
+                  <span className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                    {product.discount}% OFF
+                  </span>
+                )}
+                <button className="absolute bottom-4 right-4 bg-white/90 backdrop-blur p-2 rounded-full shadow-lg hover:bg-white transition">
+                  <Eye className="w-5 h-5 text-gray-700" />
+                </button>
+              </div>
+
+              {/* Thumbnails Grid */}
+              <div className="grid grid-cols-5 gap-3 mt-4">
+                {product.images?.map((img: string, i: number) => (
+                  <div
+                    key={i}
+                    onClick={() => setActiveImage(img)}
+                    className={`
+                      relative rounded-lg overflow-hidden cursor-pointer border-2
+                      transition duration-200
+                      ${activeImage === img
+                        ? "border-amber-600 shadow-lg"
+                        : "border-gray-200 hover:border-amber-300"}
+                    `}
+                  >
+                    <img
+                      src={img}
+                      alt={`${product.name} ${i + 1}`}
+                      className="w-full h-24 object-cover"
+                    />
+                    {activeImage === img && (
+                      <div className="absolute inset-0 bg-amber-600/10"></div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* RIGHT - Product Info */}
+            <div className="flex flex-col">
+              {/* Product Badges */}
+              <div className="flex items-center gap-3 mb-2">
+                <span className="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-semibold">
+                  Best Seller
+                </span>
+                <div className="flex items-center gap-1 text-sm">
+                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                  <span className="text-gray-500 ml-1">(128 reviews)</span>
+                </div>
+              </div>
+
+              {/* Title */}
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
                 {product.name}
               </h1>
 
-              {/* CATEGORY */}
-              <p className="text-gray-500 mt-2">
-                Category:{" "}
-                <span className="text-gray-800 font-medium">
-                  {product.category?.name}
-                </span>
-              </p>
-
-              {/* PRICE CARD */}
-              <div className="mt-5 bg-gray-100 p-4 rounded-xl flex items-center justify-between">
-                <span className="text-3xl font-bold text-green-600">
-                  ₹{product.price}
-                </span>
-
-                <span className="text-sm text-gray-500">
-                  Inclusive of all taxes
-                </span>
+              {/* SKU & Category */}
+              <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
+                <span>SKU: <span className="text-gray-700">{product.sku || "PRD-001"}</span></span>
+                <span>Category: <span className="text-gray-700">{product.category?.name}</span></span>
+                {product.availability && (
+                  <span className="text-green-600 font-medium flex items-center gap-1">
+                    <CheckCircle className="w-4 h-4" /> In Stock
+                  </span>
+                )}
               </div>
 
-              {/* DESCRIPTION */}
-              <p className="mt-5 text-gray-600 leading-relaxed">
+              {/* Price Card */}
+              <div className="bg-gradient-to-r from-amber-50 to-orange-50 p-5 rounded-xl border border-amber-200 mb-4">
+                <div className="flex items-end justify-between">
+                  <div>
+                    <span className="text-4xl font-bold text-amber-700">₹{product.price}</span>
+                    {product.originalPrice && (
+                      <span className="ml-3 text-lg text-gray-400 line-through">₹{product.originalPrice}</span>
+                    )}
+                    {product.discount && (
+                      <span className="ml-3 text-green-600 font-semibold">Save {product.discount}%</span>
+                    )}
+                  </div>
+                  <span className="text-sm text-gray-500">Inclusive of all taxes</span>
+                </div>
+                {product.emiAvailable && (
+                  <p className="text-sm text-gray-600 mt-2">
+                    EMI available from ₹{Math.round(product.price / 12)}/month
+                  </p>
+                )}
+              </div>
+
+              {/* Description Preview */}
+              <p className="text-gray-600 leading-relaxed mb-4">
                 {product.description}
               </p>
 
-              {/* FEATURES */}
-              <div className="mt-6">
-                <h3 className="font-semibold text-lg mb-3">Key Features</h3>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {product.features?.map((f: any, i: number) => (
-                    <li
-                      key={i}
-                      className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-lg text-gray-700"
-                    >
-                      <span className="text-green-600">✔</span> {f}
+              {/* Key Features */}
+              <div className="mb-4">
+                <h3 className="font-semibold text-gray-800 mb-2">Key Features</h3>
+                <ul className="grid grid-cols-1 gap-2">
+                  {product.features?.slice(0, 4).map((f: any, i: number) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
+                      <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      {f}
                     </li>
                   ))}
                 </ul>
               </div>
-            </div>
 
-            {/* CTA SECTION */}
-            <div className="mt-8 flex gap-4">
-                <button
-                    style={{
-                      background: "linear-gradient(135deg,#C9A84C,#8B6914)",
-                      border: "none",
-                      borderRadius: 8,
-                      padding: "9px 16px",
-                      fontSize: 12,
-                      fontWeight: 600,
-                      color: "#fff",
-                      cursor: "pointer",
-                      letterSpacing: "0.03em",
-                      transition: "all 0.2s",
-                    }}
-                    onClick={() => {
-  setSelectedProduct(product);
-  setEnquiryOpen(true);
-}}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.transform = "translateY(-1px)")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.transform = "none")
-                    }
+              {/* Quantity Selector */}
+              <div className="flex items-center gap-4 mb-6">
+                <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                  <button 
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    className="px-4 py-2 hover:bg-gray-100 transition font-bold text-gray-600"
                   >
-                    Enquire
+                    −
                   </button>
+                  <span className="px-6 py-2 border-x border-gray-300 font-medium min-w-[50px] text-center">
+                    {quantity}
+                  </span>
+                  <button 
+                    onClick={() => setQuantity(quantity + 1)}
+                    className="px-4 py-2 hover:bg-gray-100 transition font-bold text-gray-600"
+                  >
+                    +
+                  </button>
+                </div>
+                <span className="text-sm text-gray-500">{product.stock || 50}+ items available</span>
+              </div>
 
-              <button className="flex-1 border border-black py-3 rounded-lg text-lg font-medium hover:bg-black hover:text-white transition">
-                Add to Wishlist
-              </button>
+              {/* Action Buttons */}
+              <div className="flex flex-wrap gap-3">
+                <button className="flex-1 bg-amber-600 hover:bg-amber-700 text-white py-3 px-6 rounded-lg font-semibold transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-amber-200">
+                  <ShoppingCart className="w-5 h-5" />
+                  Add to Cart
+                </button>
+
+                <button
+                  onClick={() => {
+                    setSelectedProduct(product);
+                    setEnquiryOpen(true);
+                  }}
+                  className="flex-1 bg-gray-800 hover:bg-gray-900 text-white py-3 px-6 rounded-lg font-semibold transition duration-200 flex items-center justify-center gap-2"
+                >
+                  Enquire Now
+                </button>
+
+                <button 
+                  onClick={() => setIsWishlist(!isWishlist)}
+                  className="p-3 border border-gray-300 rounded-lg hover:border-amber-600 transition duration-200 group"
+                >
+                  <Heart className={`w-5 h-5 ${isWishlist ? 'fill-red-500 text-red-500' : 'text-gray-600 group-hover:text-amber-600'}`} />
+                </button>
+
+                <button className="p-3 border border-gray-300 rounded-lg hover:border-amber-600 transition duration-200 group">
+                  <Share2 className="w-5 h-5 text-gray-600 group-hover:text-amber-600" />
+                </button>
+              </div>
+
+              {/* Trust Badges */}
+           
             </div>
-
           </div>
+
+    
         </div>
+
+     
       </div>
 
+      {/* Enquiry Modal */}
       <EnquiryModal
         open={enquiryOpen}
         setOpen={setEnquiryOpen}

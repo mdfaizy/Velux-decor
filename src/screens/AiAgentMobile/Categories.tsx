@@ -1,16 +1,8 @@
 import React from "react";
-// import { CATEGORIES } from "./data";
 import { useNavigate } from "react-router-dom";
 import { getCategoriesApi } from "../../services/categoryApi";
 import { useState,useEffect } from "react";
-// interface Category {
-//   id: string;
-//   name: string;
-//   icon: string;
-//   description: string;
-//   image: string;
-//   tag: string;
-// }
+
 interface Category {
   _id: string;          // 🔥 Mongo ID
   name: string;
@@ -22,23 +14,12 @@ interface Category {
   isActive: boolean;
 }
 
-// interface CategoriesProps {
-//   CATEGORIES: Category[];
-//   activeCategory: string;
-//   setActiveCategory: (id: string) => void;
-// }
-
 export const Categories: React.FC = ({
-  // CATEGORIES,
-  // activeCategory,
-  // setActiveCategory,
 }) => {
   const navigate = useNavigate();
-// const [categories, setCategories] = useState<any[]>([]);
 const [categories, setCategories] = useState<Category[]>([]);
 const [activeCategory, setActiveCategory] = useState("");
-//   const [activeCategory, setActiveCategory] = useState(CATEGORIES[0].id);
-// 
+
 
 useEffect(() => {
   const fetchCategories = async () => {
@@ -132,10 +113,8 @@ useEffect(() => {
             const isWide = i === 0 || i === 5;
             return (
               <div
-                // key={cat.id}
-                // onClick={() => setActiveCategory(cat.id)}
                 key={cat._id}
-// onClick={() => setActiveCategory(cat._id)}
+
 onClick={() => {
   setActiveCategory(cat._id);
 
