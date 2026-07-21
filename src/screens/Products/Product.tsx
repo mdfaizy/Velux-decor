@@ -1,4 +1,3 @@
-import React from "react";
 // import { Badge } from '../../components/Badge'; // Uncomment to use your custom Badge
 
 export interface Product {

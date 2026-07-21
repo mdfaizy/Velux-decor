@@ -1,158 +1,3 @@
-// import React, { useState } from "react";
-// import {
-//   Home,
-//   Users,
-//   ShoppingCart,
-//   Settings,
-//   Menu,
-//   X,
-//   Plus,
-//   Folder,
-// } from "lucide-react";
-
-// import { Outlet, useNavigate, useLocation } from "react-router-dom";
-
-// const Dashboard = () => {
-//   const [sidebarOpen, setSidebarOpen] = useState(false); // mobile default closed
-//   const [collapsed, setCollapsed] = useState(false); // desktop collapse
-
-//   const navigate = useNavigate();
-//   const location = useLocation();
-
-//   const menuItems = [
-//     { label: "Dashboard", icon: Home, path: "overview" },
-//     { label: "Signup", icon: Plus, path: "signup" },
-//     { label: "Users", icon: Users, path: "users" },
-//     { label: "Create Category", icon: Folder, path: "category" },
-//     { label: "Create Product", icon: ShoppingCart, path: "product" },
-//     { label: "Settings", icon: Settings, path: "settings" },
-//   ];
-
-//   return (
-//     <div className="flex h-screen bg-gray-100 overflow-hidden">
-      
-//       {/* ===== MOBILE OVERLAY ===== */}
-//       {sidebarOpen && (
-//         <div
-//           className="fixed inset-0 bg-black/40 z-40 lg:hidden"
-//           onClick={() => setSidebarOpen(false)}
-//         />
-//       )}
-
-//       {/* ===== SIDEBAR ===== */}
-//       <aside
-//         className={`
-//         fixed z-50 top-0 left-0 h-full bg-white shadow-lg transition-all duration-300
-//         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} 
-//         lg:translate-x-0
-//         ${collapsed ? "lg:w-20" : "lg:w-64"}
-//         w-64
-//         `}
-//       >
-//         {/* Header */}
-//         <div className="p-4 flex items-center justify-between border-b">
-//           {!collapsed && <h2 className="font-bold text-lg">Dashboard</h2>}
-
-//           <div className="flex gap-2">
-//             {/* Desktop collapse */}
-//             <button
-//               onClick={() => setCollapsed(!collapsed)}
-//               className="hidden lg:block"
-//             >
-//               <Menu />
-//             </button>
-
-//             {/* Mobile close */}
-//             <button
-//               onClick={() => setSidebarOpen(false)}
-//               className="lg:hidden"
-//             >
-//               <X />
-//             </button>
-//           </div>
-//         </div>
-
-//         {/* Menu */}
-//         <nav className="mt-5 space-y-1 px-2">
-//           {menuItems.map((item, index) => {
-//             const isActive =
-//               location.pathname === `/dashboard/${item.path}`;
-
-//             return (
-//               <button
-//                 key={index}
-//                 onClick={() => {
-//                   navigate(`/dashboard/${item.path}`);
-//                   setSidebarOpen(false);
-//                 }}
-//                 className={`
-//                   flex items-center w-full px-4 py-3 rounded-lg transition
-//                   ${isActive ? "bg-blue-500 text-white" : "hover:bg-gray-100"}
-//                 `}
-//               >
-//                 <item.icon size={20} />
-//                 {!collapsed && (
-//                   <span className="ml-3 font-medium">{item.label}</span>
-//                 )}
-//               </button>
-//             );
-//           })}
-//         </nav>
-//       </aside>
-
-//       {/* ===== MAIN CONTENT ===== */}
-//   <div
-//   className={`flex-1 flex flex-col transition-all duration-300
-//   ${collapsed ? "lg:ml-20" : "lg:ml-64"}
-// `}
-// >
-        
-//         {/* HEADER */}
-//       <header
-//   className={`
-//     bg-white shadow flex items-center justify-between
-//     px-4 md:px-6 transition-all duration-300
-//     ${collapsed ? "h-14" : "h-20"}
-//   `}
-// >
-//   {/* Left */}
-//   <div className="flex items-center gap-3">
-//     <button
-//       className="lg:hidden"
-//       onClick={() => setSidebarOpen(true)}
-//     >
-//       <Menu />
-//     </button>
-
-//     <h1 className="text-lg md:text-xl font-bold">
-//       Admin Panel
-//     </h1>
-//   </div>
-
-//   {/* Right */}
-//   <div className="flex items-center gap-4">
-//     <span className="hidden md:block text-gray-600">
-//       Welcome Admin 👋
-//     </span>
-
-//     <div className="w-9 h-9 bg-blue-500 text-white rounded-full flex items-center justify-center">
-//       A
-//     </div>
-//   </div>
-// </header>
-
-//         {/* CONTENT */}
-//         <main className="flex-1 p-4 md:p-6 overflow-y-auto">
-//           <Outlet />
-//         </main>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Dashboard;
-
-
 import React, { useState } from "react";
 import {
   Home,
@@ -162,7 +7,6 @@ import {
   Menu,
   X,
   ChevronDown, ChevronUp,
-  Plus,
   Folder,
   Star,
 } from "lucide-react";
@@ -250,6 +94,16 @@ const Dashboard = () => {
   ],
   
 },
+
+{
+
+   label: "Contact List",
+  icon: Star, // lucide-react
+  children: [
+    { label: "Contact List", path: "contact-list" },
+  ],
+  
+},
     { label: "Settings", icon: Settings, path: "settings" },
   ];
 
@@ -264,27 +118,6 @@ const Dashboard = () => {
           onClick={() => setSidebarOpen(false)}
         />
       )}
-
-      {/* ===== SIDEBAR ===== */}
-      {/* <aside
-        className={`
-        fixed z-50 top-0 left-0 h-full bg-white shadow-lg transition-all duration-300
-        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} 
-        lg:translate-x-0
-        ${collapsed ? "lg:w-20" : "lg:w-64"}
-        w-64
-        `}
-      > */}
-      {/* <aside
-  className={`
-    fixed z-50 top-0 left-0 h-full bg-white shadow-lg transition-all duration-300
-    overflow-y-auto   // 🔥 ADD THIS LINE
-    ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} 
-    lg:translate-x-0
-    ${collapsed ? "lg:w-20" : "lg:w-64"}
-    w-64
-  `}
-> */}
 <aside
   className={`
     fixed top-0 left-0 z-50 h-full bg-white shadow-lg
@@ -469,9 +302,9 @@ const Dashboard = () => {
   `}
 >
          {/* <div className="flex"> */}
-         <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3">
 
-  {/* MOBILE MENU BUTTON */}
+  {/* Mobile Menu */}
   <button
     className="lg:hidden"
     onClick={() => setSidebarOpen(true)}
@@ -479,14 +312,47 @@ const Dashboard = () => {
     <Menu size={24} />
   </button>
 
+  {/* Home Button */}
+  <button
+    onClick={() => navigate("/")}
+    className="flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 bg-white hover:bg-blue-50 hover:border-blue-500 transition"
+  >
+    <Home size={18} />
+    <span className="hidden sm:inline">Home</span>
+  </button>
+
+  {/* Title */}
   <h1 className="text-lg md:text-xl font-semibold">
     Admin Panel
   </h1>
 
-          
+</div>
+{/* <UserProfile/> */}
+<div className="flex items-center gap-3">
 
-         </div>
-<UserProfile/>
+  {/* Mobile Menu */}
+  <button
+    className="lg:hidden"
+    onClick={() => setSidebarOpen(true)}
+  >
+    <Menu size={24} />
+  </button>
+
+  {/* Home Button */}
+  <button
+    onClick={() => navigate("/")}
+    className="flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 bg-white hover:bg-blue-50 hover:border-blue-500 transition"
+  >
+    <Home size={18} />
+    <span className="hidden sm:inline">Home</span>
+  </button>
+
+  {/* Title */}
+  <h1 className="text-lg md:text-xl font-semibold">
+    Admin Panel
+  </h1>
+
+</div>
         </header>
 
         {/* ===== CONTENT ===== */}

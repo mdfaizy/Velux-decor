@@ -72,6 +72,8 @@ const ProductList = () => {
     fetchProducts();
   };
 
+  
+
   const handleView = (product: any) => {
     setSelectedProduct(product);
     setViewModal(true);
@@ -247,12 +249,50 @@ const ProductList = () => {
                     </TableCell>
 
                     <TableCell>
-                      <button
-                        onClick={() => handleToggle(product._id, product.isAvailable)}
-                      >
-                        {product.isAvailable ? "Active" : "Hidden"}
-                      </button>
-                    </TableCell>
+  <div className="flex items-center gap-3">
+    <label className="relative inline-flex items-center cursor-pointer">
+      <input
+        type="checkbox"
+        className="sr-only peer"
+        checked={product.isAvailable}
+        onChange={() =>
+          handleToggle(product._id, product.isAvailable)
+        }
+      />
+
+      <div
+        className="
+          w-11 h-6
+          bg-gray-300
+          rounded-full
+          peer
+          peer-checked:bg-green-500
+          transition-colors
+          after:content-['']
+          after:absolute
+          after:top-[2px]
+          after:left-[2px]
+          after:w-5
+          after:h-5
+          after:bg-white
+          after:rounded-full
+          after:transition-all
+          peer-checked:after:translate-x-5
+        "
+      ></div>
+    </label>
+
+    <span
+      className={`text-xs font-semibold px-2 py-1 rounded-full ${
+        product.isAvailable
+          ? "bg-green-100 text-green-700"
+          : "bg-red-100 text-red-600"
+      }`}
+    >
+      {product.isAvailable ? "Active" : "Inactive"}
+    </span>
+  </div>
+</TableCell>
 
                     <TableCell>
                       <div className="flex gap-2">

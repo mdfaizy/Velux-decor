@@ -46,3 +46,8 @@ export const getMeApi = async () => {
   const res = await apiConnector.get("/auth/me");
   return res.data;
 };
+
+export const toggleUserStatusApi = async (id: string) => {
+  const res = await apiConnector.patch(`/auth/toggle-status/${id}`);
+  return res.data;
+};

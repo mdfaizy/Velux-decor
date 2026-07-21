@@ -17,3 +17,15 @@ export const deleteConsultationApi = async (id: string) => {
   const res = await apiConnector.delete(`/consultations/${id}`);
   return res.data;
 };
+
+export const updateConsultationStatusApi = async (
+  id: string,
+  status: string
+) => {
+  const res = await apiConnector.patch(
+    `/consultations/${id}/status`,
+    { status }
+  );
+
+  return res.data;
+};

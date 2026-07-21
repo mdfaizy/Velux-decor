@@ -21,7 +21,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const { user } = useAppSelector((state) => state.auth);
 const dispatch = useAppDispatch();
 const navigate = useNavigate();
-
+console.log(user);
 const handleLogout = () => {
   dispatch(setUser(null));
   dispatch(setToken(null));
@@ -86,22 +86,23 @@ const handleLogout = () => {
               V
             </span>
           </div>
-          <div
-            style={{
-              fontFamily: "'Playfair Display',serif",
-              fontSize: 20,
-              fontWeight: 700,
-              // color: isScrolled ? "#3D2B1F" : "#FAF7F2",
-              color: isScrolled || isRoutePage ? "#3D2B1F" : "#FAF7F2",
-              letterSpacing: "0.02em",
-              lineHeight: 1,
-              transition: "color 0.4s",
-            }}
-          >
-            VeluxDecor
-          </div>
+         <div
+  style={{
+    fontFamily: "'Playfair Display', serif",
+    fontSize: 20,
+    fontWeight: 700,
+    color: isScrolled || isRoutePage ? "#3D2B1F" : "#FAF7F2",
+    letterSpacing: "0.02em",
+    lineHeight: 1,
+    transition: "color 0.4s",
+  }}
+>
+  VELUXDECOR<sup style={{ fontSize: "14px", marginLeft: "1px ,lg:text-xs" }}>®</sup>
+  
+</div>
         </Link>
-        <div className="hidden md:flex items-center gap-8">
+        {/* <div className="hidden md:flex items-center gap-6"> */}
+        <div className="hidden lg:flex items-center gap-6">
           {navLinks.map((l) => (
             <NavLink
               key={l.path}
@@ -120,7 +121,8 @@ const handleLogout = () => {
           ))}
         </div>
 
-        <div className="hidden md:flex items-center gap-3">
+        {/* <div className="hidden md:flex items-center gap-3"> */}
+        <div className="hidden lg:flex items-center gap-3">
           <Link
             // onClick={() => scrollTo("contact")}
             to='/contact'
@@ -251,36 +253,6 @@ const handleLogout = () => {
           </Link>
   </>
 ) : (
-  // <div className="flex items-center gap-3">
-
-  //   <img
-  //     src={
-  //       user.avatar ||
-  //       `https://ui-avatars.com/api/?name=${user.name}`
-  //     }
-  //     className="w-9 h-9 rounded-full cursor-pointer"
-  //     onClick={() => navigate("/profile")}
-  //   />
-
-  //   {/* <span
-  //     className="text-sm font-semibold cursor-pointer"
-  //     onClick={() => navigate("/profile")}
-  //   >
-  //     {user.name}
-  //   </span>
-
-  //   <button
-  //     onClick={handleLogout}
-  //     className="text-red-500 text-sm"
-  //   >
-  //     Logout
-  //   </button> */}
-  //   <div className="absolute hidden group-hover:block bg-white shadow rounded p-2 right-0">
-  //   <p onClick={() => navigate("/profile")}>Profile</p>
-  //   <p onClick={handleLogout}>Logout</p>
-  // </div>
-
-  // </div>
  <div className="relative group flex items-center gap-3">
 
   {/* 🔥 AVATAR */}
@@ -312,7 +284,19 @@ const handleLogout = () => {
       <p className="font-semibold text-gray-800">{user.name}</p>
       <p className="text-xs text-gray-500 truncate">{user.email}</p>
     </div>
-
+    
+        
+{(user?.role === "admin" || user?.role === "designer") && (
+  <button
+    onClick={() => {
+      navigate("/dashboard/overview");
+      setMenuOpen(false);
+    }}
+    className="w-full text-left px-4 py-2 text-sm hover:text-[#C9A84C]"
+  >
+    📊 Dashboard
+  </button>
+)}
     {/* 🔥 MENU ITEMS */}
     <div className="py-2">
 
@@ -337,7 +321,8 @@ const handleLogout = () => {
           
         </div>
         <button
-          className="flex flex-col gap-[5px] md:hidden"
+          // className="flex flex-col gap-[5px] md:hidden"
+          className="flex flex-col gap-[5px] lg:hidden"
           onClick={() => setMenuOpen((prev) => !prev)}
           style={{
             background: "none",
@@ -494,7 +479,6 @@ const handleLogout = () => {
             <p className="text-xs text-gray-500 truncate">{user.email}</p>
           </div>
         </div>
-
         {/* 🔥 ACTIONS */}
         <button
           onClick={() => {

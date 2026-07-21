@@ -17,3 +17,15 @@ export const deleteEnquiryApi = async (id: string) => {
   const res = await apiConnector.delete(`/enquiry/${id}`);
   return res.data;
 };
+
+
+export const updateEnquiryStatusApi = async (
+  id: string,
+  status: string
+) => {
+  const res = await apiConnector.put(`/enquiry/${id}/status`, {
+    status,
+  });
+
+  return res.data;
+};

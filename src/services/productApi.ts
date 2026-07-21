@@ -67,3 +67,5 @@ export const toggleProductApi = async (id: string, status: boolean) => {
     throw error;
   }
 };
+
+
