@@ -189,6 +189,13 @@
       "routes": [
         "showroom-form"
       ]
+    },
+    {
+      "id": "src/screens/AiAgentMobile/ContactList.tsx",
+      "label": "ContactList",
+      "routes": [
+        "contact-list"
+      ]
     }
   ],
   "edges": [

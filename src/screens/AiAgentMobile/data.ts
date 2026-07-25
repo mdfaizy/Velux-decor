@@ -291,9 +291,9 @@ export const TESTIMONIALS: Testimonial[] = [
 ];
 
 export const STATS = [
-  { value: 15000, suffix: "+", label: "Happy Customers" },
-  { value: 25, suffix: "+", label: "Years Experience" },
-  { value: 500, suffix: "+", label: "Premium Brands" },
+  { value: 1500, suffix: "+", label: "Happy Customers" },
+  { value: 5, suffix: "+", label: "Years Experience" },
+  { value: 200, suffix: "+", label: "Premium Brands" },
   { value: 98, suffix: "%", label: "Satisfaction Rate" },
 ];
 

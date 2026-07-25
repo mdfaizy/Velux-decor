@@ -60,6 +60,7 @@ const Hero: React.FC<HeroProps> = ({
               width: "100%",
               height: "100%",
               objectFit: "cover",
+              
               transform: i === heroSlide ? "scale(1.03)" : "scale(1)",
               transition: "transform 7s ease",
             }}
@@ -323,9 +324,9 @@ const Hero: React.FC<HeroProps> = ({
         >
           {[
             ["⭐ 4.9/5", "Google Rating"],
-            ["🏆 15,000+", "Projects Done"],
-            ["📅 25 Years", "Of Excellence"],
-            ["🏙️ 6 Cities", "Showrooms"],
+            ["🏆 15,00+", "Projects Done"],
+            ["📅 5 Years", "Of Excellence"],
+            ["🏙️ 1 Cities", "Showrooms"],
           ].map(([val, lbl]) => (
             <div key={lbl} style={{ textAlign: "center" }}>
               <div

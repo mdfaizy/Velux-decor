@@ -119,7 +119,7 @@ export const Contact: React.FC<ContactProps> = ({ setBookingOpen }) => {
                 {
                   icon: "📞",
                   label: "Phone",
-                  val: "+91 98765 43210 | +91 22 4567 8900",
+                  val: "+91 9079701780",
                 },
                 { icon: "✉️", label: "Email", val: "veluxdecorprivatelimited@gmail.com" },
                 {
@@ -193,11 +193,6 @@ export const Contact: React.FC<ContactProps> = ({ setBookingOpen }) => {
               </div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
                 {[
-                  "Mumbai",
-                  "Delhi",
-                  "Bangalore",
-                  "Pune",
-                  "Chennai",
                   "Hyderabad",
                 ].map((city) => (
                   <div

@@ -27,18 +27,58 @@ const handleLogout = () => {
   dispatch(setToken(null));
   navigate("/login");
 };
-  useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 60);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  useEffect(() => {
-    window.scrollTo(0, 0);
+  //  useEffect(() => {
+  //   const onScroll = () => setIsScrolled(window.scrollY > 60);
+  //   window.addEventListener("scroll", onScroll);
+  //    onScroll(); // 👈 ye naya line add karo
+  //   return () => window.removeEventListener("scroll", onScroll);
+  // }, []);
 
-    // 🔥 jab route change ho
-    setIsRoutePage(true);
-    setIsScrolled(true); // force dark navbar
-  }, [location.pathname]);
+//   useEffect(() => {
+//   const onScroll = () => {
+//     setIsScrolled(window.scrollY > 60);
+//   };
+
+//   onScroll();
+
+//   window.addEventListener("scroll", onScroll);
+
+//   return () => window.removeEventListener("scroll", onScroll);
+// }, []);
+
+useEffect(() => {
+  const onScroll = () => {
+    if (location.pathname === "/") {
+      // Home page
+      setIsScrolled(window.scrollY > 60);
+    } else {
+      // Other pages
+      setIsScrolled(true);
+    }
+  };
+
+  onScroll();
+
+  window.addEventListener("scroll", onScroll);
+
+  return () => window.removeEventListener("scroll", onScroll);
+}, [location.pathname]);
+
+  
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+
+  //   // 🔥 jab route change ho
+  //   setIsRoutePage(true);
+  //   setIsScrolled(true); // force dark navbar
+  // }, [location.pathname]);
+
+  useEffect(() => {
+  window.scrollTo(0, 0);
+  setIsRoutePage(true);
+}, [location.pathname]);
+ 
+  
   const isHome = location.pathname === "/";
   const navLinks = [
     { label: "Collections", path: "/categories" },
@@ -58,6 +98,7 @@ const handleLogout = () => {
         right: 0,
         zIndex: 50,
         background: isScrolled ? "rgba(250,247,242,0.97)" : "transparent",
+        // background: isScrolled ? "#FFFFFF" : "transparent",
         backdropFilter: isScrolled ? "blur(20px)" : "none",
         boxShadow: isScrolled ? "0 2px 24px rgba(61,43,31,0.08)" : "none",
         transition: "all 0.4s ease",
@@ -83,7 +124,7 @@ const handleLogout = () => {
             }}
           >
             <span style={{ color: "#fff", fontSize: 18, fontWeight: 700 }}>
-              V
+              VD
             </span>
           </div>
          <div
@@ -92,17 +133,18 @@ const handleLogout = () => {
     fontSize: 20,
     fontWeight: 700,
     color: isScrolled || isRoutePage ? "#3D2B1F" : "#FAF7F2",
+    // color: isScrolled ? "#3D2B1F" : "#FAF7F2",
     letterSpacing: "0.02em",
     lineHeight: 1,
     transition: "color 0.4s",
   }}
 >
-  VELUXDECOR<sup style={{ fontSize: "14px", marginLeft: "1px ,lg:text-xs" }}>®</sup>
+  VELUX DECOR<sup style={{ fontSize: "14px", marginLeft: "1px ,lg:text-xs" }}>®</sup>
   
 </div>
         </Link>
         {/* <div className="hidden md:flex items-center gap-6"> */}
-        <div className="hidden lg:flex items-center gap-6">
+        <div className="hidden lg:flex items-center gap-4">
           {navLinks.map((l) => (
             <NavLink
               key={l.path}
@@ -145,12 +187,9 @@ const handleLogout = () => {
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = "none";
-              e.currentTarget.style.color = isScrolled
-                ? "#C9A84C"
-                : "#FAF7F2";
+              e.currentTarget.style.color = isScrolled? "#C9A84C": "#FAF7F2";
               e.currentTarget.style.borderColor = "rgba(201,168,76,0.7)";
-            }}
-          >
+            }}>
             Get a Quote
           </Link>
           <button
@@ -168,51 +207,10 @@ const handleLogout = () => {
               boxShadow: "0 4px 15px rgba(201,168,76,0.35)",
               transition: "all 0.2s",
             }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.transform = "translateY(-1px)")
-            }
-            onMouseLeave={(e) => (e.currentTarget.style.transform = "none")}
-          >
+            onMouseEnter={(e) =>(e.currentTarget.style.transform = "translateY(-1px)")}
+            onMouseLeave={(e) => (e.currentTarget.style.transform = "none")}>
             Book Consultation
           </button>
-
-          {/* <Link to='/login'
-            onClick={() => setMenuOpen(false)}
-            style={{
-              background: "linear-gradient(135deg,#C9A84C,#8B6914)",
-              border: "none",
-              borderRadius: 6,
-              padding: "9px 20px",
-              fontSize: 13,
-              fontWeight: 600,
-              color: "#fff",
-              cursor: "pointer",
-              letterSpacing: "0.05em",
-              boxShadow: "0 4px 15px rgba(201,168,76,0.35)",
-              transition: "all 0.2s",
-            }}
-          >
-            Login
-          </Link>
-           <Link to='/signup'
-            onClick={() => setMenuOpen(false)}
-            style={{
-              background: "linear-gradient(135deg,#C9A84C,#8B6914)",
-              border: "none",
-              borderRadius: 6,
-              padding: "9px 20px",
-              fontSize: 13,
-              fontWeight: 600,
-              color: "#fff",
-              cursor: "pointer",
-              letterSpacing: "0.05em",
-              boxShadow: "0 4px 15px rgba(201,168,76,0.35)",
-              transition: "all 0.2s",
-            }}
-          >
-            Signup
-          </Link> */}
-
           {!user ? (
   <>
     <Link to='/login'

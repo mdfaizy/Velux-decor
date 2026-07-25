@@ -2,33 +2,21 @@ import React, { useState, useEffect } from "react";
 import { 
   Users, 
   ShoppingCart, 
-  DollarSign, 
-  TrendingUp, 
   Activity, 
-  Package, 
-  CreditCard, 
-  Star, 
   ArrowUpRight, 
   ArrowDownRight, 
-  MoreVertical,
   Download,
   Plus,
-  Calendar,
-  ChevronRight,
-  BarChart3,
   PieChart,
   RefreshCw,
   Bell,
   Settings,
   HelpCircle,
-  Clock
 } from "lucide-react";
-import { Link } from "react-router-dom";
 import EnquiryTable from "../../../screens/AiAgentMobile/EnquiryTable";
 
 const Overview = () => {
   const [loading, setLoading] = useState(false);
-  const [selectedPeriod, setSelectedPeriod] = useState("monthly");
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -73,11 +61,11 @@ const Overview = () => {
       hoverBg: "hover:bg-emerald-50/50",
     },
     {
-      title: "Revenue",
-      value: "₹85,400",
-      change: "+23.1%",
+      title: "Total Categories",
+      value: "25",
+      change: "+12.5%",
       trend: "up",
-      icon: DollarSign,
+      icon: PieChart,
       bg: "from-amber-500 to-amber-600",
       lightBg: "bg-amber-50",
       text: "text-amber-600",
@@ -85,65 +73,13 @@ const Overview = () => {
       ringColor: "ring-amber-500/20",
       hoverBg: "hover:bg-amber-50/50",
     },
-    {
-      title: "Growth Rate",
-      value: "12.5%",
-      change: "-3.2%",
-      trend: "down",
-      icon: TrendingUp,
-      bg: "from-violet-500 to-violet-600",
-      lightBg: "bg-violet-50",
-      text: "text-violet-600",
-      borderColor: "border-violet-200",
-      ringColor: "ring-violet-500/20",
-      hoverBg: "hover:bg-violet-50/50",
-    },
   ];
 
-  const activities = [
-    {
-      icon: Users,
-      color: "bg-blue-100 text-blue-600",
-      iconBg: "bg-blue-50",
-      title: "New user registered",
-      description: "John Doe created an account",
-      time: "2 min ago",
-      type: "user",
-    },
-    {
-      icon: Package,
-      color: "bg-emerald-100 text-emerald-600",
-      iconBg: "bg-emerald-50",
-      title: "Product added",
-      description: "iPhone 15 Pro added to inventory",
-      time: "15 min ago",
-      type: "product",
-    },
-    {
-      icon: CreditCard,
-      color: "bg-amber-100 text-amber-600",
-      iconBg: "bg-amber-50",
-      title: "Payment received",
-      description: "₹12,500 from Rahul Sharma",
-      time: "1 hour ago",
-      type: "payment",
-    },
-    {
-      icon: Star,
-      color: "bg-violet-100 text-violet-600",
-      iconBg: "bg-violet-50",
-      title: "New review submitted",
-      description: "5-star review on MacBook Air",
-      time: "2 hours ago",
-      type: "review",
-    },
-  ];
 
   // Quick action buttons
   const quickActions = [
     { label: "Add Product", icon: Plus, color: "bg-indigo-600 hover:bg-indigo-700 text-white" },
     { label: "View Users", icon: Users, color: "bg-blue-600 hover:bg-blue-700 text-white" },
-    { label: "Sales Report", icon: BarChart3, color: "bg-emerald-600 hover:bg-emerald-700 text-white" },
     { label: "Settings", icon: Settings, color: "bg-gray-600 hover:bg-gray-700 text-white" },
   ];
 
@@ -207,31 +143,7 @@ const Overview = () => {
   );
 
   // Activity Item Component
-  const ActivityItem = ({ activity }: { activity: typeof activities[0] }) => (
-    <div className="flex items-start gap-3 md:gap-4 p-3 rounded-xl hover:bg-gray-50 transition-all group cursor-pointer hover:shadow-sm">
-      <div className={`
-        p-2 rounded-lg ${activity.iconBg} 
-        group-hover:scale-110 transition-transform
-        ring-1 ring-inset ring-gray-100
-      `}>
-        <activity.icon className={`w-4 h-4 ${activity.color.split(' ')[1]}`} />
-      </div>
-      <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-gray-900">
-          {activity.title}
-        </p>
-        <p className="text-xs md:text-sm text-gray-500 truncate">
-          {activity.description}
-        </p>
-      </div>
-      <div className="flex items-center gap-1.5 flex-shrink-0">
-        <Clock className="w-3 h-3 text-gray-400" />
-        <span className="text-xs text-gray-400 whitespace-nowrap">
-          {activity.time}
-        </span>
-      </div>
-    </div>
-  );
+ 
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50/50 p-3 sm:p-4 md:p-6 lg:p-8">
@@ -320,131 +232,10 @@ const Overview = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
-          {/* Recent Activity */}
-          <div className="bg-white/80 backdrop-blur-sm p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-gray-200 transition-all">
-            <div className="flex items-center justify-between mb-4 md:mb-6">
-              <div>
-                <h3 className="text-base md:text-lg font-semibold text-gray-900 flex items-center gap-2">
-                  <Activity className="w-4 h-4 md:w-5 md:h-5 text-indigo-600" />
-                  Recent Activity
-                </h3>
-                <p className="text-xs md:text-sm text-gray-500 mt-0.5">
-                  Latest actions from your team
-                </p>
-              </div>
-              <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                <MoreVertical className="w-4 h-4 md:w-5 md:h-5 text-gray-400" />
-              </button>
-            </div>
-
-            <div className="space-y-0.5 max-h-[400px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
-              {activities.map((activity, index) => (
-                <ActivityItem key={index} activity={activity} />
-              ))}
-            </div>
-
-            <button className="w-full mt-4 text-center text-sm text-indigo-600 hover:text-indigo-700 font-medium flex items-center justify-center gap-2 p-2 hover:bg-indigo-50 rounded-lg transition-colors">
-              View All Activity
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-
-          {/* Chart / Analytics */}
-          <div className="bg-white/80 backdrop-blur-sm p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-gray-200 transition-all">
-            <div className="flex items-center justify-between mb-4 md:mb-6">
-              <div>
-                <h3 className="text-base md:text-lg font-semibold text-gray-900 flex items-center gap-2">
-                  <BarChart3 className="w-4 h-4 md:w-5 md:h-5 text-indigo-600" />
-                  Sales Overview
-                </h3>
-                <p className="text-xs md:text-sm text-gray-500 mt-0.5">
-                  Monthly revenue statistics
-                </p>
-              </div>
-              <div className="flex items-center gap-1.5 bg-gray-100 rounded-lg p-0.5">
-                <button
-                  onClick={() => setSelectedPeriod("monthly")}
-                  className={`px-2.5 md:px-3 py-1 text-xs font-medium rounded-md transition-all ${
-                    selectedPeriod === "monthly"
-                      ? "bg-white text-indigo-600 shadow-sm"
-                      : "text-gray-500 hover:text-gray-700"
-                  }`}
-                >
-                  Monthly
-                </button>
-                <button
-                  onClick={() => setSelectedPeriod("weekly")}
-                  className={`px-2.5 md:px-3 py-1 text-xs font-medium rounded-md transition-all ${
-                    selectedPeriod === "weekly"
-                      ? "bg-white text-indigo-600 shadow-sm"
-                      : "text-gray-500 hover:text-gray-700"
-                  }`}
-                >
-                  Weekly
-                </button>
-              </div>
-            </div>
-
-            {/* Chart Container */}
-            <div className="relative h-48 md:h-56 bg-gradient-to-br from-gray-50 via-indigo-50/20 to-transparent rounded-xl border-2 border-dashed border-gray-200 flex items-center justify-center group hover:border-indigo-200 transition-all">
-              <div className="text-center">
-                <div className="w-14 h-14 md:w-16 md:h-16 mx-auto mb-3 bg-white rounded-2xl shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform ring-1 ring-gray-100">
-                  <PieChart className="w-7 h-7 md:w-8 md:h-8 text-indigo-400" />
-                </div>
-                <p className="text-gray-500 font-medium">Chart Coming Soon</p>
-                <p className="text-xs text-gray-400 mt-1">
-                  Revenue analytics visualization
-                </p>
-                <div className="mt-3 flex items-center justify-center gap-4 text-xs text-gray-400">
-                  <span className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
-                    Revenue
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                    Expenses
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Quick Stats */}
-            <div className="grid grid-cols-3 gap-2 md:gap-3 mt-4">
-              <div className="text-center p-2 bg-gray-50 rounded-lg">
-                <p className="text-xs text-gray-500">Total Sales</p>
-                <p className="text-sm md:text-base font-semibold text-gray-900">1,245</p>
-              </div>
-              <div className="text-center p-2 bg-gray-50 rounded-lg">
-                <p className="text-xs text-gray-500">Avg Order</p>
-                <p className="text-sm md:text-base font-semibold text-gray-900">₹2,450</p>
-              </div>
-              <div className="text-center p-2 bg-gray-50 rounded-lg">
-                <p className="text-xs text-gray-500">Conversion</p>
-                <p className="text-sm md:text-base font-semibold text-emerald-600">3.2%</p>
-              </div>
-            </div>
-          </div>
-        </div>
+       
 
         {/* Enquiry Table Section */}
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-          <div className="p-4 md:p-6 border-b border-gray-100">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <div>
-                <h3 className="text-base md:text-lg font-semibold text-gray-900">
-                  Recent Enquiries
-                </h3>
-                <p className="text-xs md:text-sm text-gray-500 mt-0.5">
-                  Latest consultation requests from customers
-                </p>
-              </div>
-              <button className="text-sm text-indigo-600 hover:text-indigo-700 font-medium flex items-center gap-1.5 hover:bg-indigo-50 px-3 py-1.5 rounded-lg transition-colors">
-                View All
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
           <div className="p-2 md:p-4">
             <EnquiryTable />
           </div>

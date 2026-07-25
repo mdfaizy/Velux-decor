@@ -418,7 +418,7 @@ export const AiAgentMobile = (): JSX.Element => {
               }}
             >
               <span style={{ color: "#fff", fontSize: 18, fontWeight: 700 }}>
-                V
+                VD
               </span>
             </div>
             <div
@@ -432,7 +432,7 @@ export const AiAgentMobile = (): JSX.Element => {
                 transition: "color 0.4s",
               }}
             >
-              VeluxDecor
+              Velux Decor
             </div>
           </div>
 
@@ -901,9 +901,9 @@ export const AiAgentMobile = (): JSX.Element => {
           >
             {[
               ["⭐ 4.9/5", "Google Rating"],
-              ["🏆 15,000+", "Projects Done"],
-              ["📅 25 Years", "Of Excellence"],
-              ["🏙️ 6 Cities", "Showrooms"],
+              ["🏆 15,00+", "Projects Done"],
+              ["📅 5 Years", "Of Excellence"],
+              ["🏙️ 1 Cities", "Showrooms"],
             ].map(([val, lbl]) => (
               <div key={lbl} style={{ textAlign: "center" }}>
                 <div

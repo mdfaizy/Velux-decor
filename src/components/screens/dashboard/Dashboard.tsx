@@ -10,7 +10,6 @@ import {
   Folder,
   Star,
 } from "lucide-react";
-
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import UserProfile from "../../../pages/auth/UserProfile";
 import { useAppSelector } from "../../../redux/slice/reduxHooks";
@@ -24,7 +23,6 @@ const Dashboard = () => {
  const { user } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
   const location = useLocation();
-
   // ✅ UPDATED MENU (with child)
   const menuItems = [
     { label: "Dashboard", icon: Home, path: "overview" },
@@ -326,10 +324,13 @@ const Dashboard = () => {
     Admin Panel
   </h1>
 
-</div>
-{/* <UserProfile/> */}
-<div className="flex items-center gap-3">
 
+
+
+</div>
+
+<div className="flex items-center gap-3">
+<UserProfile/>
   {/* Mobile Menu */}
   <button
     className="lg:hidden"
@@ -339,18 +340,7 @@ const Dashboard = () => {
   </button>
 
   {/* Home Button */}
-  <button
-    onClick={() => navigate("/")}
-    className="flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 bg-white hover:bg-blue-50 hover:border-blue-500 transition"
-  >
-    <Home size={18} />
-    <span className="hidden sm:inline">Home</span>
-  </button>
-
-  {/* Title */}
-  <h1 className="text-lg md:text-xl font-semibold">
-    Admin Panel
-  </h1>
+  
 
 </div>
         </header>
