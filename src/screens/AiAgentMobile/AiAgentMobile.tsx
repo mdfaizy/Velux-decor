@@ -31,6 +31,7 @@ import {
  
 } from "./data";
 import { Categories } from "./Categories";
+import { OfferSpotlight } from "./OfferSpotlight";
 // import ReviewSection from "../../pages/review/ReviewSection";
 
 export const AiAgentMobile = (): JSX.Element => {
@@ -129,6 +130,9 @@ export const AiAgentMobile = (): JSX.Element => {
 
       {/* Brands Marquee */}
       <Brand brandsRef={brandsRef} BRANDS={BRANDS} />
+
+      {/* Offer Spotlight (managed from Dashboard → Offers) */}
+      <OfferSpotlight />
 
       {/* Stats Banner */}
       <Stats

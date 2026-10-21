@@ -5,6 +5,40 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ===== Admin panel brand defaults =====
+   In the base layer, so any utility class on an element still wins. */
+@layer base {
+  .admin-shell {
+    accent-color: #8B6914; /* checkboxes, radios, range */
+    color: #3D2B1F;
+  }
+
+  /* warm borders instead of cool gray */
+  .admin-shell *,
+  .admin-shell ::before,
+  .admin-shell ::after {
+    border-color: #EBE2D3;
+  }
+
+  /* page and card headings match the website */
+  .admin-shell main h1,
+  .admin-shell main h2,
+  .admin-shell main h3 {
+    font-family: "Playfair Display", serif;
+    letter-spacing: -0.01em;
+  }
+
+  .admin-shell main input:focus,
+  .admin-shell main select:focus,
+  .admin-shell main textarea:focus {
+    border-color: #C9A84C;
+  }
+
+  .admin-shell ::selection {
+    background: rgba(201, 168, 76, 0.3);
+  }
+}
+
 @layer components {
   .all-\[unset\] {
     all: unset;

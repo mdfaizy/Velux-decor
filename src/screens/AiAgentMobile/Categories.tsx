@@ -1,7 +1,38 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 import { getCategoriesApi } from "../../services/categoryApi";
 import { useState,useEffect } from "react";
+
+// Admin text is sometimes typed in ALL CAPS — show it in normal case
+const isAllCaps = (s: string) => /[A-Z]/.test(s) && s === s.toUpperCase();
+const toTitleCase = (s: string) =>
+  isAllCaps(s) ? s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase()) : s;
+const toSentenceCase = (s: string) =>
+  isAllCaps(s)
+    ? s.toLowerCase().replace(/(^\s*\w|[.!?]\s+\w)/g, (c) => c.toUpperCase())
+    : s;
+
+/* Column span of each tile on large screens (3 columns), so every row is full:
+   rows alternate [wide + normal] and [normal × 3]; a single leftover tile spans the whole row */
+const getSpans = (count: number): number[] => {
+  const spans: number[] = [];
+  let wideRow = true;
+  while (spans.length < count) {
+    const left = count - spans.length;
+    if (left === 1) spans.push(3);
+    else if (wideRow || left === 2) spans.push(2, 1);
+    else spans.push(1, 1, 1);
+    wideRow = !wideRow;
+  }
+  return spans;
+};
+
+const LG_SPAN: Record<number, string> = {
+  1: "",
+  2: "lg:col-span-2",
+  3: "lg:col-span-3",
+};
 
 interface Category {
   _id: string;          // 🔥 Mongo ID
@@ -18,21 +49,13 @@ export const Categories: React.FC = ({
 }) => {
   const navigate = useNavigate();
 const [categories, setCategories] = useState<Category[]>([]);
-const [activeCategory, setActiveCategory] = useState("");
 
 
 useEffect(() => {
   const fetchCategories = async () => {
     try {
       const res = await getCategoriesApi();
-      const data = res.data || [];
-
-      setCategories(data);
-
-      // default active
-      if (data.length > 0) {
-        setActiveCategory(data[0]._id);
-      }
+      setCategories(res.data || []);
     } catch (err) {
       console.log(err);
     }
@@ -40,6 +63,8 @@ useEffect(() => {
 
   fetchCategories();
 }, []);
+
+  const spans = getSpans(categories.length);
   return (
     <section
       id="categories"
@@ -106,141 +131,95 @@ useEffect(() => {
           </p>
         </div>
 
-        {/* 6-category masonry-style grid */}
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Collection tiles: equal row heights, every row filled */}
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 auto-rows-[260px] lg:auto-rows-[280px]">
           {categories.map((cat, i) => {
-            // Make first and last tile double-wide on large screens only
-            const isWide = i === 0 || i === 5;
+            const span = spans[i];
+            // on 2-column tablets, a last odd tile spans the full row
+            const smFull = categories.length % 2 === 1 && i === categories.length - 1;
+            const badge = cat.badge?.trim();
+
             return (
-              <div
+              <button
                 key={cat._id}
-
-onClick={() => {
-  setActiveCategory(cat._id);
-
-  // 🔥 SLUG BASE NAVIGATION
-  if (!cat.slug) {
-    console.error("Slug missing:", cat);
-    return;
-  }
-
-  navigate(`/subcategory/${cat.slug}`);
-}}
-                className={`overflow-hidden rounded-[16px] cursor-pointer transition-all duration-300 ${
-                  isWide ? "lg:col-span-2" : ""
-                }`}
-                style={{
-                  borderRadius: 16,
-                  overflow: "hidden",
-                  cursor: "pointer",
-                  boxShadow:
-                    activeCategory === cat._id
-                      ? "0 20px 50px rgba(201,168,76,0.22)"
-                      : "0 4px 20px rgba(61,43,31,0.07)",
-                  border: `2px solid ${activeCategory === cat._id ? "#C9A84C" : "transparent"}`,
-                  transform:
-                    activeCategory === cat._id ? "translateY(-4px)" : "none",
-                  position: "relative",
+                type="button"
+                onClick={() => {
+                  // 🔥 SLUG BASE NAVIGATION
+                  if (!cat.slug) {
+                    console.error("Slug missing:", cat);
+                    return;
+                  }
+                  navigate(`/subcategory/${cat.slug}`);
                 }}
+                className={`group relative block h-full w-full overflow-hidden rounded-2xl text-left
+                  shadow-[0_4px_20px_rgba(61,43,31,0.08)] ring-1 ring-[rgba(201,168,76,0.12)]
+                  transition-all duration-500 hover:-translate-y-1
+                  hover:shadow-[0_20px_50px_rgba(61,43,31,0.18)] hover:ring-2 hover:ring-[#C9A84C]
+                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A84C]
+                  ${smFull ? "sm:col-span-2" : ""} ${LG_SPAN[span]} ${span === 1 && smFull ? "lg:col-span-1" : ""}`}
               >
-                <div
-                  style={{
-                    position: "relative",
-                    height: isWide ? 280 : 220,
-                    overflow: "hidden",
-                  }}
-                >
-                  <img
-                    src={cat.image}
-                    alt={cat.name}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      transform:
-                        activeCategory === cat._id
-                          ? "scale(1.06)"
-                          : "scale(1)",
-                      transition: "transform 0.6s",
-                    }}
-                  />
-                  <div
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      background:
-                        "linear-gradient(to bottom, rgba(0,0,0,0.14) 0%, rgba(0,0,0,0.38) 45%, rgba(0,0,0,0.62) 100%)",
-                    }}
-                  />
-                  {/* Tag pill */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: 14,
-                      right: 14,
-                      background: "rgba(201,168,76,0.92)",
-                      borderRadius: 20,
-                      padding: "4px 12px",
-                      fontSize: 10,
-                      fontWeight: 700,
-                      color: "#fff",
-                      letterSpacing: "0.08em",
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {/* {cat.tag} */}
-                    {cat.badge}
-                  </div>
-                  {/* Name at bottom */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      padding: "20px 22px",
-                      background: "rgba(0,0,0,0.08)",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 10,
-                        marginBottom: 6,
-                      }}
-                    >
-                      <span style={{ fontSize: 22 }}>
-                        {/* {cat.icon} */}
-                        <img src={cat.icon} className="w-6 h-6" />
+                <img
+                  src={cat.image}
+                  alt=""
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
 
-                      </span>
-                      <span
-                        style={{
-                          fontFamily: "'Playfair Display',serif",
-                          fontSize: isWide ? 24 : 20,
-                          fontWeight: 700,
-                          color: "#FAF7F2",
-                          textShadow: "0 2px 12px rgba(0,0,0,0.4)",
-                        }}
-                      >
-                        {cat.name}
-                      </span>
-                    </div>
-                    <p
+                {/* photo stays visible at the top, text area darkens smoothly */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(to bottom, rgba(26,18,12,0) 30%, rgba(26,18,12,0.45) 60%, rgba(26,18,12,0.88) 100%)",
+                  }}
+                />
+
+                {badge && (
+                  <span
+                    className="absolute top-4 right-4 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-white shadow"
+                    style={{ background: "rgba(201,168,76,0.95)" }}
+                  >
+                    {badge}
+                  </span>
+                )}
+
+                <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
+                  <div className="flex items-center gap-3 mb-2">
+                    {cat.icon && (
+                      <img
+                        src={cat.icon}
+                        alt=""
+                        className="h-9 w-9 shrink-0 rounded-full object-cover ring-2 ring-white/70"
+                      />
+                    )}
+                    <h3
+                      className={`font-bold leading-tight text-[#FAF7F2] ${
+                        span > 1 ? "text-2xl sm:text-[28px]" : "text-xl sm:text-[22px]"
+                      }`}
                       style={{
-                        fontSize: 13,
-                        color: "rgba(255,255,255,0.95)",
-                        lineHeight: 1.6,
-                        maxWidth: 380,
-                        textShadow: "0 6px 16px rgba(0,0,0,0.28)",
+                        fontFamily: "'Playfair Display',serif",
+                        textShadow: "0 2px 12px rgba(0,0,0,0.35)",
                       }}
                     >
-                      {cat.description}
-                    </p>
+                      {toTitleCase(cat.name)}
+                    </h3>
                   </div>
+
+                  {cat.description && (
+                    <p
+                      className={`line-clamp-2 text-[13.5px] leading-relaxed text-white/85 ${
+                        span > 1 ? "max-w-xl" : ""
+                      }`}
+                    >
+                      {toSentenceCase(cat.description)}
+                    </p>
+                  )}
+
+                  <span className="mt-3 inline-flex items-center gap-1.5 text-[12px] font-bold uppercase tracking-[0.12em] text-[#E8C97A] opacity-80 transition-all duration-300 group-hover:gap-2.5 group-hover:opacity-100">
+                    Explore <ArrowRight size={14} />
+                  </span>
                 </div>
-              </div>
+              </button>
             );
           })}
         </div>

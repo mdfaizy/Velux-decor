@@ -244,6 +244,7 @@
 
 import React, { useEffect, useState } from "react";
 import { getReviewsApi } from "../../services/reviewApi";
+import { WriteReviewModal } from "./WriteReviewModal";
 
 interface Testimonial {
   _id: string;
@@ -257,6 +258,7 @@ interface Testimonial {
 export const Testimonials = () => {
   const [TESTIMONIALS, setTestimonials] = useState<Testimonial[]>([]);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [reviewOpen, setReviewOpen] = useState(false);
 
   // 🔥 API CALL
   useEffect(() => {
@@ -287,8 +289,30 @@ useEffect(() => {
   return () => clearInterval(interval);
 }, [TESTIMONIALS]);
 
- // 🔥 Safety
-  if (TESTIMONIALS.length === 0) return null;
+  const writeReviewButton = (
+    <button
+      onClick={() => setReviewOpen(true)}
+      style={{
+        background: "linear-gradient(135deg,#C9A84C,#E8C97A)",
+        border: "none",
+        borderRadius: 6,
+        padding: "14px 36px",
+        fontSize: 13,
+        fontWeight: 700,
+        color: "#3D2B1F",
+        cursor: "pointer",
+        letterSpacing: "0.08em",
+        textTransform: "uppercase",
+        boxShadow: "0 8px 32px rgba(201,168,76,0.3)",
+        transition: "transform 0.3s",
+      }}
+      onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-3px)")}
+      onMouseLeave={(e) => (e.currentTarget.style.transform = "none")}
+    >
+      ★ Write a Review
+    </button>
+  );
+
   return (
     <section
       style={{
@@ -337,8 +361,17 @@ useEffect(() => {
           >
             Loved by Homeowners Across India
           </h2>
+
+          {TESTIMONIALS.length === 0 && (
+            <p style={{ color: "#8A8278", marginBottom: 28 }}>
+              Worked with us? Be the first to share your experience.
+            </p>
+          )}
+          {writeReviewButton}
         </div>
 
+        {TESTIMONIALS.length > 0 && (
+        <>
         {/* MAIN CARD SAME */}
         <div
           style={{
@@ -526,8 +559,12 @@ useEffect(() => {
             </div>
           ))}
         </div>
+        </>
+        )}
 
       </div>
+
+      <WriteReviewModal open={reviewOpen} onClose={() => setReviewOpen(false)} />
     </section>
   );
 };

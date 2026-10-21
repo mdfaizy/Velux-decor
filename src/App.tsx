@@ -33,8 +33,10 @@ import ConsultationList from "./pages/consultation/ConsultationList";
 import SubCategoryList from "./pages/subcategory/SubCategoryList";
 import CreateSubCategory from "./pages/subcategory/CreateSubCategory";
 import ReviewList from "./pages/review/ReviewList";
-import CreateReview from "./pages/review/CreateReview";
 import EnquiryTable from "./screens/AiAgentMobile/EnquiryTable";
+import OfferManager from "./pages/offers/OfferManager";
+import CustomerList from "./pages/customers/CustomerList";
+import WhatsAppBroadcast from "./pages/broadcast/WhatsAppBroadcast";
 
 // Profile
 import UserProfile from "./pages/UserProfile";
@@ -155,12 +157,18 @@ function App() {
 
           {/* REVIEW */}
           <Route path="reviews" element={<ReviewList />} />
-          <Route path="review" element={<CreateReview />} />
 
           {/* SHOWROOM */}
           <Route path="showroom-video" element={<Showroom />} />
           <Route path="showroom-form" element={<ShowroomForm />} />
           <Route path="contact-list" element={<ContactList />} />
+
+          {/* OFFERS (moving banner) */}
+          <Route path="offers" element={<OfferManager />} />
+
+          {/* WHATSAPP MARKETING */}
+          <Route path="customers" element={<CustomerList />} />
+          <Route path="whatsapp-broadcast" element={<WhatsAppBroadcast />} />
         </Route>
 
         {/* ================= FALLBACK ================= */}

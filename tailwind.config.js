@@ -29,6 +29,50 @@ module.exports = {
         "brown-light": "var(--color-brown-light)",
         "charcoal": "var(--color-charcoal)",
         "warm-gray": "var(--color-warm-gray)",
+
+        /* Brand theme for the admin panel & login pages.
+           The public website uses its own gold/brown styles, and only admin/auth
+           screens use blue/indigo/purple — so these are remapped to the brand:
+           blue → gold (primary actions), indigo/purple/violet → warm brown (accents). */
+        blue: {
+          50: "#FBF7EE",
+          100: "#F5ECD6",
+          200: "#EBD8AC",
+          300: "#DEC27D",
+          400: "#D4B260",
+          500: "#C9A84C",
+          600: "#8B6914",
+          700: "#735610",
+          800: "#5C4033",
+          900: "#3D2B1F",
+          950: "#2A1D14",
+        },
+        indigo: {
+          50: "#F7F1EC",
+          100: "#EDE0D4",
+          200: "#DCC5B1",
+          300: "#C6A587",
+          400: "#A88265",
+          500: "#8C6650",
+          600: "#6B4C3B",
+          700: "#5C4033",
+          800: "#4A3328",
+          900: "#3D2B1F",
+          950: "#2A1D14",
+        },
+        purple: {
+          50: "#F7F1EC",
+          100: "#EDE0D4",
+          200: "#DCC5B1",
+          300: "#C6A587",
+          400: "#A88265",
+          500: "#8C6650",
+          600: "#6B4C3B",
+          700: "#5C4033",
+          800: "#4A3328",
+          900: "#3D2B1F",
+          950: "#2A1D14",
+        },
       },
       fontFamily: {
         "body-LG": "var(--body-LG-font-family)",
