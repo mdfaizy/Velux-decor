@@ -43,46 +43,43 @@ const UserProfile = () => {
         onClick={() => setOpen(!open)}
         className="flex items-center gap-4 cursor-pointer"
       >
-        <span className="hidden md:block text-gray-600">
-          Welcome {user?.name || "Admin"} 👋
+        <span className="hidden md:block text-right leading-tight">
+          <span className="block text-[11px] text-[#8A8278]">Welcome back</span>
+          <span className="block text-sm font-semibold text-[#3D2B1F]">{user?.name || "Admin"}</span>
         </span>
 
-        <div className="w-9 h-9 bg-blue-500 text-white rounded-full flex items-center justify-center">
+        <div
+          className="w-10 h-10 text-white font-bold rounded-full flex items-center justify-center ring-2 ring-[#C9A84C]/30 ring-offset-2 ring-offset-[#FAF7F2]"
+          style={{ background: "linear-gradient(135deg,#C9A84C,#8B6914)" }}
+        >
           {getInitial()}
         </div>
       </div>
 
       {/* Dropdown */}
       {open && (
-        <div className="absolute right-0 mt-3 w-52 bg-white shadow-lg rounded-lg border z-50">
+        <div className="absolute right-0 mt-3 w-60 bg-white shadow-[0_16px_40px_rgba(61,43,31,0.15)] rounded-xl border border-[#EFE6D8] z-50 overflow-hidden">
 
           {/* User Info */}
-          <div className="px-4 py-3 border-b">
-            <p className="text-sm font-semibold">
+          <div className="px-4 py-3 bg-[#FBF7EE] border-b border-[#EFE6D8]">
+            <p className="text-sm font-semibold text-[#3D2B1F]">
               {user?.name || "Admin"}
             </p>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-[#8A8278] truncate">
               {user?.email || "admin@gmail.com"}
             </p>
           </div>
 
           <button
-            // onClick={() => navigate("/dashboard/profile")}
-            className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm"
+            onClick={() => navigate("/")}
+            className="w-full text-left px-4 py-2.5 hover:bg-[#FBF7EE] text-sm text-[#5C4033]"
           >
-            Profile
-          </button>
-
-          <button
-            // onClick={() => navigate("/dashboard/settings")}
-            className="w-full text-left px-4 py-2 hover:bg-gray-100 text-sm"
-          >
-            Settings
+            Go to website
           </button>
 
           <button
             onClick={handleLogout}
-            className="w-full text-left px-4 py-2 hover:bg-red-100 text-sm text-red-600"
+            className="w-full text-left px-4 py-2.5 hover:bg-red-50 text-sm text-red-600 border-t border-[#EFE6D8]"
           >
             Logout
           </button>

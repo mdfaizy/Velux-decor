@@ -1,8 +1,9 @@
 import axios from "axios";
 
 // ✅ Base URL
-// const BASE_URL = "http://localhost:8080/api";
-const BASE_URL='https://velux-decor-server.onrender.com/api'
+// Set VITE_API_URL in .env.local (e.g. http://localhost:8080/api) for local development
+const BASE_URL =
+  import.meta.env.VITE_API_URL || "https://velux-decor-server.onrender.com/api";
 
 // ✅ Axios instance
 const apiConnector = axios.create({

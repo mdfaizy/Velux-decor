@@ -177,13 +177,6 @@
       ]
     },
     {
-      "id": "src/pages/review/CreateReview.tsx",
-      "label": "CreateReview",
-      "routes": [
-        "review"
-      ]
-    },
-    {
       "id": "src/screens/AiAgentMobile/ShowroomForm.tsx",
       "label": "ShowroomForm",
       "routes": [
@@ -196,19 +189,40 @@
       "routes": [
         "contact-list"
       ]
+    },
+    {
+      "id": "src/pages/offers/OfferManager.tsx",
+      "label": "OfferManager",
+      "routes": [
+        "offers"
+      ]
+    },
+    {
+      "id": "src/pages/customers/CustomerList.tsx",
+      "label": "CustomerList",
+      "routes": [
+        "customers"
+      ]
+    },
+    {
+      "id": "src/pages/broadcast/WhatsAppBroadcast.tsx",
+      "label": "WhatsAppBroadcast",
+      "routes": [
+        "whatsapp-broadcast"
+      ]
     }
   ],
   "edges": [
     {
-      "id": "src\\screens\\AiAgentMobile\\Categories.tsx:44:4-to-src\\pages\\category\\CategoryList.tsx",
+      "id": "src\\screens\\AiAgentMobile\\Categories.tsx:69:4-to-src\\pages\\category\\CategoryList.tsx",
       "source": "src\\screens\\AiAgentMobile\\Categories.tsx",
       "target": "src\\pages\\category\\CategoryList.tsx",
       "data": {
         "viaRoute": "categories",
         "trigger": {
-          "element": "<section\r\n      id=\"categories\"\r\n      style={{ padding: \"110px 0\", background: \"#F0EAE0\" }}\r\n    >\r\n      <div className=\"max-w-7xl mx-auto px-6\">\r\n        <div\r\n          style={{\r\n            display: \"flex\",\r\n            alignItems: \"flex-end\",\r\n            justifyContent: \"space-between\",\r\n            marginBottom: 60,\r\n            flexWrap: \"wrap\",\r\n            gap: 20,\r\n          }}\r\n        >\r\n          <div>\r\n            <div\r\n              style={{\r\n                display: \"inline-flex\",\r\n                alignItems: \"center\",\r\n                gap: 8,\r\n                background: \"rgba(201,168,76,0.1)\",\r\n                borderRadius: 30,\r\n                padding: \"6px 18px\",\r\n                marginBottom: 18,\r\n                border: \"1px solid rgba(201,168,76,0.2)\",\r\n              }}\r\n            >\r\n              <span\r\n                style={{\r\n                  fontSize: 11,\r\n                  fontWeight: 700,\r\n                  color: \"#C9A84C\",\r\n                  letterSpacing: \"0.12em\",\r\n                  textTransform: \"uppercase\",\r\n                }}\r\n              >\r\n                Our Collections\r\n              </span>\r\n            </div>\r\n            <h2\r\n              style={{\r\n                fontFamily: \"'Playfair Display',serif\",\r\n                fontSize: \"clamp(28px,4vw,50px)\",\r\n                fontWeight: 700,\r\n                color: \"#3D2B1F\",\r\n                lineHeight: 1.1,\r\n              }}\r\n            >\r\n              Curated for Every Style\r\n            </h2>\r\n          </div>\r\n          <p\r\n            style={{\r\n              fontSize: 16,\r\n              color: \"#6B4C3B\",\r\n              maxWidth: 380,\r\n              lineHeight: 1.7,\r\n            }}\r\n          >\r\n            From classic elegance to modern minimalism — discover our premium\r\n            furnishing solutions.\r\n          </p>\r\n        </div>\r\n\r\n        {/* 6-category masonry-style grid */}\r\n        <div className=\"grid gap-5 sm:grid-cols-2 lg:grid-cols-3\">\r\n          {categories.map((cat, i) => {\r\n            // Make first and last tile double-wide on large screens only\r\n            const isWide = i === 0 || i === 5;\r\n            return (\r\n              <div\r\n                key={cat._id}\r\n\r\nonClick={() => {\r\n  setActiveCategory(cat._id);\r\n\r\n  // 🔥 SLUG BASE NAVIGATION\r\n  if (!cat.slug) {\r\n    console.error(\"Slug missing:\", cat);\r\n    return;\r\n  }\r\n\r\n  navigate(`/subcategory/${cat.slug}`);\r\n}}\r\n                className={`overflow-hidden rounded-[16px] cursor-pointer transition-all duration-300 ${\r\n                  isWide ? \"lg:col-span-2\" : \"\"\r\n                }`}\r\n                style={{\r\n                  borderRadius: 16,\r\n                  overflow: \"hidden\",\r\n                  cursor: \"pointer\",\r\n                  boxShadow:\r\n                    activeCategory === cat._id\r\n                      ? \"0 20px 50px rgba(201,168,76,0.22)\"\r\n                      : \"0 4px 20px rgba(61,43,31,0.07)\",\r\n                  border: `2px solid ${activeCategory === cat._id ? \"#C9A84C\" : \"transparent\"}`,\r\n                  transform:\r\n                    activeCategory === cat._id ? \"translateY(-4px)\" : \"none\",\r\n                  position: \"relative\",\r\n                }}\r\n              >\r\n                <div\r\n                  style={{\r\n                    position: \"relative\",\r\n                    height: isWide ? 280 : 220,\r\n                    overflow: \"hidden\",\r\n                  }}\r\n                >\r\n                  <img\r\n                    src={cat.image}\r\n                    alt={cat.name}\r\n                    style={{\r\n                      width: \"100%\",\r\n                      height: \"100%\",\r\n                      objectFit: \"cover\",\r\n                      transform:\r\n                        activeCategory === cat._id\r\n                          ? \"scale(1.06)\"\r\n                          : \"scale(1)\",\r\n                      transition: \"transform 0.6s\",\r\n                    }}\r\n                  />\r\n                  <div\r\n                    style={{\r\n                      position: \"absolute\",\r\n                      inset: 0,\r\n                      background:\r\n                        \"linear-gradient(to bottom, rgba(0,0,0,0.14) 0%, rgba(0,0,0,0.38) 45%, rgba(0,0,0,0.62) 100%)\",\r\n                    }}\r\n                  />\r\n                  {/* Tag pill */}\r\n                  <div\r\n                    style={{\r\n                      position: \"absolute\",\r\n                      top: 14,\r\n                      right: 14,\r\n                      background: \"rgba(201,168,76,0.92)\",\r\n                      borderRadius: 20,\r\n                      padding: \"4px 12px\",\r\n                      fontSize: 10,\r\n                      fontWeight: 700,\r\n                      color: \"#fff\",\r\n                      letterSpacing: \"0.08em\",\r\n                      textTransform: \"uppercase\",\r\n                    }}\r\n                  >\r\n                    {/* {cat.tag} */}\r\n                    {cat.badge}\r\n                  </div>\r\n                  {/* Name at bottom */}\r\n                  <div\r\n                    style={{\r\n                      position: \"absolute\",\r\n                      bottom: 0,\r\n                      left: 0,\r\n                      right: 0,\r\n                      padding: \"20px 22px\",\r\n                      background: \"rgba(0,0,0,0.08)\",\r\n                    }}\r\n                  >\r\n                    <div\r\n                      style={{\r\n                        display: \"flex\",\r\n                        alignItems: \"center\",\r\n                        gap: 10,\r\n                        marginBottom: 6,\r\n                      }}\r\n                    >\r\n                      <span style={{ fontSize: 22 }}>\r\n                        {/* {cat.icon} */}\r\n                        <img src={cat.icon} className=\"w-6 h-6\" />\r\n\r\n                      </span>\r\n                      <span\r\n                        style={{\r\n                          fontFamily: \"'Playfair Display',serif\",\r\n                          fontSize: isWide ? 24 : 20,\r\n                          fontWeight: 700,\r\n                          color: \"#FAF7F2\",\r\n                          textShadow: \"0 2px 12px rgba(0,0,0,0.4)\",\r\n                        }}\r\n                      >\r\n                        {cat.name}\r\n                      </span>\r\n                    </div>\r\n                    <p\r\n                      style={{\r\n                        fontSize: 13,\r\n                        color: \"rgba(255,255,255,0.95)\",\r\n                        lineHeight: 1.6,\r\n                        maxWidth: 380,\r\n                        textShadow: \"0 6px 16px rgba(0,0,0,0.28)\",\r\n                      }}\r\n                    >\r\n                      {cat.description}\r\n                    </p>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n            );\r\n          })}\r\n        </div>\r\n      </div>\r\n    </section>",
-          "line": 44,
-          "endLine": 248,
+          "element": "<section\r\n      id=\"categories\"\r\n      style={{ padding: \"110px 0\", background: \"#F0EAE0\" }}\r\n    >\r\n      <div className=\"max-w-7xl mx-auto px-6\">\r\n        <div\r\n          style={{\r\n            display: \"flex\",\r\n            alignItems: \"flex-end\",\r\n            justifyContent: \"space-between\",\r\n            marginBottom: 60,\r\n            flexWrap: \"wrap\",\r\n            gap: 20,\r\n          }}\r\n        >\r\n          <div>\r\n            <div\r\n              style={{\r\n                display: \"inline-flex\",\r\n                alignItems: \"center\",\r\n                gap: 8,\r\n                background: \"rgba(201,168,76,0.1)\",\r\n                borderRadius: 30,\r\n                padding: \"6px 18px\",\r\n                marginBottom: 18,\r\n                border: \"1px solid rgba(201,168,76,0.2)\",\r\n              }}\r\n            >\r\n              <span\r\n                style={{\r\n                  fontSize: 11,\r\n                  fontWeight: 700,\r\n                  color: \"#C9A84C\",\r\n                  letterSpacing: \"0.12em\",\r\n                  textTransform: \"uppercase\",\r\n                }}\r\n              >\r\n                Our Collections\r\n              </span>\r\n            </div>\r\n            <h2\r\n              style={{\r\n                fontFamily: \"'Playfair Display',serif\",\r\n                fontSize: \"clamp(28px,4vw,50px)\",\r\n                fontWeight: 700,\r\n                color: \"#3D2B1F\",\r\n                lineHeight: 1.1,\r\n              }}\r\n            >\r\n              Curated for Every Style\r\n            </h2>\r\n          </div>\r\n          <p\r\n            style={{\r\n              fontSize: 16,\r\n              color: \"#6B4C3B\",\r\n              maxWidth: 380,\r\n              lineHeight: 1.7,\r\n            }}\r\n          >\r\n            From classic elegance to modern minimalism — discover our premium\r\n            furnishing solutions.\r\n          </p>\r\n        </div>\r\n\r\n        {/* Collection tiles: equal row heights, every row filled */}\r\n        <div className=\"grid gap-5 sm:grid-cols-2 lg:grid-cols-3 auto-rows-[260px] lg:auto-rows-[280px]\">\r\n          {categories.map((cat, i) => {\r\n            const span = spans[i];\r\n            // on 2-column tablets, a last odd tile spans the full row\r\n            const smFull = categories.length % 2 === 1 && i === categories.length - 1;\r\n            const badge = cat.badge?.trim();\r\n\r\n            return (\r\n              <button\r\n                key={cat._id}\r\n                type=\"button\"\r\n                onClick={() => {\r\n                  // 🔥 SLUG BASE NAVIGATION\r\n                  if (!cat.slug) {\r\n                    console.error(\"Slug missing:\", cat);\r\n                    return;\r\n                  }\r\n                  navigate(`/subcategory/${cat.slug}`);\r\n                }}\r\n                className={`group relative block h-full w-full overflow-hidden rounded-2xl text-left\r\n                  shadow-[0_4px_20px_rgba(61,43,31,0.08)] ring-1 ring-[rgba(201,168,76,0.12)]\r\n                  transition-all duration-500 hover:-translate-y-1\r\n                  hover:shadow-[0_20px_50px_rgba(61,43,31,0.18)] hover:ring-2 hover:ring-[#C9A84C]\r\n                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A84C]\r\n                  ${smFull ? \"sm:col-span-2\" : \"\"} ${LG_SPAN[span]} ${span === 1 && smFull ? \"lg:col-span-1\" : \"\"}`}\r\n              >\r\n                <img\r\n                  src={cat.image}\r\n                  alt=\"\"\r\n                  loading=\"lazy\"\r\n                  className=\"absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105\"\r\n                />\r\n\r\n                {/* photo stays visible at the top, text area darkens smoothly */}\r\n                <div\r\n                  className=\"absolute inset-0\"\r\n                  style={{\r\n                    background:\r\n                      \"linear-gradient(to bottom, rgba(26,18,12,0) 30%, rgba(26,18,12,0.45) 60%, rgba(26,18,12,0.88) 100%)\",\r\n                  }}\r\n                />\r\n\r\n                {badge && (\r\n                  <span\r\n                    className=\"absolute top-4 right-4 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-white shadow\"\r\n                    style={{ background: \"rgba(201,168,76,0.95)\" }}\r\n                  >\r\n                    {badge}\r\n                  </span>\r\n                )}\r\n\r\n                <div className=\"absolute inset-x-0 bottom-0 p-5 sm:p-6\">\r\n                  <div className=\"flex items-center gap-3 mb-2\">\r\n                    {cat.icon && (\r\n                      <img\r\n                        src={cat.icon}\r\n                        alt=\"\"\r\n                        className=\"h-9 w-9 shrink-0 rounded-full object-cover ring-2 ring-white/70\"\r\n                      />\r\n                    )}\r\n                    <h3\r\n                      className={`font-bold leading-tight text-[#FAF7F2] ${\r\n                        span > 1 ? \"text-2xl sm:text-[28px]\" : \"text-xl sm:text-[22px]\"\r\n                      }`}\r\n                      style={{\r\n                        fontFamily: \"'Playfair Display',serif\",\r\n                        textShadow: \"0 2px 12px rgba(0,0,0,0.35)\",\r\n                      }}\r\n                    >\r\n                      {toTitleCase(cat.name)}\r\n                    </h3>\r\n                  </div>\r\n\r\n                  {cat.description && (\r\n                    <p\r\n                      className={`line-clamp-2 text-[13.5px] leading-relaxed text-white/85 ${\r\n                        span > 1 ? \"max-w-xl\" : \"\"\r\n                      }`}\r\n                    >\r\n                      {toSentenceCase(cat.description)}\r\n                    </p>\r\n                  )}\r\n\r\n                  <span className=\"mt-3 inline-flex items-center gap-1.5 text-[12px] font-bold uppercase tracking-[0.12em] text-[#E8C97A] opacity-80 transition-all duration-300 group-hover:gap-2.5 group-hover:opacity-100\">\r\n                    Explore <ArrowRight size={14} />\r\n                  </span>\r\n                </div>\r\n              </button>\r\n            );\r\n          })}\r\n        </div>\r\n      </div>\r\n    </section>",
+          "line": 69,
+          "endLine": 227,
           "column": 4,
           "endColumn": 14,
           "sourceFile": "src\\screens\\AiAgentMobile\\Categories.tsx"
@@ -232,15 +246,15 @@
       }
     },
     {
-      "id": "src\\screens\\ProductDetails.tsx:61:10-to-src\\components\\screens\\AiAgentMobile\\AiAgentMobile.tsx",
+      "id": "src\\screens\\ProductDetails.tsx:62:10-to-src\\components\\screens\\AiAgentMobile\\AiAgentMobile.tsx",
       "source": "src\\screens\\ProductDetails.tsx",
       "target": "src\\components\\screens\\AiAgentMobile\\AiAgentMobile.tsx",
       "data": {
         "viaRoute": "/",
         "trigger": {
           "element": "<Link to=\"/\" className=\"hover:text-amber-600 transition\">Home</Link>",
-          "line": 61,
-          "endLine": 61,
+          "line": 62,
+          "endLine": 62,
           "column": 10,
           "endColumn": 78,
           "sourceFile": "src\\screens\\ProductDetails.tsx"
@@ -248,15 +262,15 @@
       }
     },
     {
-      "id": "src\\screens\\ProductDetails.tsx:63:10-to-src\\screens\\AiAgentMobile\\Categories.tsx",
+      "id": "src\\screens\\ProductDetails.tsx:64:10-to-src\\screens\\AiAgentMobile\\Categories.tsx",
       "source": "src\\screens\\ProductDetails.tsx",
       "target": "src\\screens\\AiAgentMobile\\Categories.tsx",
       "data": {
         "viaRoute": "/categories",
         "trigger": {
           "element": "<Link to=\"/categories\" className=\"hover:text-amber-600 transition\">\r\n            {product.category?.name}\r\n          </Link>",
-          "line": 63,
-          "endLine": 65,
+          "line": 64,
+          "endLine": 66,
           "column": 10,
           "endColumn": 17,
           "sourceFile": "src\\screens\\ProductDetails.tsx"
@@ -420,6 +434,38 @@
           "column": 14,
           "endColumn": 23,
           "sourceFile": "src\\pages\\subcategory\\CreateSubCategory.tsx"
+        }
+      }
+    },
+    {
+      "id": "src\\pages\\offers\\OfferManager.tsx:300:16-to-src\\screens\\AiAgentMobile\\Categories.tsx",
+      "source": "src\\pages\\offers\\OfferManager.tsx",
+      "target": "src\\screens\\AiAgentMobile\\Categories.tsx",
+      "data": {
+        "viaRoute": "/categories",
+        "trigger": {
+          "element": "<input\n                  name=\"link\"\n                  value={form.link}\n                  onChange={handleChange}\n                  placeholder=\"/categories\"\n                  className={inputCls}\n                />",
+          "line": 300,
+          "endLine": 306,
+          "column": 16,
+          "endColumn": 18,
+          "sourceFile": "src\\pages\\offers\\OfferManager.tsx"
+        }
+      }
+    },
+    {
+      "id": "src\\pages\\offers\\OfferManager.tsx:366:16-to-src\\pages\\category\\CreateCategory.tsx",
+      "source": "src\\pages\\offers\\OfferManager.tsx",
+      "target": "src\\pages\\category\\CreateCategory.tsx",
+      "data": {
+        "viaRoute": "category",
+        "trigger": {
+          "element": "<select\n                  name=\"category\"\n                  value={form.category}\n                  onChange={handleChange}\n                  className={inputCls}\n                >\n                  <option value=\"\">All categories</option>\n                  {categories.map((c) => (\n                    <option key={c._id} value={c._id}>{c.name}</option>\n                  ))}\n                </select>",
+          "line": 366,
+          "endLine": 376,
+          "column": 16,
+          "endColumn": 25,
+          "sourceFile": "src\\pages\\offers\\OfferManager.tsx"
         }
       }
     }

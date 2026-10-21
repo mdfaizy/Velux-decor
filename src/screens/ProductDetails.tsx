@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import apiConnector from "../services/apiConnector";
 import EnquiryModal from "./AiAgentMobile/EnquiryModal";
+import { ProductOfferStrip } from "./AiAgentMobile/ProductOfferStrip";
 import { 
   ShoppingCart, 
   Heart, 
@@ -182,6 +183,9 @@ const ProductDetails = () => {
                   </p>
                 )}
               </div>
+
+              {/* Active offers for this product's category */}
+              <ProductOfferStrip categoryId={product.category?._id || product.category} />
 
               {/* Description Preview */}
               <p className="text-gray-600 leading-relaxed mb-4">

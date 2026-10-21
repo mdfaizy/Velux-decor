@@ -11,6 +11,7 @@ export const Contact: React.FC<ContactProps> = ({ setBookingOpen }) => {
     phone: "",
     service: "",
     message: "",});
+  const [whatsappOptIn, setWhatsappOptIn] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const handleChange = (key: string, value: string) => {
@@ -23,7 +24,7 @@ export const Contact: React.FC<ContactProps> = ({ setBookingOpen }) => {
       return;}
     try {
       setLoading(true);
-      const res = await createContactApi(form);
+      const res = await createContactApi({ ...form, whatsappOptIn });
       if (res.success) {
         // ✅ Success UI
         alert("Message sent successfully ✅");
@@ -35,6 +36,7 @@ export const Contact: React.FC<ContactProps> = ({ setBookingOpen }) => {
           service: "",
           message: "",
         });
+        setWhatsappOptIn(false);
       }
     } catch (error: any) {
       console.error(error);
@@ -323,6 +325,19 @@ export const Contact: React.FC<ContactProps> = ({ setBookingOpen }) => {
                   className="w-full px-4 py-3 rounded-lg border border-[#E0D8CC] text-[14px] text-[#3D2B1F] bg-[#FDFAF6] outline-none resize-y font-sans transition focus:border-[#C9A84C]"
                 />
               </div>
+
+              {/* WhatsApp offers opt-in */}
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={whatsappOptIn}
+                  onChange={(e) => setWhatsappOptIn(e.target.checked)}
+                  className="mt-[3px] w-4 h-4 accent-[#C9A84C] cursor-pointer"
+                />
+                <span className="text-[13px] text-[#5C4033] leading-snug">
+                  Send me offers and updates from Velux Decor on WhatsApp. You can opt out anytime.
+                </span>
+              </label>
 
               {/* Button */}
               <button

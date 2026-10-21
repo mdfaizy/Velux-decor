@@ -47,7 +47,7 @@
 
  const TableHeader: React.FC<TableHeaderProps> = ({ children, className }) => (
   <thead
-    className={`bg-slate-50 text-slate-500 uppercase text-xs dark:bg-gray-800 dark:text-gray-300 ${className}`}
+    className={`bg-[#F5EFE6] text-[#8B6914] uppercase text-[11px] tracking-[0.08em] ${className}`}
   >
     {children}
   </thead>
@@ -59,7 +59,7 @@
 
   const TableRow: React.FC<TableRowProps> = ({ children, className }) => (
   <tr
-    className={`border-t border-slate-200 hover:bg-slate-50 dark:border-gray-700 dark:hover:bg-gray-800 transition ${className}`}
+    className={`border-t border-[#EFE6D8] text-[#3D2B1F] hover:bg-[#FBF7EE] transition ${className}`}
   >
     {children}
   </tr>
